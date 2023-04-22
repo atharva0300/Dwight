@@ -12,15 +12,17 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 
+import { Tooltip } from '@mui/material';
+
 const UserBar = () => {
   return (
     <Navbar bg="white" variant="light" style ={{"width" : "410px" , "height" : "47px" , "margin-top" : "-47px" , "margin-left" : "1500px" , "border-radius" : "5px"}}>
         <Container>
             <div className = "user-container-one"> 
-                <span><img src = {cursor} className = 'cursor-image' /></span>
-                <span><img src = {reaction} className='reaction-image' /></span>
-                <span><img src = {user} className='user-image' /></span>
-                <span><img src = {notification} className='notification-image' /></span>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide collaborator's cursor</h6>} arrow><span><img src = {cursor} className = 'cursor-image' /></span></Tooltip>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Reactions</h6>} arrow><span><img src = {reaction} className='reaction-image' /></span></Tooltip>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Board owner</h6>} arrow><span><img src = {user} className='user-image' /></span></Tooltip>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Feed</h6>} arrow><span><img src = {notification} className='notification-image' /></span></Tooltip>
             </div>
             <div className='user-container-two'>
                 <span>
@@ -38,7 +40,7 @@ const UserBar = () => {
                         </Dropdown.Menu>
                     </Dropdown>
                 </span>
-                <span><Button className='share-button'>Share</Button></span>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Shared with 'board owner' team</h6>} arrow><span><Button className='share-button'>Share</Button></span></Tooltip>
 
             </div>
         </Container>

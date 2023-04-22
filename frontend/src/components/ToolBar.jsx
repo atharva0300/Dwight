@@ -11,17 +11,19 @@ import focus from '../assets/focus.png'
 import vote from '../assets/vote.png'
 import estimation from '../assets/estimation.png'
 
+import { Tooltip } from '@mui/material';
+
 const ToolBar = () => {
   return (
-    <Navbar bg="white" variant="light" style = {{"width" : "320px" , "height" : "47px" , "margin-top" :  "-48px" , "margin-left" : "1175px" , "border-radius" : "5px"}}>
+    <Navbar bg="white" variant="light" style = {{"width" : "350px" , "height" : "47px" , "margin-top" :  "-48px" , "margin-left" : "1140px" , "border-radius" : "5px"}}>
         <Container className='toolbar-container'>
-            <img src = {arrow} className='arrow-image'/>
-            <img src = {timer} className='timer-image' />
-            <img src = {vote} className='vote-image' />
-            <img src = {focus} className='focus-image' />
-            <img src = {estimation} className='estimation-image' />
-            <img src = {note} className = "note-image" />
-            <img src = {doubledown} className='doubledown-image' />
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide apps</h6>} arrow><span><img src = {arrow} className='arrow-image'/></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Timer</h6>} arrow><span><img src = {timer} className='timer-image' /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Voting</h6>} arrow><span><img src = {vote} className='vote-image' /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Talltrack</h6>} arrow><span><img src = {focus} className='focus-image' /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Estimation</h6>} arrow><span><img src = {estimation} className='estimation-image' /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Note</h6>} arrow><span><img src = {note} className = "note-image" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>More apps</h6>} arrow><span><img src = {doubledown} className='doubledown-image' /></span></Tooltip>
         </Container>
       </Navbar>
   )

@@ -115,18 +115,27 @@
   align-items: center;
 }
 
+.toolbar-container > span{
+  width : 40px;
+  height : 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .arrow-image{
   transform: rotate(180deg);
   color : grey;
 }
 
-
-
-.toolbar-container > img:hover{
+.toolbar-container > span:hover{
   background: lightblue;
-  width : 24px;
-  height : 24px;
+  border-radius: 5px;
 }
+
+
+
 
 .user-container-one{
   display : flex;
@@ -183,4 +192,8 @@
 .user-container-two > span {
   height : 35px;
   width : 35px;
+}
+
+.tooltip{
+  font-size : 16px;
 }
