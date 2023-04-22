@@ -13,9 +13,9 @@ import {
 }
 from 'mdb-react-ui-kit';
 
-import axios from axios
+import axios from 'axios';
 
-function Signin() {
+function Signin({setSigned}) {
 
   const [justifyActive, setJustifyActive] = useState('tab1');
   let [email , setEmail] = useState()
@@ -39,13 +39,25 @@ function Signin() {
 
   const SubmitSignin = (e) => {
     //making a post request to the django server
-    item = {
+    let item = {
         "email" : email,
         "password" : password
     }
     console.log(item)
 
-    parsedItem = JSON.stringify(item)
+    let parsedItem = JSON.stringify(item)
+
+    axios.get(`http://127.0.0.1:8000/signin/?email=${email}&password=${password}`)
+    .then((response) => {
+        console.log(response.data)
+        if(response.data.message=='1'){
+            setSigned(true)
+        }else{
+            setSigned(false)
+        }
+    }).catch((error) => {
+        console.log('Error found : ' , error)
+    })
 
     
   }

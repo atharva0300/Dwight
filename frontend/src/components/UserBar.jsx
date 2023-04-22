@@ -14,13 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import { Tooltip } from '@mui/material';
 
-const UserBar = ({signed, setShowSignin}) => {
-
-    useEffect(() => {
-        if(signed==false){
-            setShowSignin(true)
-        }
-    }, [signed])
+const UserBar = () => {
 
   return (
     <Navbar bg="white" variant="light" style ={{"width" : "410px" , "height" : "47px" , "marginTop" : "-47px" , "marginLeft" : "1500px" , "borderRadius" : "5px"}}>

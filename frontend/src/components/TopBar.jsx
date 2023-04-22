@@ -4,12 +4,12 @@ import ToolBar from './ToolBar'
 import UserBar from './UserBar'
 
 
-const TopBar = ({signed , setShowSignin}) => {
+const TopBar = () => {
   return (
     <div className='topbar'>
       <NavigationBar />
       <ToolBar />
-      <UserBar signed = {signed} setShowSignin = {setShowSignin} />
+      <UserBar />
     </div>
   )
 }

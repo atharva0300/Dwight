@@ -7,31 +7,49 @@ import TopBar from './components/TopBar';
 import { useState } from 'react';
 import Signin from './pages/Signin';
 
-function App() {
-  let [showSignin , setShowSignin] = useState(true)
-  let [signed , setSigned] = useState(false)
+//importing react router components 
+import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Link , Outlet} from 'react-router-dom'
 
-  const handleSignin = (value) => {
-      console.log('Handling signgin')
-      if (signed==false){
-          setShowSignin(true)
-      }else{
-          setShowSignin(false)
-      }
-  }
+function App() {
+
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path = "/" element = {<Root />}>
+        <Route path = "/signin" element = {<Signin />} />
+        <Route path="/try" element = {<TopBar />} />
+      </Route>
+    )
+  )
+
 
   return (
     <div className = "cover">
-      {signed && 
-        <TopBar signed = {false} setShowSignin = {setShowSignin} /> &&
-        <SideBar /> && 
-        <BottomBar /> && 
-        <Matrix />
-      }
-      {!signed && <Signin />}
-      
+      <RouterProvider router = {router} />
     </div>
   );
+}
+
+
+
+const Root = () => {
+  let [signed , setSigned] = useState(false)
+
+  return <>
+    {signed && <div>
+      <TopBar />
+      <SideBar />
+      <BottomBar />
+      <Matrix />
+      </div>
+    }
+    {!signed && <Signin setSigned={setSigned}/>}
+    <div>
+    <Outlet />
+    </div>
+  </>
+
+
 }
 
 export default App;
