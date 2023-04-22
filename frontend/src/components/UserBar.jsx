@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -14,9 +14,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import { Tooltip } from '@mui/material';
 
-const UserBar = () => {
+const UserBar = ({signed, setShowSignin}) => {
+
+    useEffect(() => {
+        if(signed==false){
+            setShowSignin(true)
+        }
+    }, [signed])
+
   return (
-    <Navbar bg="white" variant="light" style ={{"width" : "410px" , "height" : "47px" , "margin-top" : "-47px" , "margin-left" : "1500px" , "border-radius" : "5px"}}>
+    <Navbar bg="white" variant="light" style ={{"width" : "410px" , "height" : "47px" , "marginTop" : "-47px" , "marginLeft" : "1500px" , "borderRadius" : "5px"}}>
         <Container>
             <div className = "user-container-one"> 
                 <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide collaborator's cursor</h6>} arrow><span><img src = {cursor} className = 'cursor-image' /></span></Tooltip>
@@ -41,7 +48,6 @@ const UserBar = () => {
                     </Dropdown>
                 </span>
                 <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Shared with 'board owner' team</h6>} arrow><span><Button className='share-button'>Share</Button></span></Tooltip>
-
             </div>
         </Container>
       </Navbar>

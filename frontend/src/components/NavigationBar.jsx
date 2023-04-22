@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 const NavigationBar = () => {
   return (
-    <Navbar bg="white" variant="light" style={{"width" : "545px" , "height" : "47px" , "border-radius" : "5px" , "margin-top" : "10px" , "text-shadow" : "gray" , "margin-left" : "10px"}}>
+    <Navbar bg="white" variant="light" style={{"width" : "545px" , "height" : "47px" , "borderRadius" : "5px" , "marginTop" : "10px" , "textShadow" : "gray" , "marginLeft" : "10px"}}>
         <Container>
           <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Go to boards</h6>} arrow><Navbar.Brand href="#home" className = "brand-name">Dwight</Navbar.Brand></Tooltip>
           <span>|</span>

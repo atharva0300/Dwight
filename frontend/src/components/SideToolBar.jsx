@@ -21,7 +21,7 @@ import {Tooltip} from '@mui/material';
 
 const SideToolBar = () => {
   return (
-    <Container className = "sidebar-container" fluid style = {{"width" : "50px" , "height" :  "480px" , "margin-left" : "10px" , "margin-top" : "150px"}}>
+    <Container className = "sidebar-container" fluid style = {{"width" : "50px" , "height" :  "480px" , "marginLeft" : "10px" , "marginTop" : "150px"}}>
       
       <Tooltip placement = "right" title = {<h6 style = {{"margin-top" : "5px"}}>Select | V </h6>} arrow>
       <Row className = "sidebar-row">

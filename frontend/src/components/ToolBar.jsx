@@ -15,7 +15,7 @@ import { Tooltip } from '@mui/material';
 
 const ToolBar = () => {
   return (
-    <Navbar bg="white" variant="light" style = {{"width" : "350px" , "height" : "47px" , "margin-top" :  "-48px" , "margin-left" : "1140px" , "border-radius" : "5px"}}>
+    <Navbar bg="white" variant="light" style = {{"width" : "350px" , "height" : "47px" , "marginTop" :  "-48px" , "marginLeft" : "1140px" , "borderRadius" : "5px"}}>
         <Container className='toolbar-container'>
             <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide apps</h6>} arrow><span><img src = {arrow} className='arrow-image'/></span></Tooltip>
             <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Timer</h6>} arrow><span><img src = {timer} className='timer-image' /></span></Tooltip>

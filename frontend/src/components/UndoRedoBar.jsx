@@ -13,7 +13,7 @@ import { Tooltip } from '@mui/material';
 
 const UndoRedoBar = () => {
   return (
-    <Container className = "undo-redo-container" fluid style = {{"width" : "50px",  "height": "100px" , "margin-left" : "10px", "margin-top" : "15px"}}>
+    <Container className = "undo-redo-container" fluid style = {{"width" : "50px",  "height": "100px" , "marginLeft" : "10px", "marginTop" : "15px"}}>
         <Tooltip placement = "right" title = {<h6 style = {{"margin-top" : "5px"}}>Undo</h6>} arrow>
         <Row className='undo-redo-row'>
             <Col xs ={2}>

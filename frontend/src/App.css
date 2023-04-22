@@ -336,3 +336,18 @@
   height: 430px;
   width: 430px;
 }
+
+.note-container{
+  width: 100px;
+  height : 100px;
+  background: white;
+  text-shadow: #282c34;
+  box-shadow: #282c34;
+  z-index : 2;
+}
+
+.note-features-container{
+  position : absolute;
+  bottom : 100px;
+  left : -70px;
+}
