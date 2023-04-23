@@ -16,6 +16,8 @@ from 'mdb-react-ui-kit';
 import axios from 'axios';
 import SignupPopup from '../components/SignupPopup';
 import SigninPopup from '../components/SigninPopup';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 function Signin({setSigned}) {
@@ -32,6 +34,9 @@ function Signin({setSigned}) {
 
   let [showSuccessDiv , setShowSuccessDiv] = useState(false)
   let [showErrorDiv , setShowErrorDiv] = useState(false)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {

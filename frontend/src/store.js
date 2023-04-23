@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import matrixReducer from './features/matrixSlice';
+import { signinRegisterSlice } from './features/signinRegisterSlice';
 
 
 const store = configureStore({
     reducer : {
-        matrix : matrixReducer
+        matrix : matrixReducer,
+        signinRegister : signinRegisterSlice
     }
 })
 

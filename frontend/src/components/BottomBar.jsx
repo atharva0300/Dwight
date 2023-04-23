@@ -31,7 +31,7 @@ const BottomBar = () => {
 
     <Navbar>
       <Container className = "helper-container" fluid style={{"width" : "250px" , "height" : "47px" , "background" : "white" , "marginLeft" : "1660px" , "marginTop" : "-60px" , "borderRadius" : "5px"}}>
-            <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Undo</h6>} arrow>
+            <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Zoom out</h6>} arrow>
             <span className='helper-span'>
                 <img src={minus} className='helper-image' />
             </span>
@@ -39,7 +39,7 @@ const BottomBar = () => {
             
             <span>100%</span>
 
-            <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Redo</h6>} arrow>
+            <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Zoom in</h6>} arrow>
             <span className='helper-span'>
                 <img src = {plus2}  className='helper-image' />
             </span>
