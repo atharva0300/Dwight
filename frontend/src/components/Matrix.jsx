@@ -20,33 +20,41 @@ const Matrix = () => {
 
     const dispatch = useDispatch()
 
-    let [displayCard , setDisplayCard] = useState(false)
+    let [displayCard , setDisplayCard] = useState("")
+    let [showDisplayCard  , setShowDisplayCard] = useState(false)
     let [moveXDistance , setXDistance] = useState(0)
 
     useEffect(() => {
         if(cardOne==true){
             console.log('cardOne toggled')
-            setDisplayCard('cardOne')
+            setDisplayCard('Do First')
             
         }else if(cardTwo==true){
             console.log('cardTwo toggled')
-            setDisplayCard('cardTwo')
+            setDisplayCard('Schedule')
 
         }else if(cardThree==true){
             console.log('cardThree toggled')
-            setDisplayCard('cardThree')
+            setDisplayCard('Delegate')
 
         }else if(cardFour==true){
             console.log('cardFour toggled')
-            setDisplayCard('cardFour')
+            setDisplayCard("Don't Do")
 
         }
 
     } , [cardOne , cardTwo , cardThree , cardFour])
 
+    useEffect(() => {
+        if(showDisplayCard==false){
+            setXDistance(0)
+        }
+    } , [showDisplayCard])
+
 
     const handleDistance = () => {
-        setXDistance(-200)
+        setShowDisplayCard(true)
+        setXDistance(-100)
     }
 
 
@@ -88,7 +96,7 @@ const Matrix = () => {
 
 
     </motion.div>
-            {displayCard && <TasksDetail displayCard = {displayCard} />}
+            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} />}
     </div>
   )
 }

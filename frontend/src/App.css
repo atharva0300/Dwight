@@ -411,11 +411,201 @@
 
 
 .taskdetail-container{
-  width : 700px;
+  width : 550px;
   height : 780px;
-  background: yellow;
+  background: white;
   position : absolute;
   right : 20px;
   top : 100px;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.task-container{
+  display : flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-top{
+  width : 550px;
+  height : 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-top > div > p{
+  margin-top : 15px;
+}
+
+.task-top > div > span{
+  width : 35px;
+  height : 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-top > div > span:hover{
+  background: lightblue;
+  border-radius: 5px;
+}
+
+.task-top > img{
+  width : 24px;
+  height : 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-top > div:first-child{
+  width : 200px;
+  height : 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size : 20px;
+}
+
+.task-top > div:last-child{
+  width : 200px;
+  height : 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.task-middle{
+  width : 550px;
+  height : 680px;
+  font-family: 'IBM Plex Mono', monospace;
+  color : #0000005C;
+  margin-top : -25px;
+}
+
+.task-middle > div:first-child{
+  color : black;
+  font-family: 'IBM Plex Mono' , monospace;
+  margin-top : 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-middle > div:nth-child(2){
+  width : 550px;
+  height : 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top : -10px;
+  margin-left : 20px;
+}
+
+.task-middle > div:nth-child(2) >  span  { 
+  margin-left : 10px;
+  margin-right : 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+}
+
+.task-middle > div:nth-child(2) > span:hover{
+  width : 35px;
+  height : 35px;
+  background: lightblue;
+  border-radius: 5px;
+}
+
+.task-middle > div > input {
+  width : 400px;
+  border: none;
+}
+
+.task-middle > div > input:active{
+  border : none;
+}
+
+.task-middle > div > div > img{
+  width : 18px;
+  height : 18px;
+  margin-left : 5px;
+}
+
+.task-middle > div:last-child{
+  width : 550px;
+  height : 630px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-middle > div:last-child > div:hover{
+  background: lightblue;
+  color : white;
+  border-radius: 5px;
+}
+
+.task-middle > div:last-child > span{
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 900;
+  margin-top : -300px;
+  margin-bottom: 10px;
+  display: flex;
+  margin-left : -100px;
+}
+
+
+.task-middle > div:last-child > div{
+  width : 200px;
+  height : 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.task-middle > div:last-child > div > p{
+  margin-top : 15px;
+  margin-left : 10px;
+}
+
+.task-bottom{
+  width : 550px;
+  height : 50px;
+  display : flex ;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-bottom > div{
+  width : 100px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.task-bottom > span{
+  width : 50px;
+  height : 50px;
+  margin-top : 25px;
+  margin-right : 10px;
 }
