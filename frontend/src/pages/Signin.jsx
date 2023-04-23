@@ -20,6 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { signinSuccess , signinFail } from '../features/signinSlice';
 
+// importing thunk
+import { loginUser, registerUser } from '../features/thunks/RegisterThunk';
+
+import store from '../store'
+
 
 function Signin() {
 
@@ -38,8 +43,6 @@ function Signin() {
 
   const dispatch = useDispatch()
 
-  let signed = useSelector((state) => state.signin.signed )
-
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -57,7 +60,8 @@ function Signin() {
     setPassword(e.target.value)
   }
 
-  const SubmitSignin = (e) => {
+
+  const handleSignin = async (e) => {
     //making a post request to the django server
     let item = {
         "email" : email,
@@ -65,28 +69,28 @@ function Signin() {
     }
     console.log(item)
 
-    axios.get(`http://127.0.0.1:8000/signin/?email=${email}&password=${password}`)
-    .then((response) => {
-        console.log(response.data)
-        if(response.data.message==='1'){
-            console.log("signed set to true")    
-            dispatch(signinSuccess())     
-        }else{  
-            console.log("signed set to false")
-            setShowSigninPopup(true)
+    // dispatching the loginUser thunk
+    let data = await store.dispatch(loginUser({email  , password }))
+    console.log('data : ' , data)
+    const message = data.payload.message
 
-            // clearing out the contents of the form
-            setEmail("")
-            setPassword("")
+    if(message==='1'){
+      console.log("signed set to true")    
+      dispatch(signinSuccess())     
+    }else if(message==='0'){  
+      console.log("signed set to false")
+      setShowSigninPopup(true)
 
-            dispatch(signinFail())
-        }
-    }).catch((error) => {
-        console.log('Error found : ' , error)
-    })
+      // clearing out the contents of the form
+      setEmail("")
+      setPassword("")
+
+      dispatch(signinFail())
+    }
   }
+  
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     let item = {
       "name" : name,
       "username" : username,
@@ -96,45 +100,36 @@ function Signin() {
 
     console.log(item)
 
-    axios.post('http://127.0.0.1:8000/register/' , item)
-    .then((response) => {
-      console.log(response.data)
-      if(response.data.message==='1'){
-        setRegistered(true)
-        // show the signin page again
-        setShowSignupPopup(true)
-        handleJustifyClick('tab1')
-        setShowSuccessDiv(true)
-        setShowErrorDiv(false)
-      }else if(response.data.message==='2'){
-        setRegistered(false)
-        // show error and ask to try
-        setShowSignupPopup(false)
-      }else if(response.data.message==='3'){
-        // duplicate entry
-        setShowErrorDiv(false)
-        setShowSigninPopup(false)
-        setShowSuccessDiv(false)
-        setShowDuplicatePopup(true)
-        setShowSignupPopup(true)
-        console.log("shoeErrorDiv" , showErrorDiv)
-        console.log('duplicate entry found')
+    let data = await dispatch(registerUser(item))
+    console.log('data : ' , data)
+    let message = data.payload.message
 
-        // change the tab
-        handleJustifyClick('tab1')
-      }
-    }).catch((err) => {
-      console.log("Error : " , err)
+    if(message==='1'){
+      setRegistered(true)
+      // show the signin page again
       setShowSignupPopup(true)
-      setShowSuccessDiv(false)
-      setShowErrorDiv(true)
+      handleJustifyClick('tab1')
+      setShowSuccessDiv(true)
+      setShowErrorDiv(false)
 
-      // clear the contents of the form
-      setName("")
-      setUsername("")
-      setEmail("")
-      setPassword("")
-    })
+    }else if(message==='2'){
+      setRegistered(false)
+      // show error and ask to try
+      setShowSignupPopup(false)
+      
+    }else if(message==='3'){
+      // duplicate entry
+      setShowErrorDiv(false)
+      setShowSigninPopup(false)
+      setShowSuccessDiv(false)
+      setShowDuplicatePopup(true)
+      setShowSignupPopup(true)
+      console.log("shoeErrorDiv" , showErrorDiv)
+      console.log('duplicate entry found')
+
+      // change the tab
+      handleJustifyClick('tab1')
+    }
   } 
 
   return (
@@ -189,7 +184,7 @@ function Signin() {
             <a href="!#">Forgot password?</a>
           </div>
 
-          <MDBBtn className="mb-4 w-100" onClick = {SubmitSignin}>Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100" onClick = {handleSignin}>Sign in</MDBBtn>
           <p className="text-center">Not a member? <a href="#!">Register</a></p>
 
         </MDBTabsPane>

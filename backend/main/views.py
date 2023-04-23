@@ -22,14 +22,14 @@ class RegisterView(APIView) :
 
     def check_duplicates(self, email) : 
         # function for checking duplicate registrations 
-        currentItem = User.objects.get(email = email)
+        try : 
+            User.objects.get(email = email)
+        except User.DoesNotExist : 
+            # dupliate does not Exist
+            return False
 
-        if currentItem : 
-            # dupliate exists
-            return True
-
-        # if the duplicate doe not exist 
-        return False
+        # if the duplicate exists
+        return True
 
     def post(self , request , format = None): 
         # deserializing the request data
@@ -39,7 +39,7 @@ class RegisterView(APIView) :
 
         item = dict(request.data)
         print("sending : " , item)
-        result = self.check_duplicates(item['email'] , item['password'])
+        result = self.check_duplicates(item['email'])
         if(result) : 
             # True
             # if duplicate exists

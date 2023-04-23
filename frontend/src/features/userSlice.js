@@ -5,8 +5,9 @@ import { registerUser , loginUser } from "./thunks/RegisterThunk";
 
 const initialValue = {
     username : "",
-    status : 'idle'
+    status : 'idle',
     // status is idle in the beginning ( before any request has been made )
+    message : ""
 }
 
 
@@ -18,10 +19,16 @@ export const userSlice = createSlice({
             state.status = 'loading'
         })
         .addCase(registerUser.fulfilled , (state , action) => {
-            state.status = 'fulfilled'
+            state.message = action.message
         })
         .addCase(registerUser.rejected , (state , action) => {
             state.status = 'failed'
+        })
+        .addCase(loginUser.pending , (state , action) => {
+            state.status = 'loading'
+        })
+        .addCase(loginUser.fulfilled, (state , action) => {
+            state.message = action.message
         })
     }
 })
