@@ -20,22 +20,40 @@ from .models import User
 # creating a signin api 
 class RegisterView(APIView) : 
 
+    def check_duplicates(self, email , password) : 
+        # function for checking duplicate registrations 
+        currentItem = User.objects.get(email = email , password = password)
+
+        if currentItem : 
+            # dupliate exists
+            return True
+
+        # if the duplicate doe not exist 
+        return False
 
     def post(self , request , format = None): 
         # deserializing the request data
         # post data 
         print(request.data)
-        serializer = UserSerializer(data = request.POST)
+        print(request.POST)
 
-    
+        item = dict(request.data)
+        print("sending : " , item)
+        result = self.check_duplicates(item['email'] , item['password'])
+        if(result) : 
+            # True
+            # if duplicate exists
+            return Response({"message" : "3"})
+
+        serializer = UserSerializer(data = request.data)
 
         if serializer.is_valid() : 
             # the serializer is valid 
             serializer.save() 
-            return Response(serializer.data , status = status.HTTP_201_CREATED )
+            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
     
         # if the serialzier is not valid, then 
-        return Response(serializer.data  , status = status.HTTP_400_BAD_REQUEST)
+        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
 
     def get(self , request , format = None) : 
         # hadnling get request here 

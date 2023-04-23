@@ -351,3 +351,60 @@
   bottom : 100px;
   left : -70px;
 }
+
+.signup-success-popup{
+  width : 950px;
+  height : 50px;
+  background : greenyellow;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-success-popup > h2{
+  color : white;
+  font-size : 24px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.MDBContainer{
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.signup-error-popup{
+  width : 950px;
+  height : 50px;
+  background : crimson;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-error-popup > h2{
+  color : white;
+  font-size : 24px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+
+.signup-duplicate-popup{
+  width : 950px;
+  height : 50px;
+  background : purple;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-duplicate-popup > h2{
+  color : rgb(156, 110, 110);
+  font-size : 24px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
