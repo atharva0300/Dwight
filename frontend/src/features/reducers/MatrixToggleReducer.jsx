@@ -1,5 +1,5 @@
-import React from 'react';
 
+// matrixToggleReducer
 export const MatrixToggleReducer = {
     // defining the actions for MatrixToggleReducer
     cardOneToggle : (state) => {

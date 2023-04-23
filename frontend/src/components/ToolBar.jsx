@@ -17,13 +17,13 @@ const ToolBar = () => {
   return (
     <Navbar bg="white" variant="light" style = {{"width" : "350px" , "height" : "47px" , "marginTop" :  "-48px" , "marginLeft" : "1140px" , "borderRadius" : "5px"}}>
         <Container className='toolbar-container'>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide apps</h6>} arrow><span><img src = {arrow} className='arrow-image'/></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Timer</h6>} arrow><span><img src = {timer} className='timer-image' /></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Voting</h6>} arrow><span><img src = {vote} className='vote-image' /></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Talltrack</h6>} arrow><span><img src = {focus} className='focus-image' /></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Estimation</h6>} arrow><span><img src = {estimation} className='estimation-image' /></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Note</h6>} arrow><span><img src = {note} className = "note-image" /></span></Tooltip>
-            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>More apps</h6>} arrow><span><img src = {doubledown} className='doubledown-image' /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide apps</h6>} arrow><span><img src = {arrow} className='arrow-image' alt = "arrow" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Timer</h6>} arrow><span><img src = {timer} className='timer-image' alt = "timer" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Voting</h6>} arrow><span><img src = {vote} className='vote-image' alt = "vote" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Talltrack</h6>} arrow><span><img src = {focus} className='focus-image' alt  = "focus" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Estimation</h6>} arrow><span><img src = {estimation} className='estimation-image' alt = "estimation" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Note</h6>} arrow><span><img src = {note} className = "note-image" alt = "note" /></span></Tooltip>
+            <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>More apps</h6>} arrow><span><img src = {doubledown} className='doubledown-image' alt = "doubledown" /></span></Tooltip>
         </Container>
       </Navbar>
   )

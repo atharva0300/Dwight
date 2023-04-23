@@ -1,27 +1,12 @@
 import './App.css';
-import BottomBar from './components/BottomBar';
-import SideBar from './components/SideBar';
-import TopBar from './components/TopBar';
-import Board from './components/Board';
 
 import Signin from './pages/Signin';
 
-import { useEffect, useState } from 'react';
-
-
 //importing react router components 
-import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Link , Outlet, useNavigate} from 'react-router-dom'
+import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Outlet, useNavigate} from 'react-router-dom'
 
-// importing actions
-import { signinSuccess , signinFail } from './features/signinRegisterSlice';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 function App() {
-
-  let signed = useSelector((state) => state.signinRegister.signed)
-
-  const dispatch = useDispatch()
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -52,22 +37,13 @@ const Try = () => {
 
 const Root = () => {
 
-
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if(signed==true){
-      navigate("try/")
-    }else if(signed==false){
-      navigate('signin/')
-    }
-  } , [signed])
-
-
   return <>
     <div>
-    <Signin setSigned={setSigned}/>
-      {signed && <Try />}
+      <Signin/>
+      <Try />
+    </div>
+
+    <div>
       <Outlet />
     </div>
     

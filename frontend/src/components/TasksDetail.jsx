@@ -1,7 +1,5 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 
 import {motion} from 'framer-motion';
 
@@ -33,16 +31,16 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
          <Container className='task-container'>
             <div className='task-top'>
                 <div>
-                <span><img src = {pin} /></span>
+                <span><img src = {pin} alt = "pin" /></span>
                 <p>Note | </p>
-                <span><img src= {upload} /></span>
+                <span><img src= {upload} alt = "upload" /></span>
                 </div>
 
                 <div>
-                <span><img src = {author} /></span>
+                <span><img src = {author} alt = "author" /></span>
                 <p> | </p>
-                <span><img src = {enlarge} /></span>
-                <span onClick={() => setShowDisplayCard(false)}><img src = {close} /></span>
+                <span><img src = {enlarge} alt = "enlarge" /></span>
+                <span onClick={() => setShowDisplayCard(false)}><img src = {close} alt = "close" /></span>
                 </div>
             </div>
             <hr style = {{"width" : "550px" , "height" : "10px" , "margin-top" : "0px"}}/>
@@ -52,30 +50,30 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
                     <h2>{String(displayCard)}</h2>
                 </div>
                 <div>
-                    <span><img src = {plus} /></span>
+                    <span><img src = {plus} alt = "plus" /></span>
                     <input type = "text" placeholder = "Type '/' to format or add blocks"/>
                 </div>
 
                 <div>
                     <span>Templates</span>
                     <div>
-                        <img src = {tickbox} />
+                        <img src = {tickbox} alt = "tickbox" />
                         <p>To do List</p>
                     </div>
                     <div>
-                        <img src = {clock} />
+                        <img src = {clock} alt ="clock" />
                         <p>Meeting Agenda</p>
                     </div>
                     <div>
-                        <img src ={list} />
+                        <img src ={list} alt = "list" />
                         <p>Project summary</p>
                     </div>
                     <div>
-                        <img src = {note} />
+                        <img src = {note} alt = "note" />
                         <p>Workshop notes</p>
                     </div>
                     <div>
-                        <img src = {board} />
+                        <img src = {board} alt = "board" />
                         <p>Board annotation</p>
                     </div>
                 </div>
@@ -83,8 +81,8 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
             <div className='task-bottom'>
                 <div>
-                <img src = {reaction2} />
-                <img src = {help2} />
+                <img src = {reaction2} alt = "reaction" />
+                <img src = {help2} alt = "help" />
                 </div>
                 <span>100%</span>
             </div>

@@ -25,19 +25,19 @@ const Matrix = () => {
     let [moveXDistance , setXDistance] = useState(0)
 
     useEffect(() => {
-        if(cardOne==true){
+        if(cardOne===true){
             console.log('cardOne toggled')
             setDisplayCard('Do First')
             
-        }else if(cardTwo==true){
+        }else if(cardTwo===true){
             console.log('cardTwo toggled')
             setDisplayCard('Schedule')
 
-        }else if(cardThree==true){
+        }else if(cardThree===true){
             console.log('cardThree toggled')
             setDisplayCard('Delegate')
 
-        }else if(cardFour==true){
+        }else if(cardFour===true){
             console.log('cardFour toggled')
             setDisplayCard("Don't Do")
 
@@ -46,7 +46,7 @@ const Matrix = () => {
     } , [cardOne , cardTwo , cardThree , cardFour])
 
     useEffect(() => {
-        if(showDisplayCard==false){
+        if(showDisplayCard===false){
             setXDistance(0)
         }
     } , [showDisplayCard])

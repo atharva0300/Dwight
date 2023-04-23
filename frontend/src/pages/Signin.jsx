@@ -16,11 +16,12 @@ from 'mdb-react-ui-kit';
 import axios from 'axios';
 import SignupPopup from '../components/SignupPopup';
 import SigninPopup from '../components/SigninPopup';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { signinSuccess , signinFail } from '../features/signinSlice';
 
 
-function Signin({setSigned}) {
+function Signin() {
 
   const [justifyActive, setJustifyActive] = useState('tab1');
   let [email , setEmail] = useState()
@@ -36,7 +37,9 @@ function Signin({setSigned}) {
   let [showErrorDiv , setShowErrorDiv] = useState(false)
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+
+  let signed = useSelector((state) => state.signin.signed )
+
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -62,22 +65,21 @@ function Signin({setSigned}) {
     }
     console.log(item)
 
-    let parsedItem = JSON.stringify(item)
-
     axios.get(`http://127.0.0.1:8000/signin/?email=${email}&password=${password}`)
     .then((response) => {
         console.log(response.data)
-        if(response.data.message=='1'){
-            console.log("signed set to true")
-            setSigned(true)           
+        if(response.data.message==='1'){
+            console.log("signed set to true")    
+            dispatch(signinSuccess())     
         }else{  
             console.log("signed set to false")
-            setSigned(false)
             setShowSigninPopup(true)
 
             // clearing out the contents of the form
             setEmail("")
             setPassword("")
+
+            dispatch(signinFail())
         }
     }).catch((error) => {
         console.log('Error found : ' , error)
@@ -97,18 +99,18 @@ function Signin({setSigned}) {
     axios.post('http://127.0.0.1:8000/register/' , item)
     .then((response) => {
       console.log(response.data)
-      if(response.data.message=='1'){
+      if(response.data.message==='1'){
         setRegistered(true)
         // show the signin page again
         setShowSignupPopup(true)
         handleJustifyClick('tab1')
         setShowSuccessDiv(true)
         setShowErrorDiv(false)
-      }else if(response.data.message=='2'){
+      }else if(response.data.message==='2'){
         setRegistered(false)
         // show error and ask to try
         setShowSignupPopup(false)
-      }else if(response.data.message=='3'){
+      }else if(response.data.message==='3'){
         // duplicate entry
         setShowErrorDiv(false)
         setShowSigninPopup(false)

@@ -1,7 +1,6 @@
-import React from "react";
 
-
-export const SigninRegisterReducer = {
+// signinReducer
+export const SigninReducer = {
     signinSuccess : (state) => {
         state.signed = true
     },

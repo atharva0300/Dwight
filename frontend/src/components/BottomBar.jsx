@@ -1,7 +1,6 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col'
 
@@ -22,7 +21,7 @@ const BottomBar = () => {
       <Tooltip placement = "right" title = {<h6 style = {{"marginTop" : "5px"}}>Show sidebar</h6>} arrow>
         <Row className='bottom-row'>
             <Col xs={2}>
-                <img src={sidebar} className ="sidebar-image" style = {{"width" : "24px" , "height" :"24px" , "marginTop" : "-2px" , "marginLeft" : "-12px"}}/>
+                <img src={sidebar} alt = "sidebar" className ="sidebar-image" style = {{"width" : "24px" , "height" :"24px" , "marginTop" : "-2px" , "marginLeft" : "-12px"}}/>
             </Col>
         </Row>
         </Tooltip>
@@ -33,7 +32,7 @@ const BottomBar = () => {
       <Container className = "helper-container" fluid style={{"width" : "250px" , "height" : "47px" , "background" : "white" , "marginLeft" : "1660px" , "marginTop" : "-60px" , "borderRadius" : "5px"}}>
             <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Zoom out</h6>} arrow>
             <span className='helper-span'>
-                <img src={minus} className='helper-image' />
+                <img src={minus} alt = "minus" className='helper-image' />
             </span>
             </Tooltip>
             
@@ -41,13 +40,13 @@ const BottomBar = () => {
 
             <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Zoom in</h6>} arrow>
             <span className='helper-span'>
-                <img src = {plus2}  className='helper-image' />
+                <img src = {plus2} alt = "plus" className='helper-image' />
             </span>
             </Tooltip>
 
             <Tooltip placement = "top" title = {<h6 style = {{"marginTop" : "5px"}}>Learning center</h6>} arrow>
             <span className='helper-span'>
-                <img src={help}  className='helper-image' />
+                <img src={help} alt = "help" className='helper-image' />
             </span>
             </Tooltip>
 

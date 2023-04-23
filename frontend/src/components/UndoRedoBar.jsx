@@ -1,7 +1,5 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Row from "react-bootstrap/Row";
 import Col from 'react-bootstrap/Col'
 
@@ -17,7 +15,7 @@ const UndoRedoBar = () => {
         <Tooltip placement = "right" title = {<h6 style = {{"margin-top" : "5px"}}>Undo</h6>} arrow>
         <Row className='undo-redo-row'>
             <Col xs ={2}>
-                <img src={undo} className='img-undo-redo'/>
+                <img src={undo} className='img-undo-redo' alt = "undo" />
             </Col>
         </Row>
         </Tooltip>
@@ -25,7 +23,7 @@ const UndoRedoBar = () => {
         <Tooltip placement = "right" title = {<h6 style = {{"margin-top" : "5px"}}>Redo</h6>} arrow>
         <Row className='undo-redo-row'>
             <Col xs ={2}>
-                <img src={redo} className='img-undo-redo'/>
+                <img src={redo} className='img-undo-redo' alt = "redo" />
             </Col>
         </Row>
         </Tooltip>

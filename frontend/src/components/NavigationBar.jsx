@@ -18,13 +18,13 @@ const NavigationBar = () => {
           <span>|</span>
             <Nav className="me-auto">
             <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Edit board settings</h6>} arrow><Nav.Link href="#home">Eisenhower Matrix Template</Nav.Link></Tooltip>
-              <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Star this board</h6>} arrow><img src = {star} className = "star-image" /></Tooltip>
+              <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Star this board</h6>} arrow><img src = {star} className = "star-image" alt = "star" /></Tooltip>
               <span>|</span>
             </Nav>
             <span className = "set-upload-search" >
-            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Settings</h6>} arrow><img src = {settings} className='settings-image' /></Tooltip>
-            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Export this board</h6>} arrow><img src = {upload} className='upload-image' /></Tooltip>
-            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Search | CTRL + F </h6>} arrow><img src = {search} className='search-image' /></Tooltip>
+            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Settings</h6>} arrow><img src = {settings} className='settings-image' alt = "settings" /></Tooltip>
+            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Export this board</h6>} arrow><img src = {upload} className='upload-image' alt = "upload" /></Tooltip>
+            <Tooltip title = {<h6 style = {{"marginTop" : "5px"}}>Search | CTRL + F </h6>} arrow><img src = {search} className='search-image' alt = "search" /></Tooltip>
           </span>
         </Container>
       </Navbar>
