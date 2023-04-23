@@ -2,8 +2,17 @@ import './App.css';
 
 import Signin from './pages/Signin';
 
+// importing components here
+import TopBar from './components/TopBar';
+import SideBar from './components/SideBar';
+import BottomBar from './components/BottomBar';
+import Board from './components/Board';
+
 //importing react router components 
 import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Outlet, useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 
 
 function App() {
@@ -29,7 +38,10 @@ const Try = () => {
   // try div 
   return(
     <div>
-      <Try />
+      <TopBar />
+      <SideBar />
+      <Board />
+      <BottomBar />
     </div>
   )
 }
@@ -37,10 +49,23 @@ const Try = () => {
 
 const Root = () => {
 
+  let signed = useSelector((state) => state.signin.signed)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(signed===false){
+      navigate("/signin")
+      console.log('signed : ' , signed)
+    }else if(signed===true){
+      console.log('signed : ' , signed)
+      navigate("/try")
+    }
+  }, [signed])
+
+
   return <>
     <div>
-      <Signin/>
-      <Try />
     </div>
 
     <div>

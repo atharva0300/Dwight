@@ -20,9 +20,9 @@ from .models import User
 # creating a signin api 
 class RegisterView(APIView) : 
 
-    def check_duplicates(self, email , password) : 
+    def check_duplicates(self, email) : 
         # function for checking duplicate registrations 
-        currentItem = User.objects.get(email = email , password = password)
+        currentItem = User.objects.get(email = email)
 
         if currentItem : 
             # dupliate exists

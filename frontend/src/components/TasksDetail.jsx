@@ -43,7 +43,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
                 <span onClick={() => setShowDisplayCard(false)}><img src = {close} alt = "close" /></span>
                 </div>
             </div>
-            <hr style = {{"width" : "550px" , "height" : "10px" , "margin-top" : "0px"}}/>
+            <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
 
             <div className='task-middle'>
                 <div>
