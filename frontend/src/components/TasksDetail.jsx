@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 
 import {motion} from 'framer-motion';
@@ -18,10 +18,34 @@ import clock from '../assets/grey/clock.png'
 import list from '../assets/grey/list.png'
 import note from '../assets/grey/note.png'
 import board from '../assets/grey/board.png'
+import { useDispatch } from 'react-redux';
 
-
+// importing actions
+import { appendNote } from '../features/noteSlice';
+import { useSelector } from 'react-redux';
 
 const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
+
+    const dispatch = useDispatch()
+    let currentNote = useSelector((state) => state.notes.note)
+    let allNotes = useSelector((state) => state.notes.allNotes)
+
+    const createTask = () => {
+        console.log('creating task')
+        // creating a temporary object 
+        let item = {
+            'content' : 'this is content',
+            'type' : 'delegate'
+        }
+        dispatch(appendNote(item))
+    }
+
+    useEffect(() => {
+        console.log('displaying allNotes')
+        console.log('allNotes : ' , allNotes)
+    })
+
+
   return (
     <div>
         {showDisplayCard && 
@@ -49,7 +73,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
                 <div>
                     <h2>{String(displayCard)}</h2>
                 </div>
-                <div>
+                <div onClick={createTask}>
                     <span><img src = {plus} alt = "plus" /></span>
                     <input type = "text" placeholder = "Type '/' to format or add blocks"/>
                 </div>

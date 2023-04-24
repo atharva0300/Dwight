@@ -12,6 +12,9 @@ import {motion} from 'framer-motion'
 
 
 const Matrix = () => {
+    
+    let tasks = [1,2,3]
+    let number = 3
 
     const cardOne = useSelector((state) => state.matrix.cardOne)
     const cardTwo = useSelector((state) => state.matrix.cardTwo)
@@ -22,7 +25,8 @@ const Matrix = () => {
 
     let [displayCard , setDisplayCard] = useState("")
     let [showDisplayCard  , setShowDisplayCard] = useState(false)
-    let [moveXDistance , setXDistance] = useState(0)
+    let [moveXDistance , setXDistance] = useState({})
+
 
     useEffect(() => {
         if(cardOne===true){
@@ -57,6 +61,13 @@ const Matrix = () => {
         setXDistance(-100)
     }
 
+    const createComponent = (e) => {
+        console.log('creating a component')
+        console.log(e.target.childNodes)
+
+    }
+
+    // onClick={() => dispatch(cardFourToggle())} on Card 4 
 
   return (
     <div>
@@ -97,6 +108,14 @@ const Matrix = () => {
 
     </motion.div>
             {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} />}
+            <button onClick={createComponent} >Click to create a component</button>
+            
+            {/*tasks.map((item) => (
+                <Note />
+            ))
+            */
+            
+            }
     </div>
   )
 }

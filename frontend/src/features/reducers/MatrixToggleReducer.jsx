@@ -3,30 +3,30 @@
 export const MatrixToggleReducer = {
     // defining the actions for MatrixToggleReducer
     cardOneToggle : (state) => {
-        state.cardOne = !state.cardOne
-        state.cardTwo = false
-        state.cardThree = false
-        state.cardFour = false
+        state.cardOne.display = !state.cardOne
+        state.cardTwo.display = false
+        state.cardThree.display = false
+        state.cardFour.display = false
     },
 
     cardTwoToggle : (state) => {
-        state.cardOne = false
-        state.cardTwo = !state.cardTwo
-        state.cardThree = false
-        state.cardFour = false
+        state.cardOne.display = false
+        state.cardTwo.display = !state.cardTwo
+        state.cardThree.display = false
+        state.cardFour.display = false
     },
 
     cardThreeToggle : (state) => {
-        state.cardOne = false
-        state.cardTwo = false
-        state.cardThree = !state.cardThree
-        state.cardFour = false
+        state.cardOne.display = false
+        state.cardTwo.display = false
+        state.cardThree.display = !state.cardThree
+        state.cardFour.display = false
     },
 
     cardFourToggle : (state) => {
-        state.cardOne = false
-        state.cardTwo = false
-        state.cardThree = false
-        state.cardFour = !state.cardFour
+        state.cardOne.display = false
+        state.cardTwo.display = false
+        state.cardThree.display = false
+        state.cardFour.display = !state.cardFour
     }
 }

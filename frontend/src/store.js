@@ -2,13 +2,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import matrixReducer from './features/matrixSlice';
-import signinSlice from './features/signinSlice';
+import signinReducer from './features/signinSlice';
+import noteReducer from './features/noteSlice';
 
 
 const store = configureStore({
     reducer : {
         matrix : matrixReducer,
-        signin : signinSlice
+        signin : signinReducer,
+        notes : noteReducer
     }
 })
 

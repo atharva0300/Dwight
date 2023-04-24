@@ -5,10 +5,18 @@ import { MatrixToggleReducer } from "./reducers/MatrixToggleReducer";
 
 
 const initialValue = {
-    cardOne : false,
-    cardTwo : false,
-    cardThree : false,
-    cardFour : false
+    cardOne : {
+        'display' : false,
+    },
+    cardTwo : {
+        'display' : false,
+    },
+    cardThree : {
+        'display' : false,
+    },
+    cardFour : {
+        'display' : false,
+    }
 }
 
 export const matrixSlice = createSlice({
