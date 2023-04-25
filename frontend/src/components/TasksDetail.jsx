@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 
 import {motion} from 'framer-motion';
@@ -24,11 +24,21 @@ import { useDispatch } from 'react-redux';
 import { appendNote } from '../features/noteSlice';
 import { useSelector } from 'react-redux';
 
-const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
+// importing componetns 
+import Task from './Task';
+
+
+const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , currentCardType }) => {
 
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
     let allNotes = useSelector((state) => state.notes.allNotes)
+    
+    
+
+    // all useState hooks 
+    let [showTask , setShowTask] = useState(false)
+    let [type , setType] = useState('')
 
     const createTask = () => {
         console.log('creating task')
@@ -45,6 +55,16 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
         console.log('allNotes : ' , allNotes)
     })
 
+    useEffect(() => {
+        console.log('type : ' , type)
+    } , [type])
+    
+    const handleType = (type) => {
+        console.log('type : ' , type )
+        setType(type)
+        setShowTask(true)
+    }
+
 
   return (
     <div>
@@ -53,6 +73,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
             animate ={{'type' : 'tween' , duration : 0.5 }}
         >
          <Container className='task-container'>
+
             <div className='task-top'>
                 <div>
                 <span><img src = {pin} alt = "pin" /></span>
@@ -69,9 +90,13 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
             </div>
             <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
 
+            {showTask && <Task type = {type} currentCardType = {currentCardType} setShowTask = {setShowTask} />}
+
+            {!showTask && 
+
             <div className='task-middle'>
                 <div>
-                    <h2>{String(displayCard)}</h2>
+                    <h2>{displayCard}</h2>
                 </div>
                 <div onClick={createTask}>
                     <span><img src = {plus} alt = "plus" /></span>
@@ -80,28 +105,30 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
                 <div>
                     <span>Templates</span>
-                    <div>
+                    <div onClick={() => handleType('0')}>
                         <img src = {tickbox} alt = "tickbox" />
                         <p>To do List</p>
                     </div>
-                    <div>
+                    <div onClick={() => handleType('1')}>
                         <img src = {clock} alt ="clock" />
                         <p>Meeting Agenda</p>
                     </div>
-                    <div>
+                    <div onClick={() => handleType('2')}>
                         <img src ={list} alt = "list" />
                         <p>Project summary</p>
                     </div>
-                    <div>
+                    <div onClick={() => handleType('3')}>
                         <img src = {note} alt = "note" />
                         <p>Workshop notes</p>
                     </div>
-                    <div>
+                    <div onClick={() => handleType('4')}>
                         <img src = {board} alt = "board" />
                         <p>Board annotation</p>
                     </div>
                 </div>
             </div>
+
+            }
 
             <div className='task-bottom'>
                 <div>

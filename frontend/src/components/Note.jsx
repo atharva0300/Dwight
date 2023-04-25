@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import NoteToolBar from './NoteToolBar';
 import ResizingGrid from './ResizingGrid';
 
-const Note = () => {
+const Note = ({content , type , card , classname }) => {
 
     let [noteFeatures , toggleNoteFeatures] = useState(false)
     let [text , setText] = useState()
@@ -20,10 +20,6 @@ const Note = () => {
     
     }
 
-    const handleChange = (e) => {
-        setText(e.target.value)
-        console.log('handling on change')
-    }
 
     const handleBlur = (e) => {
         setShowInputEle(false)
@@ -33,11 +29,13 @@ const Note = () => {
   return (  
     <Draggable
         onDrag={handleOnDrag}
+        className = 'draggable'
         >
 
-        <div style={{"width" : "100px" , "height" : "100px"}} >
-            <textarea autoFocus className = "note-container" type = "text" onDoubleClick={handleOnDoubleClick} value = {text} onChange={handleChange} onBlur={handleBlur} 
-                style ={{"width" : "130px" , "white-space" : "pre-wrap" , "word-wrap" : "break-word"}}
+        <div style={{"width" : "50px" , "height" : "50px"}} >
+            <div type = "text" onDoubleClick={handleOnDoubleClick} value = {text} onBlur={handleBlur} 
+                style ={{"width" : "50px" , "height" : "50px"}}
+                className = {`${classname} note-container`}
             />
             {showInputEle && <NoteToolBar />}
             {showInputEle && <ResizingGrid />}

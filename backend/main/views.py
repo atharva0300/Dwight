@@ -16,6 +16,15 @@ from .models import User
 
 
 # Create your views here.
+config={
+    apiKey: "Use Your Api Key Here",
+    authDomain: "localhost, 127.0.0.1",
+    databaseURL: "Use Your databaseURL Here",
+    projectId: "Use Your projectId Here",
+    storageBucket: "Use Your storageBucket Here",
+    messagingSenderId: "Use Your messagingSenderId Here",
+    appId: "Use Your appId Here"
+}
 
 # creating a signin api 
 class RegisterView(APIView) : 

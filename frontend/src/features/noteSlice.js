@@ -6,9 +6,13 @@ let initialValue = {
         'content' : '',
         'type' : '',
         // type -> do it, schedule , delegate , eliminate
+        'card' : ''
+        // card -> one , two, three or four
     },
-    allNotes : []
-
+    cardOneNotes : [] ,
+    cardTwoNotes : [],
+    cardThreeNotes : [],
+    cardFourNotes : []
 }
 
 const noteSlice = createSlice({
@@ -21,4 +25,4 @@ const noteSlice = createSlice({
 // exporting 
 export default noteSlice.reducer
 
-export const {appendNote} = noteSlice.actions
+export const {appendNote , appendCardOneNotes , appendCardTwoNotes , appendCardThreeNotes , appendCardFourNotes} = noteSlice.actions

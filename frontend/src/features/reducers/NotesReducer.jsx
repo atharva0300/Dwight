@@ -2,21 +2,51 @@
 // NotesReducer
 export const NotesReducer = {
     // defining the actions for the NotesReducer
-    appendNote : (state, action) => {
-        console.log('appending the note')
-        console.log('action : ' , action)
-        console.log('action.payload : ' , action.payload)
-        state.note.content = action.payload.content
-        state.note.type = action.payload.type
-
-        // creaitng a note object
+    appendCardOneNotes: (state , action) => {
+        console.log('appending the note card one ')
         const currentNote = {
             'content' : action.payload.content,
-            'type' : action.payload.type
-        }   
+            'type' : action.payload.type,
+            'card' : 'one'
+        }
 
+        // appending into the cardOneNotes 
+        state.cardOneNotes = state.cardOneNotes.concat(currentNote)
+    },
 
-        // appending into the allNotes list 
-        state.allNotes = state.allNotes.concat(currentNote)
-    } 
+    appendCardTwoNotes : (state , action) => {
+        console.log('appending the note card two')
+        const currentNote = {
+            'content' : action.payload.content,
+            'type' : action.payload.type,
+            'card' : 'two'
+        }
+
+        // appending into the cardTwoNotes 
+        state.cardTwoNotes = state.cardTwoNotes.concat(currentNote)
+    },
+
+    appendCardThreeNotes : (state , action) => {
+        console.log('appending the note card three')
+        const currentNote = {
+            'content' : action.payload.content,
+            'type' : action.payload.type,
+            'card' : 'three'
+        }
+
+        // appending into the cardTwoNotes 
+        state.cardThreeNotes = state.cardThreeNotes.concat(currentNote)
+    },
+
+    appendCardFourNotes : (state , action) => {
+        console.log('appending the note card four')
+        const currentNote = {
+            'content' : action.payload.content,
+            'type' : action.payload.type,
+            'card' : 'four'
+        }
+
+        // appending into the cardTwoNotes 
+        state.cardFourNotes = state.cardFourNotes.concat(currentNote)
+    }
 }
