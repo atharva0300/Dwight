@@ -19,13 +19,34 @@ According to productivity expert James Clear, you can understand the items in ea
 
 ## Technologies used 
 - [X] Reactjs 
-- [ ] Redux Toolkit/Redux
+- [X] Redux Toolkit/Redux
 - [X] Django 
 - [X] Django Rest Framework
-- [ ] Postgresql 
+- [X] SQLite/Postgresql 
 - [ ] Redis
 - [ ] Docker<br/>
+Along with frontend libraries : Bootstrap, material UI, framer motion 
 more...
+
+
+### New ideas to implement/bugs to be removed
+- [ ] When notes are dragged into a card, change the card type of the note
+- [ ] Use firebase authentication
+- [ ] Update the user in the top right bar
+- [ ] User should be able to signout by himself
+- [ ] Creating a project, maintaining a record of all the projects with its content
+- [ ] Feature to add images into the notes
+- [ ] bug: Sign in/Sign up button when clicked, styling gets glitched
+- [ ] Saving the versions of the project when the save button is clicked and moving back to previous verisons of the project
+- [ ] Zoom in/Zoom out 
+- [ ] Creating a list of all the current tasks in the tasklist -> on selecting a task -> should be able to update the task and then save it again -> with changes reflected in the store and in the database
+- [X] UI and styling all the components
+- [ ] On reloading the user should not get signed out, imply a session storage or something
+- [ ] Feature for multiple users to work on multiple projects
+- [ ] bug: card one and card two notes get behind card three and card four -> should be on the top of them
+- [ ] Remove the venv from the repo and hide the sercret key. Create a requirements.txt file
+
+
 
 ## Created by
 Atharva Pingale : https://github.com/atharva0300
