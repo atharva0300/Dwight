@@ -4,9 +4,8 @@ import {SigninReducer} from './reducers/SigninReducer';
 
 
 const initialValue = {
-    signed : true
+    signed : true,
     // temporarily keeing signed to true while development
-    
 }
 
 
@@ -20,4 +19,4 @@ export const signinSlice = createSlice({
 // exporting 
 export default signinSlice.reducer
 
-export const {signinSuccess , signinFail} = signinSlice.actions
+export const {signinSuccess , signinFail , setUsername } = signinSlice.actions

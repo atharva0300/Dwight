@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -12,8 +12,14 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import { Tooltip } from '@mui/material';
+import { useSelector } from 'react-redux';
+
+
 
 const UserBar = () => {
+
+    const username = useSelector((state) => state.user.username)
+
 
   return (
     <Navbar bg="white" variant="light" style ={{"width" : "410px" , "height" : "47px" , "marginTop" : "-47px" , "marginLeft" : "1500px" , "borderRadius" : "5px"}}>
@@ -21,7 +27,7 @@ const UserBar = () => {
             <div className = "user-container-one"> 
                 <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Hide collaborator's cursor</h6>} arrow><span><img src = {cursor} className = 'cursor-image' alt = "cursor" /></span></Tooltip>
                 <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Reactions</h6>} arrow><span><img src = {reaction} className='reaction-image' alt = "reaction" /></span></Tooltip>
-                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Board owner</h6>} arrow><span><img src = {user} className='user-image' alt = "user" /></span></Tooltip>
+                <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Board owner</h6>} arrow><span>{username}</span></Tooltip>
                 <Tooltip title = {<h6 style = {{"margin-top" : "5px"}}>Feed</h6>} arrow><span><img src = {notification} className='notification-image' alt = "notification" /></span></Tooltip>
             </div>
             <div className='user-container-two'>

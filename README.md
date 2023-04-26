@@ -32,7 +32,7 @@ more...
 ### New ideas to implement/bugs to be removed
 - [ ] When notes are dragged into a card, change the card type of the note
 - [ ] Use firebase authentication
-- [ ] Update the user in the top right bar
+- [X] bug: Update the user in the top right bar
 - [ ] User should be able to signout by himself
 - [ ] Creating a project, maintaining a record of all the projects with its content
 - [ ] Feature to add images into the notes

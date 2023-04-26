@@ -15,17 +15,6 @@ from django.http import Http404
 from .models import User
 
 
-# Create your views here.
-config={
-    apiKey: "Use Your Api Key Here",
-    authDomain: "localhost, 127.0.0.1",
-    databaseURL: "Use Your databaseURL Here",
-    projectId: "Use Your projectId Here",
-    storageBucket: "Use Your storageBucket Here",
-    messagingSenderId: "Use Your messagingSenderId Here",
-    appId: "Use Your appId Here"
-}
-
 # creating a signin api 
 class RegisterView(APIView) : 
 
@@ -78,7 +67,8 @@ class SigninView(APIView) :
 
     def get_object(self, email , password):
         try:
-            return User.objects.get(email = email , password = password)
+            temp = User.objects.get(email = email , password = password)
+            return temp.username
         except User.DoesNotExist:
             return False
         
@@ -94,8 +84,10 @@ class SigninView(APIView) :
         print(email[0])
         print(password[0])
 
-        temp = self.get_object(email[0] , password[0])
-        if temp : 
-            return Response({"message" : "1"})
+        username = self.get_object(email[0] , password[0])
+        if username : 
+            # get the username 
+            print('username : ' , username)
+            return Response({"message" : "1" , "username"  : str(username) })
         
         return Response({"message" : "0"})

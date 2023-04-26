@@ -73,10 +73,12 @@ function Signin() {
     let data = await store.dispatch(loginUser({email  , password }))
     console.log('data : ' , data)
     const message = data.payload.message
+    console.log('message : ' , message)
 
     if(message==='1'){
       console.log("signed set to true")    
       dispatch(signinSuccess())     
+
     }else if(message==='0'){  
       console.log("signed set to false")
       setShowSigninPopup(true)
@@ -111,6 +113,7 @@ function Signin() {
       handleJustifyClick('tab1')
       setShowSuccessDiv(true)
       setShowErrorDiv(false)
+
 
     }else if(message==='2'){
       setRegistered(false)

@@ -19,7 +19,7 @@ export const userSlice = createSlice({
             state.status = 'loading'
         })
         .addCase(registerUser.fulfilled , (state , action) => {
-            state.message = action.message
+            state.message = action.payload.message
         })
         .addCase(registerUser.rejected , (state , action) => {
             state.status = 'failed'
@@ -28,7 +28,10 @@ export const userSlice = createSlice({
             state.status = 'loading'
         })
         .addCase(loginUser.fulfilled, (state , action) => {
-            state.message = action.message
+            state.message = action.payload.message
+            state.username = action.payload.username
+            console.log('action : ' , action)
+            console.log('action.username : ' , action.payload.username)
         })
     }
 })
