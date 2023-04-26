@@ -10,6 +10,7 @@ import close from '../assets/close.png'
 import help2 from '../assets/help2.png'
 import reaction2 from '../assets/reaction2.png'
 import enlarge from '../assets/enlarge.png'
+import back from '../assets/back.png'
 
 // importing images 
 import plus from '../assets/grey/plus.png';
@@ -22,6 +23,8 @@ import { useDispatch } from 'react-redux';
 
 // importing actions
 import { appendNote } from '../features/noteSlice';
+
+
 import { useSelector } from 'react-redux';
 
 // importing componetns 
@@ -33,8 +36,8 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
     let allNotes = useSelector((state) => state.notes.allNotes)
-    
-    
+
+
 
     // all useState hooks 
     let [showTask , setShowTask] = useState(false)
@@ -78,6 +81,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
                 <div>
                 <span><img src = {pin} alt = "pin" /></span>
                 <p>Note | </p>
+                <span><img src = {back} alt = "back" onClick={() => setShowTask(false)}/></span>
                 <span><img src= {upload} alt = "upload" /></span>
                 </div>
 

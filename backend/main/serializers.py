@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Task
 
 # creating a user serialzier 
 class UserSerializer(serializers.ModelSerializer) : 
@@ -13,3 +13,14 @@ class UserSerializer(serializers.ModelSerializer) :
         # creating an isntance of the user
         return User.objects.create(**validated_data)
     
+
+class TaskSerializer(serializers.ModelSerializer) : 
+    class Meta : 
+        model = Task
+        fields = ('quadrant' , 'type' , 'content')
+    
+
+    # a function to create an isntance of the serializer
+    def create(self , validated_data) :
+        # creating an instance of the user 
+        return Task.objects.create(**validated_data)

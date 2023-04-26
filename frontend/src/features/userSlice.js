@@ -3,18 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 // importing thunks 
 import { registerUser , loginUser } from "./thunks/RegisterThunk";
 
+// importing reducers
+import { UserReducer } from "./reducers/UserReducer";
+
 const initialValue = {
     username : "",
     status : 'idle',
     // status is idle in the beginning ( before any request has been made )
-    message : ""
+    message : "",
+
+    showUserSettings : false
 }
 
 
 export const userSlice = createSlice({
     name : 'user',
     initialState : initialValue,
-    reducers : {} , extraReducers(builder){
+    reducers : UserReducer , extraReducers(builder){
         builder.addCase(registerUser.pending , (state , action) => {
             state.status = 'loading'
         })
@@ -40,5 +45,7 @@ export const userSlice = createSlice({
 // exporting 
 export default userSlice.reducer
 
-export const selectAllUsers = (state) => state.userSlice.username
-export const getUserStatus = (state) => state.userSlice.status
+// export const selectAllUsers = (state) => state.userSlice.username
+// export const getUserStatus = (state) => state.userSlice.status
+
+export const {setShowUserSettings} = userSlice.actions

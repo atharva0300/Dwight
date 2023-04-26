@@ -19,4 +19,4 @@ export const signinSlice = createSlice({
 // exporting 
 export default signinSlice.reducer
 
-export const {signinSuccess , signinFail , setUsername } = signinSlice.actions
+export const {signinSuccess, signinFail } = signinSlice.actions

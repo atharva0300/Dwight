@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import UserSerializer
+from .serializers import UserSerializer , TaskSerializer
 from rest_framework import serializers
 from rest_framework.views import APIView
 # importing APIView as we are creating class bsed function
@@ -91,3 +91,25 @@ class SigninView(APIView) :
             return Response({"message" : "1" , "username"  : str(username) })
         
         return Response({"message" : "0"})
+    
+
+class TaskList(APIView) : 
+    # a task list class 
+
+    # handling post request 
+    def post(self,  request , format = None ): 
+        # deseraizliing the object 
+        item = dict(request.data)
+        print('item : ' , item)
+
+        # creating a sreializer instance 
+        serializer = TaskSerializer(data = item)
+
+        if serializer.is_valid() : 
+            # serializer is valid
+            print('serializer is valid') 
+            serializer.save()
+            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
+        
+        # if the serializer is not valid 
+        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)

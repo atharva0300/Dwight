@@ -23,6 +23,7 @@ export const loginUser = createAsyncThunk(
     'userSlice/loginUser' , async (credentials) => {
         let email = credentials.email
         let password = credentials.password
+        console.log('signin credentials : ' , credentials)
 
         const url = BASE_URL + 'signin/?email=' + email + '&password=' + password
         console.log('url : ' , url)

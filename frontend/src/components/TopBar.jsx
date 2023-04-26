@@ -2,6 +2,7 @@ import React from 'react'
 import NavigationBar from './NavigationBar'
 import ToolBar from './ToolBar'
 import UserBar from './UserBar'
+import UserSettings from './UserSettings'
 
 
 const TopBar = () => {
@@ -10,6 +11,7 @@ const TopBar = () => {
       <NavigationBar />
       <ToolBar />
       <UserBar />
+      <UserSettings />
     </div>
   )
 }

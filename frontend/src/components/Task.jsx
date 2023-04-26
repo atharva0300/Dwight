@@ -8,6 +8,10 @@ import { useDispatch } from 'react-redux'
 import TasksDetail from './TasksDetail'
 
 
+// importing task thunk
+import { addTask } from '../features/thunks/TaskThunk'
+
+
 
 const Task = ({type , currentCardType , setShowTask }) => {
     let [currentType , setCurrentType] = useState()
@@ -40,8 +44,9 @@ const Task = ({type , currentCardType , setShowTask }) => {
     const handleTaskSubmit = () => {
 
         const task = {
-            'type' : type,
-            'content' : currentContent,
+            quadrant : type,
+            type : currentCardType,
+            content : currentContent
         }
 
         console.log('handling task submit')
@@ -58,6 +63,16 @@ const Task = ({type , currentCardType , setShowTask }) => {
         }
 
         setShowTask(false)
+
+        // sending the post request 
+        // invoking the addTask thunk
+        const response = dispatch(addTask(task))
+
+        if (response.message==='1'){
+            console.log('SUCCESS')
+        }else if(response.message==='2'){
+            console.log('ERROR')
+        }
 
     }
 

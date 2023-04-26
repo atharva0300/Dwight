@@ -9,3 +9,9 @@ class User(models.Model) :
     password = models.TextField(max_length=50)
 
 
+class Task(models.Model) : 
+    quadrant = models.TextField(max_length=20)
+    type = models.TextField(max_length=20)
+    content = models.TextField(max_length=100000)
+    # image = models.ImageField()   # add upload to photo
+
