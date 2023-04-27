@@ -7,14 +7,11 @@ The Eisenhower Matrix is a productivity, prioritization, and time-management fra
 Also called an Eisenhower Decision Matrix, Eisenhower Box, or Urgent-Important Matrix, this approach consists of drawing a four-box square with an x-axis labeled Urgent and Not Urgent, and the y-axis labeled Important and Not Important. Then, group the items on your list into one of the four boxes, with the Urgent-and-Important box in the upper left requiring your immediate action.
 
 ## How do you use the Eisenhower Matrix ?
-After you’ve drawn your Eisenhower Matrix, you will have four empty boxes, two by two. This will allow you to categorize your to-do items into one of four possible descriptions:
-**1. First Quadrant  (upper left): urgent and important**
-**2. Second Quadrant  (upper right): important, but not urgent**
-**3. Third Quadrant (lower left): not important, but urgent**
-**4. Fourth Quadrant (lower right): neither important nor urgent**
-
-According to productivity expert James Clear, you can understand the items in each of the four quadrants with this simple framework: Do, decide, delegate, and don’t do (or delete).
-
+After you’ve drawn your Eisenhower Matrix, you will have four empty boxes, two by two. This will allow you to categorize your to-do items into one of four possible descriptions:<br/>
+**1. First Quadrant  (upper left): urgent and important**<br/>
+**2. Second Quadrant  (upper right): important, but not urgent**<br/>
+**3. Third Quadrant (lower left): not important, but urgent**<br/>
+**4. Fourth Quadrant (lower right): neither important nor urgent**<br/>
 
 ## Technologies used 
 - [X] Reactjs 
@@ -22,9 +19,7 @@ According to productivity expert James Clear, you can understand the items in ea
 - [X] Django 
 - [X] Django Rest Framework
 - [X] SQLite 
-- [ ] Redis
-- [ ] Docker<br/>
-
+<br/>
 
 ### About the Technologies
 1. ReactJS : ReactJS is a library developed by Facebook to develop user interfaces. ReactJS aims at providing modular code which is what I have kept in mind while designing the frontend code. Below are the libraries that I have used to add more features to frontend.
@@ -38,27 +33,24 @@ According to productivity expert James Clear, you can understand the items in ea
     The store of the React app is the `src/store.js` file.
     The store is divided in 5 slices.
     <br/>
-    ```
-    Slices
-    1. SigninReducer : 
-                    values : signed
-                    actions : signinSuccess , signinFail
-    2. UserReducer : 
-                    values : username, status, message, showUserSettings
-                    actions : setShowUserSettings
-    3. MatrixToggleReducer : 
-                    values : cardOne, cardTwo, cardThree, cardFour
-                    actions : cardOneToggle, cardTwoToggle, cardThreeToggle, cardFourToggle
-    4. TaskReducer : 
-                    values : quadrant, type, content, showTask, showAllTasks, allTasks
-                    actions : setShowTask, setShowAllTasks
-                    extraReducers : addTask, getAllTasks
-    5. NoteReducer : 
-                    values : note, cardOneNotes, cardTwoNotes, cardThreeNotes, cardFourNotes
-                    actions : appendCardOneNotes, appendCardTwoNotes, appendCardThreeNotes, appendCardFourNotes
-
-    ```
-
+    Slices <br/>
+    1. SigninReducer : <br/>
+                    values : signed<br/>
+                    actions : signinSuccess , signinFail <br/><br/>
+    2. UserReducer : <br/>
+                    values : username, status, message, showUserSettings<br/>
+                    actions : setShowUserSettings<br/><br/>
+    3. MatrixToggleReducer : <br/>
+                    values : cardOne, cardTwo, cardThree, cardFour<br/>
+                    actions : cardOneToggle, cardTwoToggle, cardThreeToggle, cardFourToggle<br/><br/>
+    4. TaskReducer : <br/>
+                    values : quadrant, type, content, showTask, showAllTasks, allTasks<br/>
+                    actions : setShowTask, setShowAllTasks<br/>
+                    extraReducers : addTask, getAllTasks<br/><br/>
+    5. NoteReducer : <br/>
+                    values : note, cardOneNotes, cardTwoNotes, cardThreeNotes, cardFourNotes<br/>
+                    actions : appendCardOneNotes, appendCardTwoNotes, appendCardThreeNotes, appendCardFourNotes<br/>
+    
     1. SigninReducer > signinSuccess :
     Sets the signed value to true ( user gets signed in )
 
@@ -125,7 +117,7 @@ All the images have been downloaded from <a href = "https://icons8.com/">icons8<
     1. axios : axios is a HTTP client for Javascript. Request and Response handling is simpler when axios is used. Used to communicate with backend
 
 5. Django : 
-Django is a Python framework that follows models-templates-view architecture. Here is an overview of the contents of the `main` app folder.
+Django is a Python framework that follows models-templates-view architecture. Here is an overview of the contents of the `main` app folder. The Django application runs on http://127.0.0.1:8000.
     ```
     1. models.py : Contains User model to store user data and Task model to store the details of a task.
     2. urls.py : Endpoints : register/ , taskdetails/ 
