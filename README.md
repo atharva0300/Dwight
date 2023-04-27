@@ -1,6 +1,5 @@
 # Dwight Eisenhower Matrix
-A clone of the Dwight/Eisenhower Application
-<a href = "https://miro.com/app/board/uXjVMQKVcDk=/">https://miro.com/app/board/uXjVMQKVcDk=/</a>
+An Eisenhower Matrix Application
 
 ## What is Eisenhower Matrix ? 
 The Eisenhower Matrix is a productivity, prioritization, and time-management framework designed to help you prioritize a list of tasks or agenda items by first categorizing those items according to their urgency and importance.
@@ -138,8 +137,8 @@ Django is a Python framework that follows models-templates-view architecture. He
 6. Django Rest Framework ( DRF )
 
 
-
-
+## Video Demonstration of the Application
+[screen-recorder-fri-apr-28-2023-00-46-43.webm](https://user-images.githubusercontent.com/76089814/234968688-ac010206-1d66-4236-9041-404d345f80e7.webm)
 
 
 
