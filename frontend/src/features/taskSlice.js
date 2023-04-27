@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask} from "./thunks/TaskThunk";
+import {addTask , getAllTasks} from "./thunks/TaskThunk";
 
+import { TaskReducer } from "./reducers/TaskReducer";
 
 
 
@@ -8,6 +9,9 @@ const initialValue = {
     quadrant : '',
     type : '',
     content : '',
+
+    showTask : false,
+    showAllTasks : false,
 
 
     // list of all the tasks
@@ -18,7 +22,7 @@ const initialValue = {
 const taskSlice = createSlice({
     name : 'tasks',
     initialState : initialValue , 
-    reducers : {} , extraReducers(builder){
+    reducers : TaskReducer , extraReducers(builder){
         builder.addCase(addTask.pending , (state , action) => {
             console.log('task adding pending')
         })
@@ -27,9 +31,22 @@ const taskSlice = createSlice({
             state.quadrant = action.payload.quadrant
             state.type = action.payload.type
             state.content = action.payload.content
+            
         })
         .addCase(addTask.rejected , (state , action) => {
             console.log('task addition failed')
+        })
+        .addCase(getAllTasks.fulfilled , (state , action) => {
+            console.log('got all the tasks')
+            for(let i=0;i<action.payload.allTasks.length;i++){
+                let item = action.payload.allTasks[i]
+
+                // appending the object in the allTasks 
+                
+                // appending in allTasks
+                state.allTasks = state.allTasks.concat(item)
+
+            }
         })
     }
 })
@@ -37,3 +54,5 @@ const taskSlice = createSlice({
 
 // expoerting the reducer and the actions 
 export default taskSlice.reducer
+
+export const { setShowTask , setShowAllTasks } = taskSlice.actions

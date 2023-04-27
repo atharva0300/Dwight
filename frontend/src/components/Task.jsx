@@ -6,14 +6,14 @@ import Container from 'react-bootstrap/esm/Container'
 import { appendNote  , appendCardOneNotes , appendCardTwoNotes , appendCardThreeNotes , appendCardFourNotes} from '../features/noteSlice'
 import { useDispatch } from 'react-redux'
 import TasksDetail from './TasksDetail'
-
+import { setShowTask } from '../features/taskSlice'
 
 // importing task thunk
 import { addTask } from '../features/thunks/TaskThunk'
 
 
 
-const Task = ({type , currentCardType , setShowTask }) => {
+const Task = ({type , quadrant , setShowTask }) => {
     let [currentType , setCurrentType] = useState()
     let [currentContent , setCurrentContent ] = useState()
 
@@ -44,21 +44,21 @@ const Task = ({type , currentCardType , setShowTask }) => {
     const handleTaskSubmit = () => {
 
         const task = {
-            quadrant : type,
-            type : currentCardType,
+            quadrant : quadrant,
+            type : currentType,
             content : currentContent
         }
 
         console.log('handling task submit')
 
         // condition on the type of task 
-        if(currentCardType==='one'){
+        if(quadrant==='one'){
             dispatch(appendCardOneNotes(task))
-        }else if(currentCardType==='two'){
+        }else if(quadrant==='two'){
             dispatch(appendCardTwoNotes(task))
-        }else if(currentCardType==='three'){
+        }else if(quadrant==='three'){
             dispatch(appendCardThreeNotes(task))
-        }else if(currentCardType==='four'){
+        }else if(quadrant==='four'){
             dispatch(appendCardFourNotes(task))
         }
 
@@ -74,6 +74,10 @@ const Task = ({type , currentCardType , setShowTask }) => {
             console.log('ERROR')
         }
 
+
+        // navigate back to the taskDetail page 
+        dispatch(setShowTask())
+        
     }
 
 

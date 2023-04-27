@@ -12,7 +12,7 @@ from django.http import Http404
 
 
 # importing our models 
-from .models import User
+from .models import User, Task
 
 
 # creating a signin api 
@@ -113,3 +113,13 @@ class TaskList(APIView) :
         
         # if the serializer is not valid 
         return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
+
+
+    # handling get request 
+    # displaying all the tasks 
+    def get(self ,request , format = None ): 
+        print("Handling the get request ")
+        items = Task.objects.all()
+
+        serializer = TaskSerializer(items , many= True)
+        return Response({"allTasks" : serializer.data})

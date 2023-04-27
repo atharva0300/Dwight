@@ -23,24 +23,30 @@ import { useDispatch } from 'react-redux';
 
 // importing actions
 import { appendNote } from '../features/noteSlice';
-
+import { setShowTask , setShowAllTasks } from '../features/taskSlice';
 
 import { useSelector } from 'react-redux';
 
 // importing componetns 
 import Task from './Task';
+import TaskList from './TaskList';
+
+// importing thunks 
+import { getAllTasks } from '../features/thunks/TaskThunk';
 
 
-const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , currentCardType }) => {
+
+const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadrant }) => {
 
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
     let allNotes = useSelector((state) => state.notes.allNotes)
+    let showTask = useSelector((state) => state.tasks.showTask)
+    let showAllTasks = useSelector((state) => state.tasks.showAllTasks)
 
 
 
     // all useState hooks 
-    let [showTask , setShowTask] = useState(false)
     let [type , setType] = useState('')
 
     const createTask = () => {
@@ -65,7 +71,25 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
     const handleType = (type) => {
         console.log('type : ' , type )
         setType(type)
-        setShowTask(true)
+        dispatch(setShowTask())
+    }
+
+
+    const handleShowTask = () => {
+        console.log('handling show task')
+        if(showTask==true){
+            dispatch(setShowTask())
+        }
+        
+    }
+
+    const handleShowAllTasks = async () => {
+        console.log('handleShowAllTaskss')
+        
+        dispatch(setShowTask())
+        dispatch(setShowAllTasks())
+        let response = await dispatch(getAllTasks())
+        console.log('response : ' , response)
     }
 
 
@@ -75,13 +99,14 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
         <motion.div className='taskdetail-container'
             animate ={{'type' : 'tween' , duration : 0.5 }}
         >
+            {!showAllTasks && 
          <Container className='task-container'>
 
             <div className='task-top'>
                 <div>
                 <span><img src = {pin} alt = "pin" /></span>
                 <p>Note | </p>
-                <span><img src = {back} alt = "back" onClick={() => setShowTask(false)}/></span>
+                <span><img src = {back} alt = "back" onClick={() => handleShowTask()}/></span>
                 <span><img src= {upload} alt = "upload" /></span>
                 </div>
 
@@ -94,7 +119,8 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
             </div>
             <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
 
-            {showTask && <Task type = {type} currentCardType = {currentCardType} setShowTask = {setShowTask} />}
+
+            {showTask && <Task type = {type} quadrant = {quadrant} setShowTask = {setShowTask} />}
 
             {!showTask && 
 
@@ -129,10 +155,14 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
                         <img src = {board} alt = "board" />
                         <p>Board annotation</p>
                     </div>
+                    <div className='show-all-tasks'>
+                        <button type = "submit" onClick={handleShowAllTasks} >Show All Tasks</button>
+                    </div>
                 </div>
             </div>
 
             }
+
 
             <div className='task-bottom'>
                 <div>
@@ -143,6 +173,21 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , curren
             </div>
             
         </Container>   
+        }
+
+        {showAllTasks && 
+        
+            <Container>
+
+                <div>
+                    <img src = {back} onClick={handleShowAllTasks} />
+                </div>
+
+                <div>
+                    <TaskList />
+                </div>
+            </Container>
+        }
         </motion.div>
         }   
     </div>

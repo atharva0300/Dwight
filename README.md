@@ -39,7 +39,7 @@ more...
 - [ ] 7. bug: Sign in/Sign up button when clicked, styling gets glitched
 - [ ] 8. Saving the versions of the project when the save button is clicked and moving back to previous verisons of the project
 - [ ] 9. Zoom in/Zoom out 
-- [ ] 10. Creating a list of all the current tasks in the tasklist -> on selecting a task -> should be able to update the task and then save it again -> with changes reflected in the store and in the database
+- [X] 10. Creating a list of all the current tasks in the tasklist -> on selecting a task -> should be able to update the task and then save it again -> with changes reflected in the store and in the database
 - [X] 11. UI and styling all the components
 - [ ] 12. On reloading the user should not get signed out, imply a session storage or something
 - [ ] 13. Feature for multiple users to work on multiple projects

@@ -33,7 +33,7 @@ const Matrix = () => {
     let [displayCard , setDisplayCard] = useState("")
     let [showDisplayCard  , setShowDisplayCard] = useState(false)
     let [moveXDistance , setXDistance] = useState({})
-    let [currentCardType , setCurrentCardType] = useState()    
+    let [quadrant , setQuadrant] = useState()    
 
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const Matrix = () => {
 
     const handleCardDetails = (cardType) => {
         console.log('cardType : ' , cardType)
-        setCurrentCardType(cardType)
+        setQuadrant(cardType)
         switch(cardType){
             case 'one' :dispatch(cardOneToggle()) 
                         console.log('cardOne toggled')
@@ -140,8 +140,7 @@ const Matrix = () => {
 
 
     </motion.div>
-            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} currentCardType = {currentCardType} />}
-            <button onClick={createComponent} >Click to create a component</button>
+            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} quadrant = {quadrant} />}
     </div>
   )
 }

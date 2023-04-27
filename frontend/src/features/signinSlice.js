@@ -4,7 +4,7 @@ import {SigninReducer} from './reducers/SigninReducer';
 
 
 const initialValue = {
-    signed : true,
+    signed : false,
     // temporarily keeing signed to true while development
 }
 

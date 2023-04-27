@@ -18,3 +18,13 @@ export const addTask = createAsyncThunk(
         return response?.data
     }
 )
+
+export const getAllTasks = createAsyncThunk(
+    'taskSlice/getAllTasks' , async (taskData) => {
+        console.log('taskData : ' , taskData)
+        const url = BASE_URL + 'tasklist/'
+        const response = await axios.get(url , taskData)
+        console.log(response.data)
+        return response?.data
+    }
+)

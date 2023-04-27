@@ -700,3 +700,14 @@
 .user-settings > div > p{
   margin-top : 12px;
 }
+
+.show-all-tasks{
+  margin-left : 60px;
+  margin-top : 10px;
+}
+
+.show-all-tasks > button {
+  border-radius : 5px;
+  background : fuchsia;
+  color : white;
+}
