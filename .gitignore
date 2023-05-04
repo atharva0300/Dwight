@@ -1,2 +1,5 @@
-/myenv
+# virtual environment
+myenv
+
+# secret file
 .env
