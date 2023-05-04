@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
 
 
 
 const initialValue = {
+    uuid : '',
     quadrant : '',
     type : '',
     content : '',
@@ -65,6 +66,9 @@ const taskSlice = createSlice({
                 state.allTasks = state.allTasks.concat(item)
 
             }
+        })
+        .addCase(deleteTask.fulfilled , (state  , action) => {
+            console.log('task deletion successfull')
         })
     }
 })

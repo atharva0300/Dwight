@@ -31,14 +31,13 @@ export const getAllTasks = createAsyncThunk(
     }
 )
 
-/*
-export const getAllOneTasks = createAsyncThunk(
-    'taskSlice/getAllTasks' , async (taskData) => {
-        console.log('taskData : ' , taskData)
-        const url = BASE_URL + 'tasklist/'
-        const response = await axios.get(url , taskData)
+export const deleteTask = createAsyncThunk(
+    'taskSlice/deleteTask' , async (item) => {
+        let uuid = item['uuid']
+        const url = BASE_URL + `deletetask?uuid=${uuid}`
+        console.log('url : ' , url)
+        const response = await axios.get(url)
         console.log(response.data)
-        return response?.data
+        return response?.data   
     }
 )
-*/

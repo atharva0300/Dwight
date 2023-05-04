@@ -735,7 +735,7 @@
 .tasklist-outer{
   height : 730px;
   width : 300px;
-  background : white;
+  background : lightcyan;
   /* blue color temporarily set */
   border-radius: 5px;
   margin-top : 5px;
@@ -747,9 +747,10 @@
 }
 
 .tasklist-item{
-  height : 80px;
+  height : 115px;
   width : 500px;
-  background : fuchsia;
+  background : white;
+  border : solid black 2px;
   margin-top : 10px;
   border-radius : 5px;
   display: flex;
@@ -771,33 +772,42 @@
   
 }
 
-.tasklist-item:hover{
-  border-radius : 5px;
-  background: lightblue;
-  border-width : 5px;
-  border : solid black 1px;
-  display : flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: flex-start;
-}
-
-.tasklist-item > p:first-child:hover{
-  margin-top : 5px;
-}
-
-.tasklist-item > p:nth-child(2):hover{
-  margin-top : -5px;
-}
-
-.tasklist-item > p:hover{
-  margin-left : 10px;
-}
-
 
 .tasklist-empty{
   font-family: 'IBM Plex Mono', monospace;
   margin-top :10px;
   margin-left : -5px;
-  color : balck;
+  color : black;
+}
+
+.tasklist-icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width : 100px;
+  height : 45px;
+  align-self: flex-end;
+  margin-top : -20px;
+  margin-right : 20px;
+}
+
+.tasklist-icons > div{
+  display : flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height : 40px;
+  width : 40px;
+}
+
+.tasklist-icons > div:hover{
+  background: lightblue;
+  border-radius: 5px;
+  width : 40px;
+  height : 40px;
+  display : flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

@@ -13,6 +13,66 @@ After you’ve drawn your Eisenhower Matrix, you will have four empty boxes, two
 **3. Third Quadrant (lower left): not important, but urgent**<br/>
 **4. Fourth Quadrant (lower right): neither important nor urgent**<br/>
 
+## Installation Guide 
+1. First download the code using the .zip download or if you have git installed then : 
+    - Check if you have git installed
+        ```
+        $ git --version
+        ```
+
+        if the output gives a version, then proceed with the next step of cloning the github repo
+        ```
+        $ git clone https://github.com/atharva0300/Dwight
+        $ cd Dwight
+        ```
+2. Setup the virtual environment
+    - To create a virtual environment, run the following 
+    ```
+    $ python3 -m venv myenv
+    $ source myenv/bin/activate
+    ```
+
+3. Install the dependencies from the requirements.txt file 
+    ```
+    $ pip install -r requirements.txt
+    ```
+
+4. Create a .env file in the /backend directory of the project and initialize the Django secret key 
+    ```
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = 'YOUR DJANGO SECRET KEY GOES HERE'
+
+    ```
+
+5. Initialize your databases, make migrations and start the Django server 
+    ```
+    $ cd backend 
+    $ python manage.py makemigrations
+    $ python maange.py migrate
+    ```
+
+    - After the migrations have been successfully made, run the server 
+    ```
+    $ cd ..
+    $ python manage.py 
+
+    # NOTE : The manage.py file is inside the root directory of the project and not in the backend/ directory. So change the directory location before you run the server, else you may get the error - 'manage.py file not found' 
+    ```
+
+6. Installing the dependencies of the frontend
+    ```
+    $ cd frontend
+    $ npm install 
+    ```
+
+7. After successfull installation of the node_modules, start the react application
+    ```
+    $ npm start
+    ```
+
+8. The frontend application will run on the url : ``` http://localhost:3000 ```
+9. The Django server will run on the url : ``` http://localhost:8000 ```
+
 ## Technologies used 
 - [X] Reactjs 
 - [X] Redux Toolkit/Redux
@@ -152,6 +212,11 @@ Django is a Python framework that follows models-templates-view architecture. He
 - [ ] 14. bug: card one and card two notes get behind card three and card four -> should be on the top of them
 - [X] 15. Remove the venv from the repo and hide the sercret key. Create a requirements.txt file
 - [X] 16. Use Authentication provided by Django
+- [X] 17. Updation and Deletion of the Task
+- [ ] 17. On Task deletion, the taskList does not get rendered
+- [ ] 18. On Task deletion, delete the note that is attached to that task
+
+
 
 
 

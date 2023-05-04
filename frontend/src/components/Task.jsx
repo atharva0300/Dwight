@@ -11,6 +11,8 @@ import { setShowTask } from '../features/taskSlice'
 // importing task thunk
 import { addTask } from '../features/thunks/TaskThunk'
 
+import {v4 as uuid } from 'uuid'
+
 
 
 const Task = ({type , quadrant , setShowTask }) => {
@@ -43,7 +45,12 @@ const Task = ({type , quadrant , setShowTask }) => {
 
     const handleTaskSubmit = () => {
 
+        // creating a uuid
+        const unique_uuid = uuid()
+
+
         const task = {
+            uuid : unique_uuid,
             quadrant : quadrant,
             type : currentType,
             content : currentContent
