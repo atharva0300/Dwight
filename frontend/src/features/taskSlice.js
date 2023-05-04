@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks , deleteTask , getSingleTask} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
 
@@ -82,6 +82,10 @@ const taskSlice = createSlice({
             
             console.log('action.payload : ' , action.payload)
             console.log('content : ' , state.content)
+        })
+        .addCase(updateTask.fulfilled , (state , action) => {
+            console.log('tasks updated successfully')
+
         })
     }
 })

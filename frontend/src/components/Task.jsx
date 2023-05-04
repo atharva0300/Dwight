@@ -22,6 +22,9 @@ const Task = ({setShowTask }) => {
     let currentUUID = useSelector((state) => state.tasks.uuid)
     let currentContent = useSelector((state) => state.tasks.content)
 
+    console.log('currentCOntent : ' , currentContent)
+
+
     // useSelector hooks 
     let type = useSelector((state) => state.tasks.type)
     let quadrant = useSelector((state) => state.tasks.quadrant)
@@ -46,17 +49,13 @@ const Task = ({setShowTask }) => {
             console.log('currentType : ' , currentType)
         }
 
-    }, [type])
+        setTargetContent(currentContent)
+        console.log('target Ccontent : ' , targetContent)
+        console.log('updateTaskBoolean : ' , updateTaskBoolean)
 
-    useEffect(() => {
-        if(updateTaskBoolean===true){
-            // 1. fill the contents of the quadrant, type and the previous content in the form 
-            // 2. Change the create Task button to Update Task
-            console.log('update is true')
 
-            setTargetContent(currentContent)
-        }
-    }, [])
+    } )
+
 
     const setContentHandle = (e) =>{
         setTargetContent(e.target.value)

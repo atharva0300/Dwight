@@ -215,6 +215,7 @@ Django is a Python framework that follows models-templates-view architecture. He
 - [X] 17. Updation and Deletion of the Task
 - [ ] 17. On Task deletion, the taskList does not get rendered
 - [ ] 18. On Task deletion, delete the note that is attached to that task
+- [ ] 19. bug: The updateTaskBoolean value does not get updated before the Task.jsx renders, which gives a false value. It should instead give true
 
 
 

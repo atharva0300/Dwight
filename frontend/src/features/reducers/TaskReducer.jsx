@@ -12,9 +12,10 @@ export const TaskReducer = {
         state.showAllTasks = !state.showAllTasks
     },
 
-    setUpdateTask : (state) => {
+    setUpdateTask : (state , action) => {
         console.log('inside updateTask')
-        state.updateTask = !state.updateTask
+        state.updateTask = action.payload
+        console.log('state.updateTask : ' , state.updateTask)
     },
 
     setQuadrant : (state , action ) => {

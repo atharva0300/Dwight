@@ -54,7 +54,11 @@ export const getSingleTask = createAsyncThunk(
 )
 
 export const updateTask = createAsyncThunk(
-    'taskSlice/updateTask' , async (item) => {
-        
+    'taskSlice/updateTask' , async (taskData) => {
+        console.log('taskData : ' , taskData)
+        const url = BASE_URL + 'updatetask'
+        const response = await axios.post(url , taskData)
+        console.log(response.data)
+        return response?.data
     }
 )

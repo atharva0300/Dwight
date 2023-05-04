@@ -187,3 +187,24 @@ class UpdateTask(APIView) :
         serializer = TaskSerializer(task , many = True)
 
         return Response({'taskDetails' : serializer.data})
+
+
+    def post(self , request , format = None) : 
+        # deseraizliing the object 
+        item = dict(request.data)
+        print('item : ' , item)
+
+
+        # creating a sreializer instance 
+        serializer = TaskSerializer(data = item)
+
+        """
+        if serializer.is_valid() : 
+            # serializer is valid
+            print('serializer is valid') 
+            serializer.save()
+            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
+        
+        """
+        # if the serializer is not valid 
+        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)

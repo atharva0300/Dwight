@@ -20,6 +20,8 @@ const TaskList = () => {
     let taskList = useSelector((state) => state.tasks.allTasks)
     let [taskListEmpty, setTaskListisEmpty] = useState(0)
 
+    let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -32,7 +34,7 @@ const TaskList = () => {
     } , [taskList])
 
 
-    const updateTaskHandler = (uuid) => {
+    const updateTaskHandler = async (uuid) => {
       console.log('update task handler')
 
       // 1. send a get request to the updatetask endpoint 
@@ -44,7 +46,8 @@ const TaskList = () => {
       dispatch(getSingleTask({'uuid' : uuid}))
 
       dispatch(setShowAllTasks())
-      dispatch(setUpdateTask())
+      await dispatch(setUpdateTask(true))
+      console.log('updateTaskBoolean : ' , updateTaskBoolean )
 
     }
 
