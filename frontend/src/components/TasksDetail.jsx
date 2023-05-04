@@ -77,7 +77,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
 
     const handleShowTask = () => {
         console.log('handling show task')
-        if(showTask==true){
+        if(showTask===true){
             dispatch(setShowTask())
         }
         
@@ -88,7 +88,11 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
         
         dispatch(setShowTask())
         dispatch(setShowAllTasks())
-        let response = await dispatch(getAllTasks())
+        
+        // mentioning which quadrant's data do we want
+        let item = {'quadrant' : quadrant}
+
+        let response = await dispatch(getAllTasks(item))
         console.log('response : ' , response)
     }
 
@@ -179,8 +183,8 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
         
             <Container>
 
-                <div>
-                    <img src = {back} onClick={handleShowAllTasks} />
+                <div className='back-button'>
+                    <img src = {back} onClick={handleShowAllTasks} alt = "back button" style = {{'width' : '30px' , 'height' : '30px'}} />
                 </div>
 
                 <div>

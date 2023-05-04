@@ -6,5 +6,6 @@ from . import views
 urlpatterns = [
     path('register/' , views.RegisterView.as_view()),
     path('signin/' , views.SigninView.as_view()),
-    path('tasklist/' , views.TaskList.as_view())
+    path('tasklist' , views.TaskList.as_view()),
+    path('tasklist?quadrant=<quadrant>' , views.TaskList.as_view())
 ]

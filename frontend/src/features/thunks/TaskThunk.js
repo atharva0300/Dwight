@@ -12,7 +12,7 @@ const BASE_URL = 'http://127.0.0.1:8000/'
 export const addTask = createAsyncThunk(
     'taskSlice/addTask' , async (taskData) => {
         console.log('taskData : ' , taskData)
-        const url = BASE_URL + 'tasklist/'
+        const url = BASE_URL + 'tasklist'
         const response = await axios.post(url , taskData)
         console.log(response.data)
         return response?.data
@@ -20,6 +20,19 @@ export const addTask = createAsyncThunk(
 )
 
 export const getAllTasks = createAsyncThunk(
+    'taskSlice/getAllTasks' , async (item) => {
+        console.log('taskData : ' , item)
+        let quadrant = item['quadrant']
+        const url = BASE_URL + `tasklist?quadrant=${quadrant}`
+        console.log('url : ' , url)
+        const response = await axios.get(url)
+        console.log(response.data)
+        return response?.data
+    }
+)
+
+/*
+export const getAllOneTasks = createAsyncThunk(
     'taskSlice/getAllTasks' , async (taskData) => {
         console.log('taskData : ' , taskData)
         const url = BASE_URL + 'tasklist/'
@@ -28,3 +41,4 @@ export const getAllTasks = createAsyncThunk(
         return response?.data
     }
 )
+*/

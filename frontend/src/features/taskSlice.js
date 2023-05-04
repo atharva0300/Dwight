@@ -9,13 +9,15 @@ const initialValue = {
     quadrant : '',
     type : '',
     content : '',
+    contentInBrief : '',
 
     showTask : false,
     showAllTasks : false,
 
 
     // list of all the tasks
-    allTasks : []
+    allTasks : [],
+
 }
 
 
@@ -38,11 +40,27 @@ const taskSlice = createSlice({
         })
         .addCase(getAllTasks.fulfilled , (state , action) => {
             console.log('got all the tasks')
+            console.log('paylaod tasks length : ' , action.payload.allTasks.length)
+
+
+            // initializign the allTasks to empty list 
+            // otherwise duplicate tasks will be added into the list 
+            state.allTasks = []
+            
             for(let i=0;i<action.payload.allTasks.length;i++){
+
+                // creating a breif content for all the tasks 
+                console.log('the string : ' , action.payload.allTasks[i].content)
+                state.contentInBrief = action.payload.allTasks[i].content.substring(0,55) + '...'
+
+                // adding the content in brif into the allTasks
+                action.payload.allTasks[i]['contentInBrief'] = state.contentInBrief
+
+                // obtainiong the modified allTasks list
                 let item = action.payload.allTasks[i]
 
-                // appending the object in the allTasks 
-                
+                console.log('allTasks[i] : ' , item)
+
                 // appending in allTasks
                 state.allTasks = state.allTasks.concat(item)
 

@@ -115,11 +115,31 @@ class TaskList(APIView) :
         return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
 
 
+    def get_quadrant_tasks(self, quadrant) : 
+        try:
+            taskList = Task.objects.filter(quadrant = quadrant) 
+            # NOTE : filter() will return a queryset whereas get() will return a model object
+            return taskList
+        except User.DoesNotExist:
+            return False
+    
+
+
     # handling get request 
     # displaying all the tasks 
     def get(self ,request , format = None ): 
         print("Handling the get request ")
-        items = Task.objects.all()
+        item = request.GET 
+        print('item : ' , item)
+        dictItem = dict(item)
+        print('dict item : ' , dictItem)
+        quadrant = dictItem['quadrant'][0]
+        print('quadrant : ' , quadrant)
 
-        serializer = TaskSerializer(items , many= True)
+        # getting all the tasks with the quadrant value 
+        taskList = self.get_quadrant_tasks(quadrant)
+        print('taskList : ' , taskList)
+
+        serializer = TaskSerializer(taskList , many= True)
         return Response({"allTasks" : serializer.data})
+    

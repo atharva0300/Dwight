@@ -711,3 +711,93 @@
   background : fuchsia;
   color : white;
 }
+
+.back-button{
+  width : 34px;
+  height : 34px;
+  background: white;
+  display : flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top : 5px;
+
+}
+
+.back-button:hover{
+  background: lightblue;
+  border-radius: 5px;
+
+}
+
+
+
+.tasklist-outer{
+  height : 730px;
+  width : 300px;
+  background : white;
+  /* blue color temporarily set */
+  border-radius: 5px;
+  margin-top : 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+
+}
+
+.tasklist-item{
+  height : 80px;
+  width : 500px;
+  background : fuchsia;
+  margin-top : 10px;
+  border-radius : 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.tasklist-item > p:first-child{
+  margin-top : 5px;
+}
+
+.tasklist-item > p:nth-child(2){
+  margin-top : -5px;
+}
+
+.tasklist-item > p{
+  margin-left : 10px;
+  
+}
+
+.tasklist-item:hover{
+  border-radius : 5px;
+  background: lightblue;
+  border-width : 5px;
+  border : solid black 1px;
+  display : flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.tasklist-item > p:first-child:hover{
+  margin-top : 5px;
+}
+
+.tasklist-item > p:nth-child(2):hover{
+  margin-top : -5px;
+}
+
+.tasklist-item > p:hover{
+  margin-left : 10px;
+}
+
+
+.tasklist-empty{
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top :10px;
+  margin-left : -5px;
+  color : balck;
+}
