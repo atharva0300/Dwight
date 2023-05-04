@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 
 import {motion} from 'framer-motion';
@@ -23,11 +23,11 @@ import { useDispatch } from 'react-redux';
 
 // importing actions
 import { appendNote } from '../features/noteSlice';
-import { setShowTask , setShowAllTasks } from '../features/taskSlice';
+import { setShowTask , setShowAllTasks , setType } from '../features/taskSlice';
 
 import { useSelector } from 'react-redux';
 
-// importing componetns 
+// importing compinents 
 import Task from './Task';
 import TaskList from './TaskList';
 
@@ -36,7 +36,9 @@ import { getAllTasks } from '../features/thunks/TaskThunk';
 
 
 
-const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadrant }) => {
+
+
+const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
@@ -44,10 +46,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
     let showTask = useSelector((state) => state.tasks.showTask)
     let showAllTasks = useSelector((state) => state.tasks.showAllTasks)
 
-
-
-    // all useState hooks 
-    let [type , setType] = useState('')
+    let quadrant = useSelector((state) => state.tasks.quadrant)
 
     const createTask = () => {
         console.log('creating task')
@@ -64,13 +63,10 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
         console.log('allNotes : ' , allNotes)
     })
 
-    useEffect(() => {
-        console.log('type : ' , type)
-    } , [type])
     
     const handleType = (type) => {
         console.log('type : ' , type )
-        setType(type)
+        dispatch(setType(type))
         dispatch(setShowTask())
     }
 
@@ -124,7 +120,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard , quadra
             <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
 
 
-            {showTask && <Task type = {type} quadrant = {quadrant} setShowTask = {setShowTask} />}
+            {showTask && <Task setShowTask = {setShowTask} />}
 
             {!showTask && 
 

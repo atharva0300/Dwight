@@ -8,7 +8,11 @@ import edit from '../assets/edit.png'
 
 // bootstrap components
 import Container from 'react-bootstrap/esm/Container'
-import { deleteTask, getAllTasks } from '../features/thunks/TaskThunk'
+
+// importing thunks 
+import { deleteTask, getAllTasks, getSingleTask } from '../features/thunks/TaskThunk'
+import {setShowAllTasks, setUpdateTask} from '../features/taskSlice'
+
 
 const TaskList = () => {
 
@@ -25,13 +29,26 @@ const TaskList = () => {
         }else{
           setTaskListisEmpty(false)
         }
-    } , [taskList , getAllTasks ])
+    } , [taskList])
 
 
-    const updateTaskHandler = () => {
+    const updateTaskHandler = (uuid) => {
       console.log('update task handler')
 
+      // 1. send a get request to the updatetask endpoint 
+      // 2. obtain the taskDetails
+      // 3. navigate to the Task page with the modified update button 
+      // 4. send a post request to update the task
+      // 5. navigate to the taskDetail view page 
+
+      dispatch(getSingleTask({'uuid' : uuid}))
+
+      dispatch(setShowAllTasks())
+      dispatch(setUpdateTask())
+
     }
+
+
     const deleteTaskHandler = async (uuid) => {
       // deleting the task
       
@@ -61,7 +78,7 @@ const TaskList = () => {
             <p>Task Type : {item.type}</p>
             <p>Task : {item.contentInBrief}</p>
             <div className='tasklist-icons'>
-              <div onClick={updateTaskHandler}>
+              <div onClick={() => updateTaskHandler(item.uuid)}>
                 <img src = {edit} alt = "edit" />
               </div>
               <div onClick={() => deleteTaskHandler(item.uuid)}>

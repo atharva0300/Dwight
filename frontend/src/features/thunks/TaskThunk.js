@@ -41,3 +41,20 @@ export const deleteTask = createAsyncThunk(
         return response?.data   
     }
 )
+
+export const getSingleTask = createAsyncThunk(
+    'taskSlice/getSingleTask' , async(item) => {
+        let uuid = item['uuid']
+        const url = BASE_URL + `updatetask?uuid=${uuid}`
+        console.log('url : ' , url)
+        const response = await axios.get(url)
+        console.log(response.data)
+        return response?.data
+    }
+)
+
+export const updateTask = createAsyncThunk(
+    'taskSlice/updateTask' , async (item) => {
+        
+    }
+)

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // importing actions and our matrix reducer 
 import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle } from '../features/matrixSlice';
+import {setQuadrant} from '../features/taskSlice'
+
 import TasksDetail from './TasksDetail';
 
 import {motion} from 'framer-motion'
@@ -13,15 +15,6 @@ import {motion} from 'framer-motion'
 
 const Matrix = () => {
     
-    let tasks = [1,2,3]
-    let number = 3
-
-    const cardOne = useSelector((state) => state.matrix.cardOne)
-    const cardTwo = useSelector((state) => state.matrix.cardTwo)
-    const cardThree = useSelector((state) => state.matrix.cardThree)
-    const cardFour = useSelector((state) => state.matrix.cardFour)
-
-    const allCardOnes = useSelector((state) => state.notes.cardOne)
 
     const cardOneNotes = useSelector((state) => state.notes.cardOneNotes)
     const cardTwoNotes = useSelector((state) => state.notes.cardTwoNotes)
@@ -33,7 +26,7 @@ const Matrix = () => {
     let [displayCard , setDisplayCard] = useState("")
     let [showDisplayCard  , setShowDisplayCard] = useState(false)
     let [moveXDistance , setXDistance] = useState({})
-    let [quadrant , setQuadrant] = useState()    
+
 
 
     useEffect(() => {
@@ -48,15 +41,9 @@ const Matrix = () => {
         setXDistance(-100)
     }
 
-    const createComponent = (e) => {
-        console.log('creating a component')
-        console.log(e.target.childNodes)
-
-    }
-
     const handleCardDetails = (cardType) => {
         console.log('cardType : ' , cardType)
-        setQuadrant(cardType)
+        dispatch(setQuadrant(cardType))
         switch(cardType){
             case 'one' :dispatch(cardOneToggle()) 
                         console.log('cardOne toggled')
@@ -140,7 +127,7 @@ const Matrix = () => {
 
 
     </motion.div>
-            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} quadrant = {quadrant} />}
+            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} />}
     </div>
   )
 }

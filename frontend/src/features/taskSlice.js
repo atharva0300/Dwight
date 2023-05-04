@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks , deleteTask} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask , getSingleTask} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
 
@@ -14,6 +14,7 @@ const initialValue = {
 
     showTask : false,
     showAllTasks : false,
+    updateTaskBoolean : false,
 
 
     // list of all the tasks
@@ -70,6 +71,18 @@ const taskSlice = createSlice({
         .addCase(deleteTask.fulfilled , (state  , action) => {
             console.log('task deletion successfull')
         })
+        .addCase(getSingleTask.fulfilled , (state , action) => {
+            console.log('task has been found and the taskDetails have been sent')
+
+            // fill the quadrant, uuid, content here
+            state.uuid = action.payload.taskDetails[0].uuid
+            state.quadrant = action.payload.taskDetails[0].quadrant
+            state.type = action.payload.taskDetails[0].type
+            state.content = action.payload.taskDetails[0].content
+            
+            console.log('action.payload : ' , action.payload)
+            console.log('content : ' , state.content)
+        })
     }
 })
 
@@ -77,4 +90,4 @@ const taskSlice = createSlice({
 // expoerting the reducer and the actions 
 export default taskSlice.reducer
 
-export const { setShowTask , setShowAllTasks } = taskSlice.actions
+export const { setShowTask , setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent } = taskSlice.actions

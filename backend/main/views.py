@@ -163,7 +163,27 @@ class DeleteTask(APIView) :
             # obtaining the deleted task 
             # item = Task.objects.get(uuid = uuid )
             # print('deleted item : ' , item)
-            
+
             return Response({'message' : 'Task successfully deleted'})
         except : 
             return Response({'message' : 'Didnt delete the task'})
+
+
+class UpdateTask(APIView) : 
+    
+    def get(self , request, format = None ):
+        print('inside the get method of the updateTask')
+        # obtaining the get data
+        item = request.GET
+        itemDict = dict(item)
+        uuid = itemDict['uuid'][0]
+
+        # obtain the task detail of the uuid 
+        task = Task.objects.filter(uuid = uuid )
+        print('task : ' , task)
+        print('task 0 : ' , task[0])
+
+        # serialize the task 
+        serializer = TaskSerializer(task , many = True)
+
+        return Response({'taskDetails' : serializer.data})
