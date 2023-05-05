@@ -12,6 +12,7 @@ import Container from 'react-bootstrap/esm/Container'
 // importing thunks 
 import { deleteTask, getAllTasks, getSingleTask } from '../features/thunks/TaskThunk'
 import {setShowAllTasks, setUpdateTask} from '../features/taskSlice'
+import { deleteNote } from '../features/noteSlice'
 
 
 const TaskList = () => {
@@ -66,12 +67,18 @@ const TaskList = () => {
       console.log('response : ' , response)
 
       // 3. re-fetch all the tasks
-      const item = {
+      let item = {
         quadrant : quadrant
       }
       response = await dispatch(getAllTasks(item))
       console.log('response after rerendering the updated list : ' , response)
       // comment : might have to put this in the callback
+
+      item = {
+        quadrant : quadrant,
+        uuid : uuid
+      }
+      dispatch(deleteNote(item))
 
 
     }

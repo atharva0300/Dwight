@@ -213,10 +213,10 @@ Django is a Python framework that follows models-templates-view architecture. He
 - [X] 15. Remove the venv from the repo and hide the sercret key. Create a requirements.txt file
 - [X] 16. Use Authentication provided by Django
 - [X] 17. Updation and Deletion of the Task
-- [ ] 17. On Task deletion, the taskList does not get rendered
-- [ ] 18. On Task deletion, delete the note that is attached to that task
-- [ ] 19. bug: The updateTaskBoolean value does not get updated before the Task.jsx renders, which gives a false value. It should instead give true
-
+- [X] 18. On Task deletion, the taskList does not get rendered
+- [X] 19. On Task deletion, delete the note that is attached to that task
+- [X] 20. bug: The updateTaskBoolean value does not get updated before the Task.jsx renders, which gives a false value. It should instead give true
+- [ ] 21. Generate all notes when the app is started
 
 
 

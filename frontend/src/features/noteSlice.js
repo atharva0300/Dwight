@@ -6,8 +6,10 @@ let initialValue = {
         'content' : '',
         'type' : '',
         // type -> do it, schedule , delegate , eliminate
-        'card' : ''
+        'card' : '',
         // card -> one , two, three or four
+        'uuid' : ''
+        // unique uuid for the note 
     },
     cardOneNotes : [] ,
     cardTwoNotes : [],
@@ -25,4 +27,4 @@ const noteSlice = createSlice({
 // exporting 
 export default noteSlice.reducer
 
-export const {appendNote , appendCardOneNotes , appendCardTwoNotes , appendCardThreeNotes , appendCardFourNotes} = noteSlice.actions
+export const {appendNote , appendCardOneNotes , appendCardTwoNotes , appendCardThreeNotes , appendCardFourNotes , deleteNote} = noteSlice.actions
