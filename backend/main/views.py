@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import generics
 
 from django.http import Http404
 
@@ -93,11 +94,11 @@ class SigninView(APIView) :
         return Response({"message" : "0"})
     
 
-class TaskList(APIView) : 
+class TaskList(generics.ListCreateAPIView) : 
     # a task list class 
 
     # handling post request 
-    def post(self,  request , format = None ): 
+    def create(self,  request , format = None ): 
         # deseraizliing the object 
         item = dict(request.data)
         print('item : ' , item)
@@ -127,7 +128,7 @@ class TaskList(APIView) :
 
     # handling get request 
     # displaying all the tasks 
-    def get(self ,request , format = None ): 
+    def list(self ,request , format = None ): 
         print("Handling the get request ")
         item = request.GET 
         print('item : ' , item)
@@ -169,8 +170,10 @@ class DeleteTask(APIView) :
             return Response({'message' : 'Didnt delete the task'})
 
 
-class UpdateTask(APIView) : 
     
+
+class UpdateTask(APIView) : 
+
     def get(self , request, format = None ):
         print('inside the get method of the updateTask')
         # obtaining the get data
@@ -190,21 +193,18 @@ class UpdateTask(APIView) :
 
 
     def post(self , request , format = None) : 
+        print("Inside teh updateTask")
         # deseraizliing the object 
         item = dict(request.data)
         print('item : ' , item)
 
 
-        # creating a sreializer instance 
-        serializer = TaskSerializer(data = item)
-
-        """
-        if serializer.is_valid() : 
-            # serializer is valid
-            print('serializer is valid') 
-            serializer.save()
-            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
-        
-        """
-        # if the serializer is not valid 
-        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
+        try : 
+            # obtain the object
+            obj = Task.objects.get(uuid = item['uuid'])
+            obj.content = item['content']
+            obj.save()
+            return Response({"message" : "Task updated successfully"})
+                 
+        except : 
+            return Response({"message" : "Task didn't update"})

@@ -32,9 +32,6 @@ const taskSlice = createSlice({
         })
         .addCase(addTask.fulfilled , (state , action) => {
             console.log('task creating fulfilled')
-            state.quadrant = action.payload.quadrant
-            state.type = action.payload.type
-            state.content = action.payload.content
             
         })
         .addCase(addTask.rejected , (state , action) => {
@@ -53,7 +50,7 @@ const taskSlice = createSlice({
 
                 // creating a breif content for all the tasks 
                 console.log('the string : ' , action.payload.allTasks[i].content)
-                state.contentInBrief = action.payload.allTasks[i].content.substring(0,55) + '...'
+                state.contentInBrief = action.payload.allTasks[i].content.substring(0,55) + ' ...'
 
                 // adding the content in brif into the allTasks
                 action.payload.allTasks[i]['contentInBrief'] = state.contentInBrief

@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux';
 
 // importing actions
 import { appendNote } from '../features/noteSlice';
-import { setShowTask , setShowAllTasks , setType } from '../features/taskSlice';
+import { setShowTask , setShowAllTasks , setType, setUpdateTask, setContent } from '../features/taskSlice';
 
 import { useSelector } from 'react-redux';
 
@@ -48,6 +48,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
     let quadrant = useSelector((state) => state.tasks.quadrant)
 
+
     const createTask = () => {
         console.log('creating task')
         // creating a temporary object 
@@ -65,14 +66,20 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
     
     const handleType = (type) => {
+        dispatch(setUpdateTask(false))
         console.log('type : ' , type )
         dispatch(setType(type))
         dispatch(setShowTask())
+        dispatch(setContent(""))
     }
 
 
     const handleShowTask = () => {
         console.log('handling show task')
+
+        // remove the contents of the task
+        dispatch(setContent(""))
+
         if(showTask===true){
             dispatch(setShowTask())
         }

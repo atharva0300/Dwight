@@ -21,6 +21,7 @@ const TaskList = () => {
     let [taskListEmpty, setTaskListisEmpty] = useState(0)
 
     let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
+    let quadrant = useSelector((state) => state.tasks.quadrant)
 
     const dispatch = useDispatch()
 
@@ -34,7 +35,7 @@ const TaskList = () => {
     } , [taskList])
 
 
-    const updateTaskHandler = async (uuid) => {
+    const updateTaskHandler = (uuid) => {
       console.log('update task handler')
 
       // 1. send a get request to the updatetask endpoint 
@@ -44,9 +45,10 @@ const TaskList = () => {
       // 5. navigate to the taskDetail view page 
 
       dispatch(getSingleTask({'uuid' : uuid}))
+      dispatch(setUpdateTask(true))
 
       dispatch(setShowAllTasks())
-      await dispatch(setUpdateTask(true))
+
       console.log('updateTaskBoolean : ' , updateTaskBoolean )
 
     }
@@ -64,8 +66,11 @@ const TaskList = () => {
       console.log('response : ' , response)
 
       // 3. re-fetch all the tasks
-      dispatch(getAllTasks())
-
+      const item = {
+        quadrant : quadrant
+      }
+      response = await dispatch(getAllTasks(item))
+      console.log('response after rerendering the updated list : ' , response)
       // comment : might have to put this in the callback
 
 
@@ -77,7 +82,6 @@ const TaskList = () => {
     {!taskListEmpty && 
         taskList.map((item) => (
         <div className='tasklist-item'>
-            <p>UUID : {item.uuid}</p>
             <p>Task Type : {item.type}</p>
             <p>Task : {item.contentInBrief}</p>
             <div className='tasklist-icons'>

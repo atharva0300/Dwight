@@ -13,9 +13,9 @@ export const TaskReducer = {
     },
 
     setUpdateTask : (state , action) => {
-        console.log('inside updateTask')
-        state.updateTask = action.payload
-        console.log('state.updateTask : ' , state.updateTask)
+        console.log('INSIDE UPDATE TASK')
+        state.updateTaskBoolean = action.payload
+        console.log('state.updateTask : ' , state.updateTaskBoolean)
     },
 
     setQuadrant : (state , action ) => {

@@ -8,7 +8,7 @@ import {setContent} from '../features/taskSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 // importing task thunk
-import { addTask } from '../features/thunks/TaskThunk'
+import { addTask, updateTask } from '../features/thunks/TaskThunk'
 
 import {v4 as uuid } from 'uuid'
 
@@ -20,10 +20,11 @@ const Task = ({setShowTask }) => {
     let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
 
     let currentUUID = useSelector((state) => state.tasks.uuid)
-    let currentContent = useSelector((state) => state.tasks.content)
+    let content = useSelector((state) => state.tasks.content)
 
-    console.log('currentCOntent : ' , currentContent)
+    console.log('content : ' , content)
 
+    let renderOnce = true
 
     // useSelector hooks 
     let type = useSelector((state) => state.tasks.type)
@@ -32,7 +33,7 @@ const Task = ({setShowTask }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(updateTaskBoolean===false){
+        if(updateTaskBoolean===false && renderOnce===true ){
             console.log('type in useEffect : ' , type)
             if(type==='0'){
                 setCurrentType('Todo')
@@ -47,9 +48,13 @@ const Task = ({setShowTask }) => {
             }
     
             console.log('currentType : ' , currentType)
+
+            // setTargetContent("")
+
+            renderOnce = false
         }
 
-        setTargetContent(currentContent)
+        // setTargetContent(currentContent)
         console.log('target Ccontent : ' , targetContent)
         console.log('updateTaskBoolean : ' , updateTaskBoolean)
 
@@ -58,6 +63,7 @@ const Task = ({setShowTask }) => {
 
 
     const setContentHandle = (e) =>{
+        console.log(e.target.value)
         setTargetContent(e.target.value)
     }
 
@@ -65,6 +71,8 @@ const Task = ({setShowTask }) => {
 
         // creating a uuid
         const unique_uuid = uuid()
+
+        console.log('target content in the task : ' , targetContent)
 
 
         const task = {
@@ -111,17 +119,17 @@ const Task = ({setShowTask }) => {
         const task = {
             uuid : currentUUID,
             quadrant : quadrant,
-            type : currentType,
+            type : type,
             content : targetContent
         }
-        
+        console.log('update task to submit : ' , task)
         console.log('handling task submit')
 
         setShowTask(false)
 
         // sending the post request 
         // invoking the updateTask thunk
-        const response = dispatch(addTask(task))
+        const response = dispatch(updateTask(task))
 
         if (response.message==='1'){
             console.log('SUCCESS')
@@ -141,12 +149,13 @@ const Task = ({setShowTask }) => {
   return (
     <Container className = "task">
         <div>
-            <h4>Type of Task : {type}</h4>
+            { !updateTaskBoolean && <h4>Type of Task : {currentType}</h4>}
+            { updateTaskBoolean && <h4>Type of Task : {type}</h4>}
             <hr />
         </div>
 
         <div>
-            <textarea style = {{"width" : "500px" , "height" : "550px" , "marginLeft" : "-90px" }} value = {targetContent} onChange = {setContentHandle} />
+            <textarea style = {{"width" : "500px" , "height" : "550px" , "marginLeft" : "-90px" }} defaultValue = {content} onChange = {setContentHandle} contentEditable = 'True' />
         </div>
         
         { !updateTaskBoolean && <button type = "submit" onClick={handleTaskSubmit}>Create Task</button>}
