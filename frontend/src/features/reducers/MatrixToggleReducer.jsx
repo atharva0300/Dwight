@@ -28,5 +28,14 @@ export const MatrixToggleReducer = {
         state.cardTwo.display = false
         state.cardThree.display = false
         state.cardFour.display = !state.cardFour
-    }
+    },
+    
+    setDisplayCardText : (state , action) => {
+        state.displayCardText = action.payload
+    },
+    
+    setShowDisplayCard : (state , action) => {
+        console.log('action.payload : ' , action.payload)
+        state.showDisplayCard = action.payload
+    } 
 }

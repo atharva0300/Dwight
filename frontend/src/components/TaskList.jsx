@@ -11,7 +11,7 @@ import Container from 'react-bootstrap/esm/Container'
 
 // importing thunks 
 import { deleteTask, getAllTasks, getSingleTask } from '../features/thunks/TaskThunk'
-import {setShowAllTasks, setUpdateTask} from '../features/taskSlice'
+import {setShowAllTasks, setTaskListisEmpty, setUpdateTask} from '../features/taskSlice'
 import { deleteNote } from '../features/noteSlice'
 
 
@@ -19,7 +19,7 @@ const TaskList = () => {
 
     // get a list of all the tasks
     let taskList = useSelector((state) => state.tasks.allTasks)
-    let [taskListEmpty, setTaskListisEmpty] = useState(0)
+    let taskListEmpty = useSelector((state) => state.tasks.taskListEmpty)
 
     let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
     let quadrant = useSelector((state) => state.tasks.quadrant)
@@ -29,9 +29,9 @@ const TaskList = () => {
     useEffect(() => {
         console.log('taskList : ' , taskList)
         if(taskList.length===0){
-          setTaskListisEmpty(true)
+          dispatch(setTaskListisEmpty(true))
         }else{
-          setTaskListisEmpty(false)
+          dispatch(setTaskListisEmpty(false))
         }
     } , [taskList])
 
@@ -88,7 +88,7 @@ const TaskList = () => {
     <Container className='tasklist-outer'>
     {!taskListEmpty && 
         taskList.map((item) => (
-        <div className='tasklist-item'>
+        <div className='tasklist-item' key = {item.uuid}>
             <p>Task Type : {item.type}</p>
             <p>Task : {item.contentInBrief}</p>
             <div className='tasklist-icons'>

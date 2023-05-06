@@ -1,14 +1,12 @@
 import React, { useContext, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // importing actions 
-import {signinFail } from '../features/signinSlice'
 import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router'
 
 const UserSettings = () => {
     const showUserSettings = useSelector((state) => state.user.showUserSettings)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     let {logoutUser} = useContext(AuthContext)

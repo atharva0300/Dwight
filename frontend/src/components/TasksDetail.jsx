@@ -33,19 +33,21 @@ import TaskList from './TaskList';
 
 // importing thunks 
 import { getAllTasks } from '../features/thunks/TaskThunk';
+import { setShowDisplayCard } from '../features/matrixSlice';
 
 
 
 
 
-const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
+const TasksDetail = () => {
 
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
     let allNotes = useSelector((state) => state.notes.allNotes)
     let showTask = useSelector((state) => state.tasks.showTask)
     let showAllTasks = useSelector((state) => state.tasks.showAllTasks)
-
+    let displayCardText = useSelector((state) => state.matrix.displayCardText)
+    let showDisplayCard = useSelector((state) => state.matrix.showDisplayCard)
     let quadrant = useSelector((state) => state.tasks.quadrant)
 
 
@@ -121,7 +123,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
                 <span><img src = {author} alt = "author" /></span>
                 <p> | </p>
                 <span><img src = {enlarge} alt = "enlarge" /></span>
-                <span onClick={() => setShowDisplayCard(false)}><img src = {close} alt = "close" /></span>
+                <span onClick={() => dispatch(setShowDisplayCard(false))}><img src = {close} alt = "close" /></span>
                 </div>
             </div>
             <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
@@ -133,7 +135,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
 
             <div className='task-middle'>
                 <div>
-                    <h2>{displayCard}</h2>
+                    <h2>{displayCardText}</h2>
                 </div>
                 <div onClick={createTask}>
                     <span><img src = {plus} alt = "plus" /></span>

@@ -2,16 +2,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import matrixReducer from './features/matrixSlice';
-import signinReducer from './features/signinSlice';
 import noteReducer from './features/noteSlice';
 import userReducer from './features/userSlice';
 import taskReducer from './features/taskSlice';
+import SigninReducer from './features/signinSlice';
 
 
 const store = configureStore({
     reducer : {
+        signin : SigninReducer,
         matrix : matrixReducer,
-        signin : signinReducer,
         notes : noteReducer,
         user : userReducer, 
         tasks : taskReducer

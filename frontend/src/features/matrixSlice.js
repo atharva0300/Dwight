@@ -16,7 +16,10 @@ const initialValue = {
     },
     cardFour : {
         'display' : false,
-    }
+    },
+
+    displayCardText : "",
+    showDisplayCard : false,
 }
 
 export const matrixSlice = createSlice({
@@ -27,7 +30,7 @@ export const matrixSlice = createSlice({
 
 
 // exporting actions and reducer
-export const {cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle } = matrixSlice.actions
+export const {cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle, setDisplayCardText , setShowDisplayCard } = matrixSlice.actions
 
 export default matrixSlice.reducer
 

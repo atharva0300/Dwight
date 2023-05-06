@@ -16,6 +16,8 @@ const initialValue = {
     showAllTasks : false,
     updateTaskBoolean : false,
 
+    taskListEmpty : false,
+
 
     // list of all the tasks
     allTasks : [],
@@ -91,4 +93,4 @@ const taskSlice = createSlice({
 // expoerting the reducer and the actions 
 export default taskSlice.reducer
 
-export const { setShowTask , setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent } = taskSlice.actions
+export const { setShowTask , setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent , setTaskListisEmpty } = taskSlice.actions

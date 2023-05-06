@@ -5,7 +5,7 @@ import Note from './Note';
 import { useDispatch, useSelector } from 'react-redux';
 
 // importing actions and our matrix reducer 
-import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle } from '../features/matrixSlice';
+import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle, setDisplayCardText, setShowDisplayCard } from '../features/matrixSlice';
 import {setQuadrant} from '../features/taskSlice'
 
 import TasksDetail from './TasksDetail';
@@ -20,11 +20,10 @@ const Matrix = () => {
     const cardTwoNotes = useSelector((state) => state.notes.cardTwoNotes)
     const cardThreeNotes = useSelector((state) => state.notes.cardThreeNotes)
     const cardFourNotes = useSelector((state) => state.notes.cardFourNotes)
+    let showDisplayCard = useSelector((state) => state.matrix.showDisplayCard)
 
     const dispatch = useDispatch()
 
-    let [displayCard , setDisplayCard] = useState("")
-    let [showDisplayCard  , setShowDisplayCard] = useState(false)
     let [moveXDistance , setXDistance] = useState({})
 
 
@@ -37,7 +36,7 @@ const Matrix = () => {
 
 
     const handleDistance = () => {
-        setShowDisplayCard(true)
+        dispatch(setShowDisplayCard(true))
         setXDistance(-100)
     }
 
@@ -47,23 +46,23 @@ const Matrix = () => {
         switch(cardType){
             case 'one' :dispatch(cardOneToggle()) 
                         console.log('cardOne toggled')
-                        setDisplayCard('Do First')
+                        dispatch(setDisplayCardText("Do First"))
                         break
 
             case 'two' :dispatch(cardTwoToggle())
                         console.log('cardTwo toggled')
-                        setDisplayCard('Schedule')
+                        dispatch(setDisplayCardText('Schedule'))
                         break
 
             case 'three' :  dispatch(cardThreeToggle())
                             console.log('cardThree toggled')
-                            setDisplayCard('Delegate')
+                            dispatch(setDisplayCardText('Delegate'))
                             break
 
 
             case 'four':dispatch(cardFourToggle())
                         console.log('cardFour toggled')
-                        setDisplayCard("Don't Do")
+                        dispatch(setDisplayCardText("Don't Do"))
                         break
 
 
@@ -127,7 +126,7 @@ const Matrix = () => {
 
 
     </motion.div>
-            {showDisplayCard && <TasksDetail displayCard = {displayCard} showDisplayCard = {showDisplayCard} setShowDisplayCard = {setShowDisplayCard} />}
+            {showDisplayCard && <TasksDetail />}
     </div>
   )
 }

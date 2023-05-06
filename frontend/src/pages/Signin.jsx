@@ -13,18 +13,16 @@ import {
 }
 from 'mdb-react-ui-kit';
 
-import axios from 'axios';
-import SignupPopup from '../components/SignupPopup';
-import SigninPopup from '../components/SigninPopup';
+import SignupPopup from '../components/popups/SignupPopup';
+import SigninPopup from '../components/popups/SigninPopup';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { signinSuccess , signinFail } from '../features/signinSlice';
 
 // importing thunk
-import { loginUser, registerUser } from '../features/thunks/RegisterThunk';
+import { registerUser } from '../features/thunks/RegisterThunk';
 
-import store from '../store'
 import AuthContext from '../context/AuthContext';
+import {signUpOne, signUpThree, signUpTwo } from '../features/signinSlice';
 
 
 function Signin() {
@@ -35,12 +33,9 @@ function Signin() {
   let [name, setName] = useState()
   let [username , setUsername] = useState()
   let [registered , setRegistered] = useState(false)
-  let [showSignupPopup , setShowSignupPopup] = useState(false)
-  let [showSigninPopup , setShowSigninPopup] = useState(false)
-  let [showDuplicatePopup , setShowDuplicatePopup] = useState(false)
 
-  let [showSuccessDiv , setShowSuccessDiv] = useState(false)
-  let [showErrorDiv , setShowErrorDiv] = useState(false)
+  let showSignupPopup = useSelector((state) => state.signin.showSignupPopup)
+  let showSigninPopup = useSelector((state) => state.signin.showSigninPopup)
 
   const dispatch = useDispatch()
 
@@ -65,35 +60,6 @@ function Signin() {
 
   const handleSignin = async (e) => {
     e.preventDefault()
-    /*
-    //making a post request to the django server
-    let item = {
-        "email" : email,
-        "password" : password
-    }
-    console.log(item)
-
-    // dispatching the loginUser thunk
-    let data = await store.dispatch(loginUser({email  , password }))
-    console.log('data : ' , data)
-    const message = data.payload.message
-    console.log('message : ' , message)
-
-    if(message==='1'){
-      console.log("signed set to true")    
-      dispatch(signinSuccess())     
-
-    }else if(message==='0'){  
-      console.log("signed set to false")
-      setShowSigninPopup(true)
-
-      // clearing out the contents of the form
-      setEmail("")
-      setPassword("")
-
-      dispatch(signinFail())
-    }
-    */
     let item = {
       'username' : username,
       'password' : password
@@ -120,25 +86,18 @@ function Signin() {
     if(message==='1'){
       setRegistered(true)
       // show the signin page again
-      setShowSignupPopup(true)
       handleJustifyClick('tab1')
-      setShowSuccessDiv(true)
-      setShowErrorDiv(false)
+      dispatch(signUpOne())
 
 
     }else if(message==='2'){
       setRegistered(false)
       // show error and ask to try
-      setShowSignupPopup(false)
+      dispatch(signUpTwo())
       
     }else if(message==='3'){
       // duplicate entry
-      setShowErrorDiv(false)
-      setShowSigninPopup(false)
-      setShowSuccessDiv(false)
-      setShowDuplicatePopup(true)
-      setShowSignupPopup(true)
-      console.log("shoeErrorDiv" , showErrorDiv)
+      dispatch(signUpThree())
       console.log('duplicate entry found')
 
       // change the tab
@@ -244,8 +203,8 @@ function Signin() {
 
       </MDBTabsContent>
 
-      {showSignupPopup && <SignupPopup showSuccessDiv = {showSuccessDiv}  setShowSuccessDiv = {setShowSuccessDiv} showErrorDiv = {showErrorDiv} setShowErrorDiv = {setShowErrorDiv} showDuplicatePopup = {showDuplicatePopup} setShowDuplicatePopup = {setShowDuplicatePopup} />}
-      {showSigninPopup && <SigninPopup showSigninPopup = {showSigninPopup} setShowSigninPopup = {setShowSigninPopup}   />}
+      {showSignupPopup && <SignupPopup />}
+      {showSigninPopup && <SigninPopup />}
 
     </MDBContainer>
   );

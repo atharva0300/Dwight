@@ -34,6 +34,10 @@ export const TaskReducer = {
         console.log('setting the content')
         state.content = action.payload
         console.log('state.content : ' , state.content)
+    },
+
+    setTaskListisEmpty : (state , action) => {
+        state.taskListEmpty = action.payload
     }
 
     
