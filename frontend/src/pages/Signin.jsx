@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   MDBContainer,
   MDBTabs,
@@ -24,6 +24,7 @@ import { signinSuccess , signinFail } from '../features/signinSlice';
 import { loginUser, registerUser } from '../features/thunks/RegisterThunk';
 
 import store from '../store'
+import AuthContext from '../context/AuthContext';
 
 
 function Signin() {
@@ -43,6 +44,7 @@ function Signin() {
 
   const dispatch = useDispatch()
 
+  let {loginUser} = useContext(AuthContext)
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -52,8 +54,8 @@ function Signin() {
     setJustifyActive(value);
   };
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value)
+  const handleUsername = (e) => {
+    setUsername(e.target.value)
   }
 
   const handlePassword = (e) => {
@@ -62,6 +64,8 @@ function Signin() {
 
 
   const handleSignin = async (e) => {
+    e.preventDefault()
+    /*
     //making a post request to the django server
     let item = {
         "email" : email,
@@ -89,6 +93,13 @@ function Signin() {
 
       dispatch(signinFail())
     }
+    */
+    let item = {
+      'username' : username,
+      'password' : password
+    }
+
+    await loginUser(item)
   }
   
 
@@ -179,7 +190,7 @@ function Signin() {
             <p className="text-center mt-3">or:</p>
           </div>
 
-          <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' onChange = {handleEmail} value = {email}  />
+          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='email' onChange = {handleUsername} value = {username}  />
           <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange = {handlePassword} value = {password} />
 
           <div className="d-flex justify-content-between mx-4 mb-4">

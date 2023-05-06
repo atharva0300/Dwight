@@ -62,7 +62,7 @@ const TasksDetail = ({displayCard , showDisplayCard ,setShowDisplayCard }) => {
     useEffect(() => {
         console.log('displaying allNotes')
         console.log('allNotes : ' , allNotes)
-    })
+    }, [])
 
     
     const handleType = (type) => {

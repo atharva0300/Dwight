@@ -30,6 +30,9 @@ const Task = ({setShowTask }) => {
     let type = useSelector((state) => state.tasks.type)
     let quadrant = useSelector((state) => state.tasks.quadrant)
 
+    // obtaining the user from the userSlice
+    const userUUID = useSelector((state) => state.user.userUUID)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -59,7 +62,7 @@ const Task = ({setShowTask }) => {
         console.log('updateTaskBoolean : ' , updateTaskBoolean)
 
 
-    } )
+    }, [renderOnce] )
 
 
     const setContentHandle = (e) =>{
@@ -76,10 +79,11 @@ const Task = ({setShowTask }) => {
 
 
         const task = {
-            uuid : unique_uuid,
+            taskUUID : unique_uuid,
             quadrant : quadrant,
             type : currentType,
-            content : targetContent
+            content : targetContent,
+            userUUID : userUUID
         }
 
         console.log('handling task submit')

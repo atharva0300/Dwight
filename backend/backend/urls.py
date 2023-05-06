@@ -20,5 +20,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # including urls file of the app
-    path('' , include('main.urls'))
+    path('' , include('main.urls')),
+
+    # path to the api folder 
+    path('api/' , include('main.api.urls'))
+
 ]

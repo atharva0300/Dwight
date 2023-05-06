@@ -1,22 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // importing actions 
 import {signinFail } from '../features/signinSlice'
+import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router'
 
 const UserSettings = () => {
     const showUserSettings = useSelector((state) => state.user.showUserSettings)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    let {logoutUser} = useContext(AuthContext)
 
     useEffect(() => {
         console.log(showUserSettings)
     } , [showUserSettings])
 
     const handleSignout = () => {
-        console.log('hadnling signout')
-        dispatch(signinFail())
-
+      navigate("/signin")
+      logoutUser()
     }
+
 
   return (
     <div>

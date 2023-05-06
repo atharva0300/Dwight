@@ -9,10 +9,16 @@ import BottomBar from './components/BottomBar';
 import Board from './components/Board';
 
 //importing react router components 
-import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Outlet, useNavigate} from 'react-router-dom'
+import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Outlet, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
+
+// importing context 
+import AuthContext, { AuthProvider } from './context/AuthContext';
+import WhiteBoard from './pages/WhiteBoard';
+
+let firstRender = true
 
 
 function App() {
@@ -20,60 +26,53 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path = "/" element = {<Root />}>
-        <Route index path = "/signin" element = {<Signin />} />
-        <Route path="/try" element = {<Try />} />
+          <Route index path = "/signin" element = {<Signin />} />
+          <Route path="/try" exact element = {<WhiteBoard />} />
       </Route>
     )
+
   )
 
 
   return (
-    <div className = "cover">
-      <RouterProvider router = {router} />
-    </div>
+      <div className = "cover">
+        <RouterProvider router = {router} />
+      </div>
   );
-}
-
-const Try = () => {
-  // try div 
-  return(
-    <div>
-      <TopBar />
-      <SideBar />
-      <Board />
-      <BottomBar />
-    </div>
-  )
 }
 
 
 const Root = () => {
 
-  let signed = useSelector((state) => state.signin.signed)
-
   const navigate = useNavigate()
+  
+  console.log('privateRouter works')
+  let {user} = useContext(AuthContext)
+  console.log('user in the App.js : ' , user)
+
 
   useEffect(() => {
-    if(signed===false){
+    if(user===false){
       navigate("/signin")
-      console.log('signed : ' , signed)
-    }else if(signed===true){
-      console.log('signed : ' , signed)
+    }else{
+      console.log(user.username)
       navigate("/try")
     }
-  }, [signed])
+  
+  }, [user])
 
 
-  return <>
+  console.log('inside root')
+  return(
+    <>
     <div>
     </div>
-
+    
     <div>
       <Outlet />
     </div>
-    
-  </>
-
+    </>
+  )
 
 }
 

@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer) :
 class TaskSerializer(serializers.ModelSerializer) : 
     class Meta : 
         model = Task
-        fields = ('uuid' , 'quadrant' , 'type' , 'content')
+        fields = ('taskUUID' , 'quadrant' , 'type' , 'content')
     
 
     # a function to create an isntance of the serializer

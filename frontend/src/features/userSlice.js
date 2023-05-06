@@ -11,6 +11,7 @@ const initialValue = {
     status : 'idle',
     // status is idle in the beginning ( before any request has been made )
     message : "",
+    userUUID : "",
 
     showUserSettings : false
 }
@@ -37,6 +38,11 @@ export const userSlice = createSlice({
             state.username = action.payload.username
             console.log('action : ' , action)
             console.log('action.username : ' , action.payload.username)
+
+            // obtain the user key value and then store the user in the slice 
+            state.userUUID = action.payload.userUUID
+
+            console.log("logged in user : " , state.userUUID)
         })
     }
 })

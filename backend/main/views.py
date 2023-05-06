@@ -11,9 +11,15 @@ from rest_framework import generics
 
 from django.http import Http404
 
+# importing authentication classes and permission classes 
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
 
 # importing our models 
 from .models import User, Task
+
+from uuid import uuid4
 
 
 # creating a signin api 
@@ -44,7 +50,11 @@ class RegisterView(APIView) :
             # if duplicate exists
             return Response({"message" : "3"})
 
+
         serializer = UserSerializer(data = request.data)
+
+        # create a unique uuid for the registered user 
+
 
         if serializer.is_valid() : 
             # the serializer is valid 
@@ -69,9 +79,13 @@ class SigninView(APIView) :
     def get_object(self, email , password):
         try:
             temp = User.objects.get(email = email , password = password)
-            return temp.username
+            return temp.username 
         except User.DoesNotExist:
             return False
+    
+    def get_user(self, email , password ): 
+        user = User.objects.filter(email = email , password = password)
+        return user
         
 
     def get(self , request , format = None) : 
@@ -86,16 +100,18 @@ class SigninView(APIView) :
         print(password[0])
 
         username = self.get_object(email[0] , password[0])
+
         if username : 
             # get the username 
             print('username : ' , username)
-            return Response({"message" : "1" , "username"  : str(username) })
+            return Response({"message" : "1" , "username"  : str(username)})
         
         return Response({"message" : "0"})
     
 
 class TaskList(generics.ListCreateAPIView) : 
     # a task list class 
+
 
     # handling post request 
     def create(self,  request , format = None ): 
@@ -147,6 +163,7 @@ class TaskList(generics.ListCreateAPIView) :
 
 class DeleteTask(APIView) : 
 
+
     def get(self , request , format = None) : 
         print('handling the get request')
         item = request.GET
@@ -173,6 +190,7 @@ class DeleteTask(APIView) :
     
 
 class UpdateTask(APIView) : 
+
 
     def get(self , request, format = None ):
         print('inside the get method of the updateTask')

@@ -7,6 +7,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const BASE_URL = 'http://127.0.0.1:8000/'
 
+
 // register thunk
 export const registerUser = createAsyncThunk(
     'userSlice/registerUser' , async (credentials) => {

@@ -11,7 +11,7 @@ class User(models.Model) :
 
 
 class Task(models.Model) :
-    uuid = models.UUIDField(default = uuid.uuid4 ,unique = True) 
+    taskUUID = models.UUIDField(default = uuid.uuid4 ,unique = True) 
     quadrant = models.TextField(max_length=20)
     type = models.TextField(max_length=20)
     content = models.TextField(max_length=100000)
