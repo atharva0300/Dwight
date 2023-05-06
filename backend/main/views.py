@@ -112,6 +112,7 @@ class SigninView(APIView) :
 class TaskList(generics.ListCreateAPIView) : 
     # a task list class 
 
+    # permission_classes = [IsAuthenticated]
 
     # handling post request 
     def create(self,  request , format = None ): 

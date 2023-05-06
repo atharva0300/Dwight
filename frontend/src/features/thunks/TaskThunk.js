@@ -14,10 +14,21 @@ const BASE_URL = 'http://127.0.0.1:8000/'
 // task thunk
 export const addTask = createAsyncThunk(
     'taskSlice/addTask' , async (taskData) => {
+         // let {authTokens} = useContext(AuthContext)
 
         console.log('taskData : ' , taskData)
         const url = BASE_URL + 'tasklist'
-        const response = await axios.post(url , taskData  )
+        const response = axios.post(url , taskData)
+        /*
+        const response = await (url , {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer' + String(authTokens.access)
+            },
+            body : taskData
+        } )
+        */
         console.log(response.data)
         return response?.data
     }

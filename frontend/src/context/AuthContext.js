@@ -79,6 +79,10 @@ export const AuthProvider = ({children}) => {
         }else{
             logoutUser()
         }
+
+        if(loading){
+            setLoading(false)
+        }
     }
 
     let contextData = {
@@ -89,6 +93,12 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(() => {
+
+        if(loading){
+            // we still need to update the token 
+            updateToken()
+        }
+
         console.log('inside update useEffect')
         let fourMinutes = 1000 * 60 * 4
         let interval = setInterval(() => {

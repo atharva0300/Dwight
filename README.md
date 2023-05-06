@@ -218,6 +218,8 @@ Django is a Python framework that follows models-templates-view architecture. He
 - [X] 20. bug: The updateTaskBoolean value does not get updated before the Task.jsx renders, which gives a false value. It should instead give true
 - [ ] 21. Generate all notes when the app is started
 - [X] 22. Use JWT authentcation and permission classes
+- [ ] 21. Adding authorizations for using apis
+- [X] 23. bug: dosen't updateToken on loading and on signout 
 
 
 
