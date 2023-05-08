@@ -9,5 +9,6 @@ urlpatterns = [
     # path('tasklist?quadrant=<quadrant' , views.TaskList.as_view()),
     path('deletetask' , views.DeleteTask.as_view()),
     # path('deletetask' , views.DeleteTask.as_view())
-    path('updatetask' , views.UpdateTask.as_view())
+    path('updatetask' , views.UpdateTask.as_view()),
+    path('iconImage' , views.IconImage.as_view() )
 ]

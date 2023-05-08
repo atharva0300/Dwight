@@ -22,11 +22,11 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     'userSlice/loginUser' , async (credentials) => {
-        let email = credentials.email
+        let username = credentials.username
         let password = credentials.password
         console.log('signin credentials : ' , credentials)
 
-        const url = BASE_URL + 'signin/?email=' + email + '&password=' + password
+        const url = BASE_URL + 'signin/?username=' + username + '&password=' + password
         console.log('url : ' , url)
 
         const response = await axios.get(url)

@@ -9,17 +9,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // importing the store and the Provider from toolkit
 import store from './store';
 import { Provider } from 'react-redux';
-import { AuthProvider } from './context/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
       <Provider store = {store}>
         <App />
       </Provider>
-      </AuthProvider>
   </React.StrictMode>
 );
 

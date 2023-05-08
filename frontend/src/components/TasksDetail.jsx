@@ -23,17 +23,18 @@ import { useDispatch } from 'react-redux';
 
 // importing actions
 import { appendNote } from '../features/noteSlice';
-import { setShowTask , setShowAllTasks , setType, setUpdateTask, setContent } from '../features/taskSlice';
+import { setShowAllTasks , setType, setUpdateTask, setContent, setShowTaskCreation, setShowTaskUpdation, setShowTaskTypes } from '../features/taskSlice';
 
 import { useSelector } from 'react-redux';
 
 // importing compinents 
-import Task from './Task';
 import TaskList from './TaskList';
 
 // importing thunks 
-import { getAllTasks } from '../features/thunks/TaskThunk';
+import { getAllTasks, updateTask } from '../features/thunks/TaskThunk';
 import { setShowDisplayCard } from '../features/matrixSlice';
+import TaskCreation from './TaskCreation';
+import TaskUpdation from './TaskUpdation';
 
 
 
@@ -44,11 +45,14 @@ const TasksDetail = () => {
     const dispatch = useDispatch()
     let currentNote = useSelector((state) => state.notes.note)
     let allNotes = useSelector((state) => state.notes.allNotes)
-    let showTask = useSelector((state) => state.tasks.showTask)
+    let showTaskCreation = useSelector((state) => state.tasks.showTaskCreation)
+    let showTaskUpdation = useSelector((state) => state.tasks.showTaskUpdation)
+    let showTaskTypes = useSelector((state) => state.tasks.showTaskTypes)
     let showAllTasks = useSelector((state) => state.tasks.showAllTasks)
     let displayCardText = useSelector((state) => state.matrix.displayCardText)
     let showDisplayCard = useSelector((state) => state.matrix.showDisplayCard)
     let quadrant = useSelector((state) => state.tasks.quadrant)
+    let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
 
 
     const createTask = () => {
@@ -61,44 +65,48 @@ const TasksDetail = () => {
         dispatch(appendNote(item))
     }
 
-    useEffect(() => {
-        console.log('displaying allNotes')
-        console.log('allNotes : ' , allNotes)
-    }, [])
 
-    
     const handleType = (type) => {
         dispatch(setUpdateTask(false))
+        dispatch(setShowTaskTypes(false))
+        dispatch(setShowTaskCreation(true))
         console.log('type : ' , type )
         dispatch(setType(type))
-        dispatch(setShowTask())
         dispatch(setContent(""))
+
     }
 
 
-    const handleShowTask = () => {
+    const BackNavigate = () => {
         console.log('handling show task')
 
         // remove the contents of the task
         dispatch(setContent(""))
 
-        if(showTask===true){
-            dispatch(setShowTask())
+        if(showAllTasks===true){
+            dispatch(setShowAllTasks(false))
+            dispatch(setShowTaskTypes(true))
+        }else if(showTaskCreation===true){
+            dispatch(setShowTaskCreation(false))
+            dispatch(setShowTaskTypes(true))
+        }else if(showTaskUpdation===true){
+            dispatch(setShowTaskUpdation(false))
+            dispatch(setShowAllTasks(true))
         }
         
     }
 
     const handleShowAllTasks = async () => {
         console.log('handleShowAllTaskss')
-        
-        dispatch(setShowTask())
-        dispatch(setShowAllTasks())
+        dispatch(setShowTaskTypes(false))
+        dispatch(setShowAllTasks(true))
         
         // mentioning which quadrant's data do we want
         let item = {'quadrant' : quadrant}
 
         let response = await dispatch(getAllTasks(item))
         console.log('response : ' , response)
+
     }
 
 
@@ -115,7 +123,7 @@ const TasksDetail = () => {
                 <div>
                 <span><img src = {pin} alt = "pin" /></span>
                 <p>Note | </p>
-                <span><img src = {back} alt = "back" onClick={() => handleShowTask()}/></span>
+                <span><img src = {back} alt = "back" onClick={() => BackNavigate()}/></span>
                 <span><img src= {upload} alt = "upload" /></span>
                 </div>
 
@@ -126,12 +134,13 @@ const TasksDetail = () => {
                 <span onClick={() => dispatch(setShowDisplayCard(false))}><img src = {close} alt = "close" /></span>
                 </div>
             </div>
-            <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "0px"}}/>
+            <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "-70px"}}/>
 
 
-            {showTask && <Task setShowTask = {setShowTask} />}
+            {showTaskCreation && <TaskCreation setShowTaskCreation = {setShowTaskCreation} />}
+            {showTaskUpdation && updateTaskBoolean && <TaskUpdation setShowTaskUpdation={setShowTaskUpdation} /> }
 
-            {!showTask && 
+            {showTaskTypes && 
 
             <div className='task-middle'>
                 <div>
@@ -189,7 +198,7 @@ const TasksDetail = () => {
             <Container>
 
                 <div className='back-button'>
-                    <img src = {back} onClick={handleShowAllTasks} alt = "back button" style = {{'width' : '30px' , 'height' : '30px'}} />
+                    <img src = {back} onClick={BackNavigate} alt = "back button" style = {{'width' : '30px' , 'height' : '30px'}} />
                 </div>
 
                 <div>

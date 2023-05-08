@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {motion} from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,10 @@ const SignupPopup = () => {
   let showSuccessDiv = useSelector((state) => state.signin.showSuccessDiv)
   let showErrorDiv = useSelector((state) => state.signin.showErrorDiv)
   let showDuplicatePopup = useSelector((state) => state.signin.showDuplicatePopup)
+
+  useEffect(() => {
+    console.log('showDuplicated value changed ')
+  } , [showDuplicatePopup])
 
 
   const dispatch = useDispatch()

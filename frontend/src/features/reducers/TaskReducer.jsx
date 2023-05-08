@@ -1,15 +1,25 @@
 
 // TaskReducer
 export const TaskReducer = {
-    setShowTask : (state) => {
-        console.log('inside setShowTask')
-        state.showTask = !state.showTask
-        console.log('show Task : ' , state.showTask)
+    setShowTaskCreation : (state) => {
+        console.log('inside setshowTaskCreation')
+        state.showTaskCreation = !state.showTaskCreation
+        console.log('show Task : ' , state.showTaskCreation)
     },
 
-    setShowAllTasks : (state) => {
+    setShowTaskUpdation : (state) => {
+        console.log('inside the setSHowTaskUpdation')
+        state.showTaskUpdation = !state.showTaskUpdation
+        console.log('show task update : ' , state.showTaskUpdation)
+    },
+
+    setShowTaskTypes : (state , action) => {
+        state.showTaskTypes = action.payload
+    },
+
+    setShowAllTasks : (state , action) => {
         console.log('inside setShowAllTasks')
-        state.showAllTasks = !state.showAllTasks
+        state.showAllTasks = action.payload
     },
 
     setUpdateTask : (state , action) => {
@@ -38,6 +48,36 @@ export const TaskReducer = {
 
     setTaskListisEmpty : (state , action) => {
         state.taskListEmpty = action.payload
+    },
+
+    populateFields : (state , action) => {
+        console.log('populating the form fields')
+        /*
+            taskUUID : '',
+            quadrant : '',
+            type : '',
+            content : '',
+            contentInBrief : '',
+            iconPath : '',
+            attachPath : '',
+            reminder : '',
+            due : '',
+            completed : '',
+    */
+        state.due = action.payload.due
+        state.reminder = action.payload.reminder
+        state.content = action.payload.content
+        state.quadrant = action.payload.quadrant
+        state.type = action.payload.quadrant
+        state.taskUUID = action.payload.taskUUID
+        state.iconPath = action.payload.iconPath
+        state.completed = action.payload.completed
+        
+        
+    },
+
+    setFetchIcomImage : (state , action) => {
+        state.fetchIconImage = action.payload
     }
 
     

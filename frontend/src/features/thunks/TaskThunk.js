@@ -4,7 +4,6 @@ import React, { useContext, useEffect } from 'react';
 
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import AuthContext from '../../context/AuthContext';
 
 const BASE_URL = 'http://127.0.0.1:8000/'
 
@@ -14,11 +13,21 @@ const BASE_URL = 'http://127.0.0.1:8000/'
 // task thunk
 export const addTask = createAsyncThunk(
     'taskSlice/addTask' , async (taskData) => {
-         // let {authTokens} = useContext(AuthContext)
 
         console.log('taskData : ' , taskData)
         const url = BASE_URL + 'tasklist'
         const response = axios.post(url , taskData)
+
+        axios({
+            method: 'post',
+            url: url,
+            data: taskData,
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }).then((response) => {
+            console.log(response)
+            return response?.data   
+        })
+        .catch((err) => console.log(err));
         /*
         const response = await (url , {
             method : 'POST',
@@ -29,8 +38,6 @@ export const addTask = createAsyncThunk(
             body : taskData
         } )
         */
-        console.log(response.data)
-        return response?.data
     }
 )
 
@@ -50,8 +57,8 @@ export const getAllTasks = createAsyncThunk(
 export const deleteTask = createAsyncThunk(
     'taskSlice/deleteTask' , async (item) => {
         
-        let uuid = item['uuid']
-        const url = BASE_URL + `deletetask?uuid=${uuid}`
+        let taskUUID = item['taskUUID']
+        const url = BASE_URL + `deletetask?taskUUID=${taskUUID}`
         console.log('url : ' , url)
         const response = await axios.get(url)
         console.log(response.data)
@@ -60,11 +67,12 @@ export const deleteTask = createAsyncThunk(
 )
 
 export const getSingleTask = createAsyncThunk(
-    'taskSlice/getSingleTask' , async(item) => {
-        let uuid = item['uuid']
-        const url = BASE_URL + `updatetask?uuid=${uuid}`
+    'taskSlice/getSingleTask' , async (item) => {
+        console.log('inside getSingleTask thunk')
+        let taskUUID = item['taskUUID']
+        const url = BASE_URL + `updatetask?taskUUID=${taskUUID}`
         console.log('url : ' , url)
-        const response = await axios.get(url)
+        const response =  await axios.get(url)
         console.log(response.data)
         return response?.data
     }
@@ -76,6 +84,28 @@ export const updateTask = createAsyncThunk(
         const url = BASE_URL + 'updatetask'
         console.log('url : ' , url)
         const response = await axios.post(url , taskData)
+        console.log(response.data)
+        return response?.data
+    }
+)
+
+export const getIconImage = createAsyncThunk(
+    'taskSlice/getIconImage' , (iconPath) => {
+        console.log('iconPath in thunk : ' , iconPath)
+        const url = BASE_URL + `iconImage?iconPath=${iconPath}`
+        console.log('url : ' , url)
+        const response = axios.get(url)
+        console.log(response.data)
+        return response?.data
+    }
+)
+
+export const getAttachments = createAsyncThunk(
+    'taskSlice/getAttachments' , async (filePath) => {
+        console.log('filePath : ' , filePath)
+        const url = BASE_URL + `attachments?filePath=${filePath}`
+        console.log('url : ' , url)
+        const response = await axios.get(url)
         console.log(response.data)
         return response?.data
     }

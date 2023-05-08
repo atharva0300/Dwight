@@ -19,10 +19,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 // importing thunk
-import { registerUser } from '../features/thunks/RegisterThunk';
+import { loginUser, registerUser } from '../features/thunks/RegisterThunk';
 
-import AuthContext from '../context/AuthContext';
+
 import {signUpOne, signUpThree, signUpTwo } from '../features/signinSlice';
+import { setSigned } from '../features/userSlice';
 
 
 function Signin() {
@@ -37,9 +38,11 @@ function Signin() {
   let showSignupPopup = useSelector((state) => state.signin.showSignupPopup)
   let showSigninPopup = useSelector((state) => state.signin.showSigninPopup)
 
+  let showDuplicatePopup = useSelector((state) => state.signin.showDuplicatePopup)
+
   const dispatch = useDispatch()
 
-  let {loginUser} = useContext(AuthContext)
+
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -49,23 +52,23 @@ function Signin() {
     setJustifyActive(value);
   };
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value)
-  }
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value)
-  }
 
 
-  const handleSignin = async (e) => {
+  const handleSignin = (e) => {
     e.preventDefault()
     let item = {
       'username' : username,
       'password' : password
     }
 
-    await loginUser(item)
+    let response = dispatch(loginUser(item))
+    if(response){
+      dispatch(setSigned(true))
+    }else{
+      console.log('signin failed')
+      dispatch(setSigned(false))
+    }
+  
   }
   
 
@@ -98,10 +101,12 @@ function Signin() {
     }else if(message==='3'){
       // duplicate entry
       dispatch(signUpThree())
+      console.log('showDuplicatePopup : ' , showDuplicatePopup)
+      console.log('showsignup popup : ' , showSignupPopup)
       console.log('duplicate entry found')
 
       // change the tab
-      handleJustifyClick('tab1')
+      handleJustifyClick('tab2')
     }
   } 
 
@@ -149,8 +154,8 @@ function Signin() {
             <p className="text-center mt-3">or:</p>
           </div>
 
-          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='email' onChange = {handleUsername} value = {username}  />
-          <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange = {handlePassword} value = {password} />
+          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='email' onChange = {(e) => setUsername(e.target.value)} value = {username}  />
+          <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange = {(e) => setPassword(e.target.value)} value = {password} />
 
           <div className="d-flex justify-content-between mx-4 mb-4">
             <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import UserSerializer , TaskSerializer
+from .serializers import ProfileSerializer , TaskSerializer
 from rest_framework import serializers
 from rest_framework.views import APIView
 # importing APIView as we are creating class bsed function
@@ -15,9 +15,19 @@ from django.http import Http404
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+# parsers 
+from rest_framework.parsers import MultiPartParser, FormParser
+
+
+# importing admin User
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+
+import base64
+
 
 # importing our models 
-from .models import User, Task
+from .models import Profile , Task
 
 from uuid import uuid4
 
@@ -37,6 +47,9 @@ class RegisterView(APIView) :
         return True
 
     def post(self , request , format = None): 
+        """
+        1. createa user in the admin and give permissions to it
+        """
         # deserializing the request data
         # post data 
         print(request.data)
@@ -50,8 +63,14 @@ class RegisterView(APIView) :
             # if duplicate exists
             return Response({"message" : "3"})
 
+        # creating a new user in the admin 
+        user = User.objects.create_user(item['username'],  item['email'] , item['password'])
+        # normal user, no privilage given
+        user.is_staff()
+        user.save()
+        print('user.id : ' , user.id)
 
-        serializer = UserSerializer(data = request.data)
+        serializer = ProfileSerializer(data = item)
 
         # create a unique uuid for the registered user 
 
@@ -59,7 +78,7 @@ class RegisterView(APIView) :
         if serializer.is_valid() : 
             # the serializer is valid 
             serializer.save() 
-            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
+            return Response({"message" : "1" , "userID" : user.id} , status = status.HTTP_201_CREATED )
     
         # if the serialzier is not valid, then 
         return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
@@ -70,7 +89,7 @@ class RegisterView(APIView) :
         items = User.objects.all()
 
         # creating a serializer 
-        serializer = UserSerializer(items , many = True)
+        serializer = ProfileSerializer(items , many = True)
         return Response(serializer.data)
     
 
@@ -78,59 +97,63 @@ class SigninView(APIView) :
 
     def get_object(self, email , password):
         try:
-            temp = User.objects.get(email = email , password = password)
+            temp = Profile.objects.get(email = email , password = password)
             return temp.username 
-        except User.DoesNotExist:
+        except Profile.DoesNotExist:
             return False
     
     def get_user(self, email , password ): 
-        user = User.objects.filter(email = email , password = password)
+        user = Profile.objects.filter(email = email , password = password)
         return user
         
 
+    
     def get(self , request , format = None) : 
         print("Inside get request of SigninView")
         item = request.GET
         print(item)
         dictItem = dict(item)
         print(dictItem)
-        email = dictItem['email']
+        username = dictItem['username']
         password = dictItem['password']
-        print(email[0])
+        print(username[0])
         print(password[0])
 
-        username = self.get_object(email[0] , password[0])
-
-        if username : 
+        user = authenticate(username = str(username[0]) , password = str(password[0]))
+        
+        if user : 
             # get the username 
             print('username : ' , username)
-            return Response({"message" : "1" , "username"  : str(username)})
+            # obtain the user.id 
+            userID = User.objects.get(username = str(username[0])).id
+            return Response({"message" : "1" , "username"  : str(user.username) , "userID" : userID } , status = status.HTTP_200_OK)
         
-        return Response({"message" : "0"})
+        return Response({"message" : "0"} , status = status.HTTP_400_BAD_REQUEST)
+    
     
 
 class TaskList(generics.ListCreateAPIView) : 
     # a task list class 
+    parser_classes = (MultiPartParser, FormParser)
 
     # permission_classes = [IsAuthenticated]
 
     # handling post request 
     def create(self,  request , format = None ): 
-        # deseraizliing the object 
-        item = dict(request.data)
-        print('item : ' , item)
+        print('inside create task list\n')
+        item = request.data
+        # converting the duedatetime and remdatetime to django format 
+        print(item['due'])
+        print(item['reminder'])
+        print('request.data : ' , request.data)
 
-        # creating a sreializer instance 
-        serializer = TaskSerializer(data = item)
-
-        if serializer.is_valid() : 
-            # serializer is valid
-            print('serializer is valid') 
-            serializer.save()
-            return Response({"message" : "1"} , status = status.HTTP_201_CREATED )
-        
-        # if the serializer is not valid 
-        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
+        task_serializer = TaskSerializer(data=request.data)
+        if task_serializer.is_valid():
+            task_serializer.save()
+            return Response(task_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', task_serializer.errors)
+            return Response(task_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
     def get_quadrant_tasks(self, quadrant) : 
@@ -146,7 +169,7 @@ class TaskList(generics.ListCreateAPIView) :
     # handling get request 
     # displaying all the tasks 
     def list(self ,request , format = None ): 
-        print("Handling the get request ")
+        print("inside list task list\n ")
         item = request.GET 
         print('item : ' , item)
         dictItem = dict(item)
@@ -166,18 +189,18 @@ class DeleteTask(APIView) :
 
 
     def get(self , request , format = None) : 
-        print('handling the get request')
+        print('inside get of deletettask')
         item = request.GET
         print('item : ' , item)
         dictItem = dict(item)
         print('dictItem : ' , dictItem)
 
-        uuid = dictItem['uuid'][0]
-        print('uuid : ' , uuid)
+        taskUUID = dictItem['taskUUID'][0]
+        print('taskUUID : ' , taskUUID)
 
         try : 
             # deleting the task with the received uuid 
-            Task.objects.all().filter(uuid = uuid).delete()
+            Task.objects.all().filter(taskUUID = taskUUID).delete()
             print('task deleted')
             # obtaining the deleted task 
             # item = Task.objects.get(uuid = uuid )
@@ -195,18 +218,14 @@ class UpdateTask(APIView) :
 
     def get(self , request, format = None ):
         print('inside the get method of the updateTask')
-        # obtaining the get data
-        item = request.GET
-        itemDict = dict(item)
-        uuid = itemDict['uuid'][0]
+        item  =request.GET 
+        dictItem = dict(item)
+        print(dictItem)
 
-        # obtain the task detail of the uuid 
-        task = Task.objects.filter(uuid = uuid )
-        print('task : ' , task)
-        print('task 0 : ' , task[0])
-
+        task = Task.objects.filter(taskUUID = request.GET['taskUUID'])
         # serialize the task 
         serializer = TaskSerializer(task , many = True)
+        print('serializer.data : ' , serializer.data)
 
         return Response({'taskDetails' : serializer.data})
 
@@ -227,3 +246,14 @@ class UpdateTask(APIView) :
                  
         except : 
             return Response({"message" : "Task didn't update"})
+
+
+class IconImage(APIView) : 
+
+    def get(self , request , format = None) : 
+        print("inside the IcomImage View GET ")
+        iconPath = request.GET['iconPath']
+        print('iconPath : ' , iconPath)
+
+        return Response(status = status.HTTP_200_OK)
+    

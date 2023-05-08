@@ -1,23 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask , getIconImage , getAttachments} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserID } from "./userSlice";
 
 
 
 const initialValue = {
-    uuid : '',
+    taskUUID : '',
     quadrant : '',
     type : '',
     content : '',
     contentInBrief : '',
+    iconPath : '',
+    attachPath : '',
+    reminder : '',
+    due : '',
+    completed : '',
 
-    showTask : false,
+    showTaskCreation : false,
+    showTaskUpdation : false,
     showAllTasks : false,
     updateTaskBoolean : false,
+    obtainIconImage : false,
+    showTaskTypes : false,
 
+    fetchIconImage : false,
     taskListEmpty : false,
-
 
     // list of all the tasks
     allTasks : [],
@@ -31,9 +41,12 @@ const taskSlice = createSlice({
     reducers : TaskReducer , extraReducers(builder){
         builder.addCase(addTask.pending , (state , action) => {
             console.log('task adding pending')
+            console.log(action.payload)
         })
         .addCase(addTask.fulfilled , (state , action) => {
             console.log('task creating fulfilled')
+            console.log('action.payload : ')
+            console.log(action.payload)
             
         })
         .addCase(addTask.rejected , (state , action) => {
@@ -72,20 +85,41 @@ const taskSlice = createSlice({
         })
         .addCase(getSingleTask.fulfilled , (state , action) => {
             console.log('task has been found and the taskDetails have been sent')
+            console.log('action.payload : ', action.payload)
 
             // fill the quadrant, uuid, content here
-            state.uuid = action.payload.taskDetails[0].uuid
-            state.quadrant = action.payload.taskDetails[0].quadrant
-            state.type = action.payload.taskDetails[0].type
-            state.content = action.payload.taskDetails[0].content
             
-            console.log('action.payload : ' , action.payload)
-            console.log('content : ' , state.content)
+            
+            console.log('after updation')
+            
+           if(action.payload.taskDetails[0]!== undefined || action.payload.taskDetails[0]!=={}){
+                console.log('action.payload is not underfined or {}, setting the state')
+
+                state.taskUUID = action.payload.taskDetails[0].taskUUID
+                state.quadrant = action.payload.taskDetails[0].quadrant
+                state.type = action.payload.taskDetails[0].type
+                state.content = action.payload.taskDetails[0].content
+                state.iconPath = action.payload.taskDetails[0].icon
+                state.due = action.payload.taskDetails[0].due
+                state.reminder = action.payload.taskDetails[0].reminder
+                state.completed = action.payload.taskDetails[0].completed
+
+                state.fetchIconImage = true
+           }
+
+
+            
         })
         .addCase(updateTask.fulfilled , (state , action) => {
             console.log('tasks updated successfully')
 
         })
+        .addCase(getIconImage.fulfilled , (state , action) => {
+            console.log('inside getIconImage.fulfilled')
+            console.log('action.payload in getIconImage : ' , action.payload)
+            
+        })
+        
     }
 })
 
@@ -93,4 +127,4 @@ const taskSlice = createSlice({
 // expoerting the reducer and the actions 
 export default taskSlice.reducer
 
-export const { setShowTask , setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent , setTaskListisEmpty } = taskSlice.actions
+export const { setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent , setTaskListisEmpty , populateFields , setShowTaskCreation , setShowTaskUpdation , setShowTaskTypes , setFetchIcomImage} = taskSlice.actions

@@ -432,6 +432,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height : 900px;
+
 }
 
 .task-top{
@@ -492,11 +494,12 @@
 
 .task-middle{
   width : 550px;
-  height : 680px;
+  height : 730px;
   font-family: 'IBM Plex Mono', monospace;
   color : #0000005C;
-  margin-top : -25px;
+  margin-top : -95px;
   background: lightcyan;
+  border-bottom-left-radius: 10px;
 }
 
 .task-middle > div:first-child{
@@ -619,26 +622,44 @@
 
 .task{
   width : 550px;
-  height : 680px;
+  height : 730px;
   font-family: 'IBM Plex Mono', monospace;
   color : #0000005C;
-  margin-top : -25px;
+  margin-top : -95px;
   background: lightcyan;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow-y : scroll;
+  overflow-x: hidden;
+  border-radius: 5px;
 }
 
-.task > div:nth-child(2){
-  margin-left : 85px;
+.task > div{
+  display : flex ;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width : 500px;
+  margin-top  : 10px;
 }
+
+
+
 
 .task > button{
   border-radius: 5px;
   background: fuchsia;
   width : 150px;
   height : 40px;
+  margin-top : 5px;
+}
+
+.task > button:hover{
+  border: solid 2px black;
+  color : fuchsia;
+  background: white;
 }
 
 .task > button:active{

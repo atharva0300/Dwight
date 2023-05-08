@@ -10,8 +10,8 @@ import edit from '../assets/edit.png'
 import Container from 'react-bootstrap/esm/Container'
 
 // importing thunks 
-import { deleteTask, getAllTasks, getSingleTask } from '../features/thunks/TaskThunk'
-import {setShowAllTasks, setTaskListisEmpty, setUpdateTask} from '../features/taskSlice'
+import { deleteTask, getAllTasks, getIconImage, getSingleTask } from '../features/thunks/TaskThunk'
+import {setShowAllTasks, setShowTaskUpdation, setTaskListisEmpty, setUpdateTask} from '../features/taskSlice'
 import { deleteNote } from '../features/noteSlice'
 
 
@@ -23,21 +23,30 @@ const TaskList = () => {
 
     let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
     let quadrant = useSelector((state) => state.tasks.quadrant)
+          
+    let iconPath = useSelector((state) => state.tasks.iconPath)
+    
+
 
     const dispatch = useDispatch()
 
+    if(taskList.length===0){
+      dispatch(setTaskListisEmpty(true))
+    }else{
+      dispatch(setTaskListisEmpty(false))
+    }
+
+    /*
     useEffect(() => {
-        console.log('taskList : ' , taskList)
-        if(taskList.length===0){
-          dispatch(setTaskListisEmpty(true))
-        }else{
-          dispatch(setTaskListisEmpty(false))
-        }
-    } , [taskList])
+        console.log('obtainIconImage : ' , obtainIconImage)
 
+    } , [obtainIconImage])
+    */
 
-    const updateTaskHandler = (uuid) => {
+    const updateTaskHandler =  (taskUUID) => {
       console.log('update task handler')
+      dispatch(setShowAllTasks(false))
+      dispatch(setShowTaskUpdation(true))
 
       // 1. send a get request to the updatetask endpoint 
       // 2. obtain the taskDetails
@@ -45,7 +54,12 @@ const TaskList = () => {
       // 4. send a post request to update the task
       // 5. navigate to the taskDetail view page 
 
-      dispatch(getSingleTask({'uuid' : uuid}))
+      console.log('uuid : ' , taskUUID)
+      dispatch( getSingleTask({'taskUUID' : taskUUID}))
+
+
+      // calling the iconImage thunk 
+
       dispatch(setUpdateTask(true))
 
       dispatch(setShowAllTasks())
@@ -55,15 +69,15 @@ const TaskList = () => {
     }
 
 
-    const deleteTaskHandler = async (uuid) => {
+    const deleteTaskHandler = async (taskUUID) => {
       // deleting the task
       
       // 1. obtain the task ID 
-      console.log('uuid to delete : ' , uuid )
+      console.log('uuid to delete : ' , taskUUID )
 
 
       // 2. fetch the delete method to delete the task in the backend 
-      let response = await dispatch(deleteTask({'uuid' : uuid}))
+      let response = await dispatch(deleteTask({'taskUUID' : taskUUID}))
       console.log('response : ' , response)
 
       // 3. re-fetch all the tasks
@@ -76,7 +90,7 @@ const TaskList = () => {
 
       item = {
         quadrant : quadrant,
-        uuid : uuid
+        uuid : taskUUID
       }
       dispatch(deleteNote(item))
 
@@ -88,14 +102,14 @@ const TaskList = () => {
     <Container className='tasklist-outer'>
     {!taskListEmpty && 
         taskList.map((item) => (
-        <div className='tasklist-item' key = {item.uuid}>
+        <div className='tasklist-item' key = {item.taskUUID}>
             <p>Task Type : {item.type}</p>
             <p>Task : {item.contentInBrief}</p>
             <div className='tasklist-icons'>
-              <div onClick={() => updateTaskHandler(item.uuid)}>
+              <div onClick={() => updateTaskHandler(item.taskUUID)}>
                 <img src = {edit} alt = "edit" />
               </div>
-              <div onClick={() => deleteTaskHandler(item.uuid)}>
+              <div onClick={() => deleteTaskHandler(item.taskUUID)}>
                 <img src = {trash} alt = "delete" />
               </div>
             </div>

@@ -7,7 +7,8 @@ let initialValue = {
     showSigninPopup : false,
     showDuplicatePopup : false,
     showSuccessDiv : false,
-    showErrorDiv : false
+    showErrorDiv : false,
+
 
 }
 

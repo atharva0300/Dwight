@@ -2,23 +2,12 @@ import './App.css';
 
 import Signin from './pages/Signin';
 
-// importing components here
-import TopBar from './components/TopBar';
-import SideBar from './components/SideBar';
-import BottomBar from './components/BottomBar';
-import Board from './components/Board';
-
 //importing react router components 
 import {createBrowserRouter , createRoutesFromElements, RouterProvider,  Route , Outlet, useNavigate, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { useContext, useEffect } from 'react';
-
-
-// importing context 
-import AuthContext, { AuthProvider } from './context/AuthContext';
+import { useEffect } from 'react';
 import WhiteBoard from './pages/WhiteBoard';
 
-let firstRender = true
 
 
 function App() {
@@ -45,21 +34,19 @@ function App() {
 const Root = () => {
 
   const navigate = useNavigate()
-  
-  console.log('privateRouter works')
-  let {user} = useContext(AuthContext)
-  console.log('user in the App.js : ' , user)
+
+  const signed = useSelector((state) => state.user.signed)
 
 
   useEffect(() => {
-    if(user===false){
+    if(signed===false){
       navigate("/signin")
     }else{
-      console.log(user.username)
+      console.log(signed.username)
       navigate("/try")
     }
   
-  }, [user])
+  }, [signed])
 
 
   console.log('inside root')

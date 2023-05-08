@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // importing actions and our matrix reducer 
 import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle, setDisplayCardText, setShowDisplayCard } from '../features/matrixSlice';
-import {setQuadrant} from '../features/taskSlice'
+import {setQuadrant, setShowTaskTypes} from '../features/taskSlice'
 
 import TasksDetail from './TasksDetail';
 
@@ -69,6 +69,7 @@ const Matrix = () => {
             default : console.log('invalid card type')
                             break
         }
+        dispatch(setShowTaskTypes(true))
     }
 
 

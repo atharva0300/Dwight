@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-// importing actions 
-import AuthContext from '../context/AuthContext'
+
 import { useNavigate } from 'react-router'
 
 const UserSettings = () => {
     const showUserSettings = useSelector((state) => state.user.showUserSettings)
     const navigate = useNavigate()
 
-    let {logoutUser} = useContext(AuthContext)
 
     useEffect(() => {
         console.log(showUserSettings)
@@ -17,7 +15,7 @@ const UserSettings = () => {
 
     const handleSignout = () => {
       navigate("/signin")
-      logoutUser()
+    
     }
 
 

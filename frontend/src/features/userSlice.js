@@ -13,6 +13,9 @@ const initialValue = {
     message : "",
     userUUID : "",
 
+    userID : '',
+    signed : false,
+
     showUserSettings : false
 }
 
@@ -36,13 +39,14 @@ export const userSlice = createSlice({
         .addCase(loginUser.fulfilled, (state , action) => {
             state.message = action.payload.message
             state.username = action.payload.username
-            console.log('action : ' , action)
+            console.log('response received, user logged in')
+            console.log('action.payload in loginUser : ' , action.payload)
             console.log('action.username : ' , action.payload.username)
+            state.userID  = action.payload.userID
+            console.log('userID in the loginUser : ' , state.userID)
 
-            // obtain the user key value and then store the user in the slice 
-            state.userUUID = action.payload.userUUID
-
-            console.log("logged in user : " , state.userUUID)
+            state.signed = true
+            return true;
         })
     }
 })
@@ -54,4 +58,4 @@ export default userSlice.reducer
 // export const selectAllUsers = (state) => state.userSlice.username
 // export const getUserStatus = (state) => state.userSlice.status
 
-export const {setShowUserSettings} = userSlice.actions
+export const {setShowUserSettings , setSigned , setUserID} = userSlice.actions
