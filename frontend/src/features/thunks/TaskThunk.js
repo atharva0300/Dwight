@@ -18,6 +18,7 @@ export const addTask = createAsyncThunk(
         const url = BASE_URL + 'tasklist'
         const response = axios.post(url , taskData)
 
+        /*
         axios({
             method: 'post',
             url: url,
@@ -27,7 +28,10 @@ export const addTask = createAsyncThunk(
             console.log(response)
             return response?.data   
         })
+        
         .catch((err) => console.log(err));
+        
+        */
         /*
         const response = await (url , {
             method : 'POST',
@@ -90,9 +94,10 @@ export const updateTask = createAsyncThunk(
 )
 
 export const getIconImage = createAsyncThunk(
-    'taskSlice/getIconImage' , (iconPath) => {
-        console.log('iconPath in thunk : ' , iconPath)
-        const url = BASE_URL + `iconImage?iconPath=${iconPath}`
+    'taskSlice/getIconImage' , (item) => {
+        console.log('iconPath in thunk : ' , item['iconPath'])
+        console.log('taskUUID : ' , item['tasUUID'])
+        const url = BASE_URL + `iconImage?iconPath=${item['iconPath']}&taskUUID=${item['taskUUID']}`
         console.log('url : ' , url)
         const response = axios.get(url)
         console.log(response.data)

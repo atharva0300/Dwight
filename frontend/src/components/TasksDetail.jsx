@@ -38,7 +38,7 @@ import TaskUpdation from './TaskUpdation';
 
 
 
-
+let renderOnce = true;
 
 const TasksDetail = () => {
 
@@ -49,10 +49,13 @@ const TasksDetail = () => {
     let showTaskUpdation = useSelector((state) => state.tasks.showTaskUpdation)
     let showTaskTypes = useSelector((state) => state.tasks.showTaskTypes)
     let showAllTasks = useSelector((state) => state.tasks.showAllTasks)
-    let displayCardText = useSelector((state) => state.matrix.displayCardText)
     let showDisplayCard = useSelector((state) => state.matrix.showDisplayCard)
     let quadrant = useSelector((state) => state.tasks.quadrant)
     let updateTaskBoolean = useSelector((state) => state.tasks.updateTaskBoolean)
+
+
+
+
 
 
     const createTask = () => {
@@ -78,7 +81,7 @@ const TasksDetail = () => {
 
 
     const BackNavigate = () => {
-        console.log('handling show task')
+        console.log('handling backNavigate task')
 
         // remove the contents of the task
         dispatch(setContent(""))
@@ -109,6 +112,16 @@ const TasksDetail = () => {
 
     }
 
+    const closeTaskDetailHandler = () =>{
+        console.log('closeTaskDetail')
+        dispatch(setShowTaskCreation(false))
+        dispatch(setShowTaskUpdation(false))
+        dispatch(setShowAllTasks(false))
+        dispatch(setShowTaskTypes(false))
+
+        dispatch(setShowDisplayCard(false))
+    }
+
 
   return (
     <div>
@@ -131,20 +144,21 @@ const TasksDetail = () => {
                 <span><img src = {author} alt = "author" /></span>
                 <p> | </p>
                 <span><img src = {enlarge} alt = "enlarge" /></span>
-                <span onClick={() => dispatch(setShowDisplayCard(false))}><img src = {close} alt = "close" /></span>
+
+                <span onClick={closeTaskDetailHandler}><img src = {close} alt = "close" /></span>
                 </div>
             </div>
             <hr style = {{"width" : "550px" , "height" : "10px" , "marginTop" : "-70px"}}/>
 
 
             {showTaskCreation && <TaskCreation setShowTaskCreation = {setShowTaskCreation} />}
-            {showTaskUpdation && updateTaskBoolean && <TaskUpdation setShowTaskUpdation={setShowTaskUpdation} /> }
+            {showTaskUpdation && <TaskUpdation setShowTaskUpdation={setShowTaskUpdation} /> }
 
             {showTaskTypes && 
 
             <div className='task-middle'>
                 <div>
-                    <h2>{displayCardText}</h2>
+                    <h2>{quadrant}</h2>
                 </div>
                 <div onClick={createTask}>
                     <span><img src = {plus} alt = "plus" /></span>
@@ -153,25 +167,25 @@ const TasksDetail = () => {
 
                 <div>
                     <span>Templates</span>
-                    <div onClick={() => handleType('0')}>
+                    <div onClick={() => handleType('Todo List')}>
                         <img src = {tickbox} alt = "tickbox" />
-                        <p>To do List</p>
+                        <p>Todo List</p>
                     </div>
-                    <div onClick={() => handleType('1')}>
+                    <div onClick={() => handleType('Meeting Agenda')}>
                         <img src = {clock} alt ="clock" />
                         <p>Meeting Agenda</p>
                     </div>
-                    <div onClick={() => handleType('2')}>
+                    <div onClick={() => handleType('Project Summary')}>
                         <img src ={list} alt = "list" />
-                        <p>Project summary</p>
+                        <p>Project Summary</p>
                     </div>
-                    <div onClick={() => handleType('3')}>
+                    <div onClick={() => handleType('Workshop Notes')}>
                         <img src = {note} alt = "note" />
-                        <p>Workshop notes</p>
+                        <p>Workshop Notes</p>
                     </div>
-                    <div onClick={() => handleType('4')}>
+                    <div onClick={() => handleType('Board Annotation')}>
                         <img src = {board} alt = "board" />
-                        <p>Board annotation</p>
+                        <p>Board Annotation</p>
                     </div>
                     <div className='show-all-tasks'>
                         <button type = "submit" onClick={handleShowAllTasks} >Show All Tasks</button>

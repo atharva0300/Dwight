@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import ProfileSerializer , TaskSerializer
+from .serializers import ProfileSerializer , TaskSerializer, SubTaskSerializer
 from rest_framework import serializers
 from rest_framework.views import APIView
 # importing APIView as we are creating class bsed function
@@ -23,11 +23,20 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
+# import PIL 
+from PIL import Image
+
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models.fields.files import ImageFieldFile
+
+# importing base64
 import base64
+import json
+from io import BytesIO
 
 
 # importing our models 
-from .models import Profile , Task
+from .models import Profile , Task, SubTask
 
 from uuid import uuid4
 
@@ -206,9 +215,10 @@ class DeleteTask(APIView) :
             # item = Task.objects.get(uuid = uuid )
             # print('deleted item : ' , item)
 
-            return Response({'message' : 'Task successfully deleted'})
+            return Response({'message' : 'Task successfully deleted'} , status = status.HTTP_200_OK)
         except : 
-            return Response({'message' : 'Didnt delete the task'})
+            print('didnt delete the task')
+            return Response({'message' : 'Didnt delete the task'} , status = status.HTTP_400_BAD_REQUEST)
 
 
     
@@ -248,12 +258,66 @@ class UpdateTask(APIView) :
             return Response({"message" : "Task didn't update"})
 
 
+
+class ExtendedEncoder(DjangoJSONEncoder):
+    def default(self, o):
+        if isinstance(o, ImageFieldFile):
+            return str(o)
+        else:
+            return super().default(o)
+
 class IconImage(APIView) : 
 
     def get(self , request , format = None) : 
         print("inside the IcomImage View GET ")
         iconPath = request.GET['iconPath']
         print('iconPath : ' , iconPath)
+        taskUUID = request.GET['taskUUID']
 
-        return Response(status = status.HTTP_200_OK)
+        # obtain the task with the taskUUID 
+        task = Task.objects.get(taskUUID = taskUUID)
+
+        # obtain the image object
+        icon = task.icon
+        iconImage = Image.open(icon)
+        iconImage.show()
+
+        # encoding the image to base64
+        # mystr = json.dumps(str(iconImage) , cls=ExtendedEncoder)
+        imgByteArr = BytesIO()
+        # iconImage.save(imgByteArr , format=iconImage.format)
+        
+        # imgByteArr = imgByteArr.getValue()
+        # bytesarray = bytes(Image.fromarray(array.reshape((600,600,3))).tobytes())
+        #print('imgByteArr : ' , imgByteArr)
+
+        mystr = base64.b64encode(iconImage.tobytes())
+        print('mystr  : ' , mystr)
+
+        return Response({"iconImage" : imgByteArr } ,  status = status.HTTP_200_OK)
     
+class SubTaskView(APIView) : 
+
+    def post(self , request , format = None ) : 
+        print('inside subTaskView POST')
+        taskUUID = request.POST.get('taskUUID')
+        subTaskContent = request.POST.get('subTaskContent')
+        print('subTaskContent : ' , subTaskContent)
+        print('taskUUID : ' , taskUUID)
+        
+        subtask_serializer = SubTaskSerializer(data = request.data)
+        if(subtask_serializer.is_valid()) : 
+            subtask_serializer.save()
+            return Response({"message" : "subTask Created" } , status = status.HTTP_201_CREATED)
+        
+        else : 
+            return Response({"message" : "subTask Creation Failed"} , status=status.HTTP_400_BAD_REQUEST)
+
+        
+
+    """
+    def get(self , request , format = None ) : 
+        print('inside SUbTaskView GET')
+        taskUUID = request.GET['taskUUID']
+        subTaskContent = request.GET['subTaskContent']
+    """

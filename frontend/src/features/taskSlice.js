@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask , getIconImage , getAttachments} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask , getIconImage , getAttachments, getSubTasks, postSubTasks} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserID } from "./userSlice";
 
+// importing buffer libraries 
+import {decode as base64_decode, encode as base64_encode} from 'base-64';
 
 
 const initialValue = {
@@ -28,9 +28,13 @@ const initialValue = {
 
     fetchIconImage : false,
     taskListEmpty : false,
+    taskCreationSuccess : false,
+    taskUpdationSuccess : false,
+    fetchSubTasks : false,
 
     // list of all the tasks
     allTasks : [],
+    allSubTasks : []
 
 }
 
@@ -47,10 +51,15 @@ const taskSlice = createSlice({
             console.log('task creating fulfilled')
             console.log('action.payload : ')
             console.log(action.payload)
+            state.taskCreationSuccess = '1'
+
+            // setting the fetchSubTasks to true 
+            state.fetchSubTasks = true
             
         })
         .addCase(addTask.rejected , (state , action) => {
             console.log('task addition failed')
+            state.taskCreationSuccess = '2'
         })
         .addCase(getAllTasks.fulfilled , (state , action) => {
             console.log('got all the tasks')
@@ -110,14 +119,43 @@ const taskSlice = createSlice({
 
             
         })
+        .addCase(updateTask.rejected , (state , action) => {
+            console.log('taskUpdation failed')
+            state.taskUpdationSuccess = '2'
+        })
+
         .addCase(updateTask.fulfilled , (state , action) => {
             console.log('tasks updated successfully')
+            state.taskUpdationSuccess = '1'
+
+
 
         })
         .addCase(getIconImage.fulfilled , (state , action) => {
             console.log('inside getIconImage.fulfilled')
             console.log('action.payload in getIconImage : ' , action.payload)
-            
+
+            let imageDecoded = base64_decode(action.payload.iconObj)
+            console.log('imageDecoded : ' , imageDecoded)
+
+        })
+
+        .addCase(getSubTasks.rejected , (state , action) => {
+            console.log('getSubTasks rejected')
+        })
+
+        .addCase(getSubTasks.fulfilled , (state , action) => {
+            console.log('getSUbTasks fulfilled')
+            console.log('action.payload : ' , action.payload)
+        })
+
+        .addCase(postSubTasks.rejected , (state ,action) =>{
+            console.log('postSubTask rejected')
+        })
+
+        .addCase(postSubTasks.fulfilled , (state , action) => {
+            console.log('postSubTask fulfilled')
+            console.log('action.payload : ' , action.payload)
         })
         
     }
@@ -127,4 +165,18 @@ const taskSlice = createSlice({
 // expoerting the reducer and the actions 
 export default taskSlice.reducer
 
-export const { setShowAllTasks , setUpdateTask , setQuadrant , setType , setContent , setTaskListisEmpty , populateFields , setShowTaskCreation , setShowTaskUpdation , setShowTaskTypes , setFetchIcomImage} = taskSlice.actions
+export const { setShowAllTasks , 
+                setUpdateTask , 
+                setQuadrant , 
+                setType , 
+                setContent , 
+                setTaskListisEmpty , 
+                setShowTaskCreation , 
+                setShowTaskUpdation , 
+                setShowTaskTypes , 
+                setFetchIcomImage,
+                setCompleted,
+                setDue,
+                setReminder,
+                setFetchSubTasks
+            } = taskSlice.actions

@@ -19,6 +19,8 @@ const initialValue = {
     showUserSettings : false
 }
 
+export let userID = ''
+
 
 export const userSlice = createSlice({
     name : 'user',
@@ -42,8 +44,8 @@ export const userSlice = createSlice({
             console.log('response received, user logged in')
             console.log('action.payload in loginUser : ' , action.payload)
             console.log('action.username : ' , action.payload.username)
-            state.userID  = action.payload.userID
-            console.log('userID in the loginUser : ' , state.userID)
+            userID  = action.payload.userID
+            console.log('userID in the loginUser : ' , userID)
 
             state.signed = true
             return true;
@@ -58,4 +60,4 @@ export default userSlice.reducer
 // export const selectAllUsers = (state) => state.userSlice.username
 // export const getUserStatus = (state) => state.userSlice.status
 
-export const {setShowUserSettings , setSigned , setUserID} = userSlice.actions
+export const {setShowUserSettings , setSigned} = userSlice.actions

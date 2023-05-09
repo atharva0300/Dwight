@@ -31,8 +31,9 @@ class Task(models.Model) :
 
 
 class SubTask(models.Model) :
-    task = models.ForeignKey(Task  , on_delete=models.CASCADE)
-    content = models.TextField(max_length=1000)
+    taskUUID = models.ForeignKey(Task  , on_delete=models.CASCADE)
+    subTaskContent = models.TextField(max_length=1000)
+    subTaskUUID = models.UUIDField(default = uuid.uuid4 , unique = True)
 
 
 class Attachment(models.Model) :

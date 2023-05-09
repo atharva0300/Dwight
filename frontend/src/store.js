@@ -6,6 +6,7 @@ import noteReducer from './features/noteSlice';
 import userReducer from './features/userSlice';
 import taskReducer from './features/taskSlice';
 import SigninReducer from './features/signinSlice';
+import subtaskReducer from './features/subtaskSlice';
 
 
 const store = configureStore({
@@ -14,7 +15,8 @@ const store = configureStore({
         matrix : matrixReducer,
         notes : noteReducer,
         user : userReducer, 
-        tasks : taskReducer
+        tasks : taskReducer,
+        subtasks : subtaskReducer
     }
 })
 

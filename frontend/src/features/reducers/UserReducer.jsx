@@ -10,8 +10,5 @@ export const UserReducer = {
         state.signed = action.payload
     },
 
-    setUserID : (state , action) => {
-        state.userID = action.payload
-    }
 }
 

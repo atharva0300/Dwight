@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Profile, Task
+from .models import Profile, Task, SubTask
+
 
 # creating a user serialzier 
 class ProfileSerializer(serializers.ModelSerializer) : 
@@ -37,3 +38,13 @@ class TaskSerializer(serializers.ModelSerializer) :
     def create(self , validated_data) :
         # creating an instance of the user 
         return Task.objects.create(**validated_data)
+    
+
+class SubTaskSerializer(serializers.ModelSerializer) :
+    class Meta : 
+        model = SubTask
+        fields = '__all__'
+
+    
+    def create(self , validated_data) : 
+        return SubTask.objects.create(**validated_data)

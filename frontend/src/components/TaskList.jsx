@@ -25,7 +25,6 @@ const TaskList = () => {
     let quadrant = useSelector((state) => state.tasks.quadrant)
           
     let iconPath = useSelector((state) => state.tasks.iconPath)
-    
 
 
     const dispatch = useDispatch()
@@ -36,12 +35,6 @@ const TaskList = () => {
       dispatch(setTaskListisEmpty(false))
     }
 
-    /*
-    useEffect(() => {
-        console.log('obtainIconImage : ' , obtainIconImage)
-
-    } , [obtainIconImage])
-    */
 
     const updateTaskHandler =  (taskUUID) => {
       console.log('update task handler')
@@ -62,7 +55,7 @@ const TaskList = () => {
 
       dispatch(setUpdateTask(true))
 
-      dispatch(setShowAllTasks())
+      // dispatch(setShowAllTasks())
 
       console.log('updateTaskBoolean : ' , updateTaskBoolean )
 

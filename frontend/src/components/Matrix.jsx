@@ -5,8 +5,8 @@ import Note from './Note';
 import { useDispatch, useSelector } from 'react-redux';
 
 // importing actions and our matrix reducer 
-import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle, setDisplayCardText, setShowDisplayCard } from '../features/matrixSlice';
-import {setQuadrant, setShowTaskTypes} from '../features/taskSlice'
+import { cardOneToggle , cardTwoToggle , cardThreeToggle , cardFourToggle, setShowDisplayCard } from '../features/matrixSlice';
+import {setQuadrant, setShowAllTasks, setShowTaskCreation, setShowTaskTypes, setShowTaskUpdation} from '../features/taskSlice'
 
 import TasksDetail from './TasksDetail';
 
@@ -43,33 +43,38 @@ const Matrix = () => {
     const handleCardDetails = (cardType) => {
         console.log('cardType : ' , cardType)
         dispatch(setQuadrant(cardType))
+        dispatch(setShowDisplayCard(true))
         switch(cardType){
-            case 'one' :dispatch(cardOneToggle()) 
-                        console.log('cardOne toggled')
-                        dispatch(setDisplayCardText("Do First"))
-                        break
+            case 'Do First' :dispatch(cardOneToggle()) 
+                            console.log('cardOne toggled')
+                            break
 
-            case 'two' :dispatch(cardTwoToggle())
+            case 'Schedule' :dispatch(cardTwoToggle())
                         console.log('cardTwo toggled')
-                        dispatch(setDisplayCardText('Schedule'))
                         break
 
-            case 'three' :  dispatch(cardThreeToggle())
+            case 'Delegate' :  dispatch(cardThreeToggle())
                             console.log('cardThree toggled')
-                            dispatch(setDisplayCardText('Delegate'))
                             break
 
 
-            case 'four':dispatch(cardFourToggle())
+            case 'Eliminate':dispatch(cardFourToggle())
                         console.log('cardFour toggled')
-                        dispatch(setDisplayCardText("Don't Do"))
                         break
 
 
             default : console.log('invalid card type')
                             break
         }
+    }
+
+    if(showDisplayCard===true){
+        console.log('setShowDisplayCard : ' , showDisplayCard)
+        dispatch(setShowAllTasks(false))
+        dispatch(setShowTaskCreation(false))
+        dispatch(setShowTaskUpdation(false))
         dispatch(setShowTaskTypes(true))
+
     }
 
 
@@ -83,7 +88,7 @@ const Matrix = () => {
         style = {{"position" : "absolute", "top" : "-100px" , "left" : "0px"}}
     >
         <div className='row1-cards'>
-            <Card className='card-one' style={{"background" : "#ff726f"}} onClick={() => handleCardDetails('one')}>
+            <Card className='card-one' style={{"background" : "#ff726f"}} onClick={() => handleCardDetails('Do First')}>
                 <h5 style ={{"marginLeft" : "30px" , "marginTop" : "30px"}}>Do First</h5>
                 <p style = {{"marginLeft" : "30px"}}>Urgent & Important</p>
                 <Note content = {""} type = {""} card = {""} />
@@ -93,7 +98,7 @@ const Matrix = () => {
                     ))
                 }
             </Card>
-            <Card className='card-two' style = {{"background" : "lightblue"}} onClick={() => handleCardDetails('two')}>
+            <Card className='card-two' style = {{"background" : "lightblue"}} onClick={() => handleCardDetails('Schedule')}>
                 <h5 style ={{"marginLeft" : "30px" , "marginTop" : "30px"}}>Schedule</h5>
                 <p style = {{"marginLeft" : "30px"}}>Less Urgent but Important</p>
                 {
@@ -105,7 +110,7 @@ const Matrix = () => {
         </div>
 
         <div className='row2-cards'>
-            <Card className='card-three' style={{"background" : "lightgreen"}} onClick={() => handleCardDetails('three')}>
+            <Card className='card-three' style={{"background" : "lightgreen"}} onClick={() => handleCardDetails('Delegate')}>
                 <h5 style ={{"marginLeft" : "30px" , "marginTop" : "30px"}}>Delegate</h5>
                 <p style = {{"marginLeft" : "30px"}}>Urgent but less important</p>
                 {
@@ -114,7 +119,7 @@ const Matrix = () => {
                     ))
                 }
             </Card>
-            <Card className='card-four' style ={{"background" : "gray"}} onClick={() => handleCardDetails('four')} >
+            <Card className='card-four' style ={{"background" : "gray"}} onClick={() => handleCardDetails('Eliminate')} >
                 <h5 style ={{"marginLeft" : "30px" , "marginTop" : "30px"}}>Don't Do</h5>
                 <p style = {{"marginLeft" : "30px"}}>Neither Urgent not Important</p>
                 {
