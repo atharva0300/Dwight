@@ -19,6 +19,7 @@ export const SigninReducer = {
 
     setShowErrorDiv : (state , action) => {
         state.showErrorDiv = action.payload
+        console.log('inside error div')
     },
 
     signUpOne : (state) => {
@@ -29,6 +30,8 @@ export const SigninReducer = {
 
     signUpTwo : (state) => {
         state.setShowSignupPopup = false
+        state.setShowErrorDiv = true
+        console.log('showing error div')
     },
 
     signUpThree : (state) => {

@@ -5,15 +5,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* for development*/ 
-  position : None; 
+   /* position : None; */ 
   /* FOr production */
-  /*
   position:fixed;
   top:0px;
   bottom:0px;
   left:0px;
   right:0px;
-  */
 }
 
 code {

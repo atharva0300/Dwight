@@ -38,7 +38,7 @@ export const TaskReducer = {
     setTaskListisEmpty : (state , action) => {
         state.taskListEmpty = action.payload
     },
-    setFetchIcomImage : (state , action) => {
+    setFetchIconImage : (state , action) => {
         state.fetchIconImage = action.payload
     },
 

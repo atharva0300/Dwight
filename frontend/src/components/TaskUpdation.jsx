@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+// importing userID 
+
 
 // importing actions 
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,12 +11,18 @@ import { getIconImage, updateTask } from '../features/thunks/TaskThunk';
 
 import DateTime from 'react-datetime'
 import "react-datetime/css/react-datetime.css";
-import { setCompleted, setDue, setFetchIcomImage, setQuadrant, setReminder, setType } from '../features/taskSlice';
+import { setCompleted, setDue, setFetchIconImage, setQuadrant, setReminder, setShowAllTasks, setShowTaskTypes, setType } from '../features/taskSlice';
 
 
 import {v4 as uuid } from 'uuid'
+import SubTasks from './SubTasks';
+
+// importing allSUbTass
+import { allSubTasks } from '../features/taskSlice';
 
 let renderOnce = true
+
+
 
 const TaskUpdation = ({setShowTaskUpdation }) => {
     // defining the variables when the updation is False 
@@ -31,7 +39,16 @@ const TaskUpdation = ({setShowTaskUpdation }) => {
     let completed = useSelector((state) => state.tasks.completed)
     let content = useSelector((state) => state.tasks.content)
     let taskUUID = useSelector((state) => state.tasks.taskUUID)
-    
+
+
+    // allSUbTasskList hook
+    let [allSubTasksList , setAllSubTasksList] = useState(allSubTasks)
+
+    useEffect(() => {
+        if(allSubTasks!==[]){
+            setAllSubTasksList(allSubTasks)
+        }
+    } , [allSubTasks])
 
     let initialDue = new Date(due)
     let initialReminder = new Date(reminder)
@@ -51,43 +68,50 @@ const TaskUpdation = ({setShowTaskUpdation }) => {
             iconPath : iconPath,
             taskUUID : taskUUID
         }
-        dispatch(getIconImage(item))
+        // dispatch(getIconImage(item))
         console.log('dispatched getIconImage')
-        dispatch(setFetchIcomImage(false))
+        dispatch(setFetchIconImage(false))
     }
 
-    // importing task.state
-    let userID = useSelector((state) => state.tasks.userID)
     
 
     const handleUpdateTask = () => {
         console.log('handling task update')
 
-        // creating a uuid
-        const unique_uuid = uuid()
 
         let uploadData = new FormData()
 
-        uploadData.append('user', userID)
+        // uploadData.append('user', userID)
         uploadData.append('quadrant' , quadrant)
         uploadData.append('type' , type)
-        uploadData.append('content' , targetContent)
-        uploadData.append('taskUUID' , unique_uuid)
+        if(targetContent===content){
+            uploadData.append('content' , content)
+        }else if(targetContent!==content){
+            uploadData.append('content' , targetContent)
+        }
+        uploadData.append('taskUUID' , taskUUID)
         uploadData.append('due' , due)
         uploadData.append('reminder' , reminder)
-        uploadData.append('icon' , iconFile , iconFile.name ) 
+        if(iconFile){
+            uploadData.append('icon' , iconFile , iconFile.name ) 
+        }else if(!iconFile){
+            uploadData.append('icon' , false)
+        }
         uploadData.append('completed' , completed)
 
+
         console.log('formData before dispatching uploadTask : ' , uploadData)
-
-        dispatch(updateTask(uploadData))
-
-
-        if (taskUpdationSuccess==='1'){
-            console.log('SUCCESS')
-        }else if(taskUpdationSuccess==='2'){
-            console.log('ERROR')
+        console.log('allSubTaskList : ' , allSubTasksList)
+        
+        const item = {
+            taskData : uploadData,
+            subTaskData : allSubTasksList
         }
+        dispatch(updateTask(item))
+
+        // navigating back to the TaskDetail page 
+        dispatch(setShowTaskUpdation(false))
+        dispatch(setShowTaskTypes(true))
 
     }
 
@@ -164,6 +188,8 @@ const TaskUpdation = ({setShowTaskUpdation }) => {
             <label>Attachments : </label>
             <input type ="file" onChange={(e) => setAttachFiles(e.target.files[0])}/>
         </div>
+
+        <SubTasks allSubTasks={allSubTasksList} setAllSubTasks={setAllSubTasksList} />
 
         <div>
             <textarea style = {{"width" : "500px" , "height" : "400px" , "marginLeft" : "0px" }} defaultValue = {content} onChange = {(e) => setTargetContent(e.target.value)} contentEditable = 'True' placeholder='Notes...'/>

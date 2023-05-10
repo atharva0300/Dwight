@@ -68,13 +68,15 @@ class RegisterView(APIView) :
         print(request.data)
         print(request.POST)
 
-        item = dict(request.data)
+        item = dict(request.data) 
         print("sending : " , item)
         result = self.check_duplicates(item['email'])
         if(result) : 
             # True
             # if duplicate exists
+            print('duplicate data found')
             return Response({"message" : "3"})
+
 
         # creating a new user in the admin 
         user = User.objects.create_user(item['username'],  item['email'] , item['password'])
@@ -94,7 +96,7 @@ class RegisterView(APIView) :
             return Response({"message" : "1" , "userID" : user.id} , status = status.HTTP_201_CREATED )
     
         # if the serialzier is not valid, then 
-        return Response({"message" : "0"}  , status = status.HTTP_400_BAD_REQUEST)
+        return Response({"message" : "0"}  , status = status.HTTP_200_OK)
 
     def get(self , request , format = None) : 
         # hadnling get request here 
@@ -133,6 +135,8 @@ class SigninView(APIView) :
         print(password[0])
 
         user = authenticate(username = str(username[0]) , password = str(password[0]))
+
+        print('user :  ' , user)
         
         if user : 
             # get the username 
@@ -245,13 +249,13 @@ class UpdateTask(APIView) :
         dictItem = dict(item)
         print(dictItem)
 
-        task = Task.objects.filter(taskUUID = request.GET['taskUUID'] , user = request.GET['user'])
+        task = Task.objects.get(taskUUID = request.GET['taskUUID'] , user = request.GET['user'])
         # serialize the task 
-        serializer = TaskSerializer(task , many = True)
+        serializer = TaskSerializer(task , many = False)
         print('serializer.data : ' , serializer.data)
 
-        return Response({'taskDetails' : serializer.data})
-
+        return Response(serializer.data)
+    
 
     def post(self , request , format = None) : 
         print("Inside teh updateTask")
@@ -262,12 +266,32 @@ class UpdateTask(APIView) :
 
         try : 
             # obtain the object
-            obj = Task.objects.get(uuid = item['uuid'])
-            obj.content = item['content']
+            print('inside the try block')
+            print('taskUUID : ' , item['taskUUID'][0] )
+            taskUUID = item['taskUUID'][0]
+            obj = Task.objects.get(taskUUID = taskUUID)
+            print('obj  : ' , obj)
+            print('quadrant : ' , obj.quadrant)
+            obj.quadrant = item['quadrant'][0]
+            obj.type = item['type'][0]
+            obj.content = item['content'][0]
+            print('debug 1')
+            print('item icon : ' , item['icon'][0])
+            if(item['icon'][0] is not False) :
+                obj.icon = item['icon'][0] 
+            
+
+            obj.due = item['due'][0]
+            obj.reminder = item['reminder'][0]
+            obj.completed = item['completed'][0]
+
             obj.save()
-            return Response({"message" : "Task updated successfully"})
+
+            print('task updation successfull')
+            return Response({"id" : obj.id})
                  
-        except : 
+        except KeyError: 
+            print('there is a keyerror : ')
             return Response({"message" : "Task didn't update"})
 
 
@@ -333,9 +357,48 @@ class SubTaskView(APIView) :
 
         
 
-    """
-    def get(self , request , format = None ) : 
-        print('inside SUbTaskView GET')
-        taskUUID = request.GET['taskUUID']
-        subTaskContent = request.GET['subTaskContent']
-    """
+
+class UpdateSubTask(APIView) : 
+
+    def get(self , request , format = None) : 
+        print('inside the get method of the updateTask')
+        item  =request.GET 
+        dictItem = dict(item)
+        print(dictItem)
+
+        subtask = SubTask.objects.filter(task = request.GET['task'])
+        # serialize the task 
+        serializer = SubTaskSerializer(subtask , many = True)
+        print('serializer.data : ' , serializer.data)
+
+        return Response(serializer.data , status = status.HTTP_200_OK)
+
+
+    
+    def post(self , request , format = None) : 
+        print("Inside teh updateSubTask")
+        # deseraizliing the object 
+        item = dict(request.data)
+        print('item : ' , item)
+
+
+        try : 
+            # obtain the object
+            obj = SubTask.objects.get(subTaskUUID = item['subTaskUUID'])
+            obj.subTaskContent = item['subTaskContent']
+
+            obj.save()
+            return Response({"message" : "Task updated successfully"})
+                 
+        except SubTask.DoesNotExist : 
+            # we create a new subtask 
+
+            subtask_serializer = SubTaskSerializer(data = request.data)
+
+            if subtask_serializer.is_valid() : 
+                subtask_serializer.save()
+                return Response({"message" : "subTask Created" } , status = status.HTTP_201_CREATED)
+            
+            else : 
+                print('serializer errors : ' , subtask_serializer.errors)
+                return Response({"message" : "subTask Creation Failed"} , status=status.HTTP_400_BAD_REQUEST)

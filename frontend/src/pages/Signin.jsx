@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   MDBContainer,
   MDBTabs,
@@ -22,9 +22,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '../features/thunks/RegisterThunk';
 
 
-import {signUpOne, signUpThree, signUpTwo } from '../features/signinSlice';
-import { setSigned } from '../features/userSlice';
+import {setShowErrorDiv, setShowSigninPopup, setShowSignupPopup, signUpOne, signUpThree, signUpTwo } from '../features/signinSlice';
+import { setSigned, signed } from '../features/userSlice';
 
+let renderOnce = true
 
 function Signin() {
 
@@ -40,7 +41,20 @@ function Signin() {
 
   let showDuplicatePopup = useSelector((state) => state.signin.showDuplicatePopup)
 
+  // obtaining signed 
+  let signed = useSelector((state) => state.user.signed)
+
+  let message = useSelector((state) => state.user.message)
+
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(signed===true && renderOnce===true){
+      console.log('rendering signed false once')
+      dispatch(setShowSigninPopup(false))
+      renderOnce = false
+    }
+  } , [signed])
 
 
 
@@ -61,18 +75,18 @@ function Signin() {
       'password' : password
     }
 
-    let response = dispatch(loginUser(item))
-    if(response){
-      dispatch(setSigned(true))
-    }else{
-      console.log('signin failed')
-      dispatch(setSigned(false))
+    dispatch(loginUser(item))
+
+    if(signed===false){
+      dispatch(setShowSigninPopup(true))
+    }else if(signed===true){
+      dispatch(setShowSigninPopup(false))
     }
-  
+
   }
   
 
-  const handleSignup = async (e) => {
+  const handleSignup =  (e) => {
     let item = {
       "name" : name,
       "username" : username,
@@ -82,32 +96,42 @@ function Signin() {
 
     console.log(item)
 
-    let data = await dispatch(registerUser(item))
-    console.log('data : ' , data)
-    let message = data.payload.message
-
-    if(message==='1'){
-      setRegistered(true)
-      // show the signin page again
-      handleJustifyClick('tab1')
-      dispatch(signUpOne())
-
-
-    }else if(message==='2'){
-      setRegistered(false)
-      // show error and ask to try
+    // checking for undergined values 
+    if(name===undefined || username===undefined || email===undefined || password===undefined) {
       dispatch(signUpTwo())
-      
-    }else if(message==='3'){
-      // duplicate entry
-      dispatch(signUpThree())
-      console.log('showDuplicatePopup : ' , showDuplicatePopup)
-      console.log('showsignup popup : ' , showSignupPopup)
-      console.log('duplicate entry found')
-
-      // change the tab
-      handleJustifyClick('tab2')
+    
     }
+    else{
+      dispatch(registerUser(item))
+
+      console.log('message : ' , message)
+
+      if(message==='1'){
+        setRegistered(true)
+        // show the signin page again
+        handleJustifyClick('tab1')
+        dispatch(signUpOne())
+  
+  
+      }else if(message==='2'){
+        setRegistered(false)
+        // show error and ask to try
+        dispatch(signUpTwo())
+        
+      }else if(message==='3'){
+        // duplicate entry
+        dispatch(signUpThree())
+        console.log('showDuplicatePopup : ' , showDuplicatePopup)
+        console.log('showsignup popup : ' , showSignupPopup)
+        console.log('duplicate entry found')
+  
+        // change the tab
+        handleJustifyClick('tab2')
+      }
+    }
+    
+
+
   } 
 
   return (

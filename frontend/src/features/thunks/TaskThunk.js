@@ -76,22 +76,80 @@ export const getSingleTask = createAsyncThunk(
         console.log('inside getSingleTask thunk')
         let taskUUID = item['taskUUID']
         let userID = item['userID']
-        const url = BASE_URL + `updatetask?taskUUID=${taskUUID}&user=${userID}`
+        let url = BASE_URL + `updatetask?taskUUID=${taskUUID}&user=${userID}`
         console.log('url : ' , url)
-        const response =  await axios.get(url)
-        console.log(response.data)
-        return response?.data
+
+        // fetching all the tasks 
+        const response1 =  await axios.get(url)
+
+
+        console.log(response1.data)
+        console.log('task.id : ' ,response1.data.id)
+
+        if(response1.data.id){
+            const taskID = response1.data.id
+            // fethcing all the subTasks
+            url = BASE_URL + `updatesubtask?task=${taskID}`
+            const response2 = await axios.get(url)
+
+            console.log('response 2 : ' , response2.data)
+
+            const responseData = {
+                taskData : response1?.data,
+                subTaskData : response2?.data
+            }
+
+            return responseData
+        }
+
     }
 )
 
 export const updateTask = createAsyncThunk(
-    'taskSlice/updateTask' , async (taskData) => {
+    'taskSlice/updateTask' , async (item) => {
+        console.log('item : ' , item)
+        let taskData = item['taskData']
         console.log('taskData : ' , taskData)
-        const url = BASE_URL + 'updatetask'
+
+        let subTaskData = item['subTaskData']
+        console.log('subTaskData : ' , subTaskData)
+
+
+        let url = BASE_URL + 'updatetask'
         console.log('url : ' , url)
-        const response = await axios.post(url , taskData)
-        console.log(response.data)
-        return response?.data
+
+        // posting the taskData
+        const response1 = await axios.post(url , taskData)
+
+        console.log('response1?.data : ' , response1?.data)
+
+        let response2 = ''
+
+        if(response1?.data.id){
+            console.log('posting the subTasks')
+            url = BASE_URL + 'updatesubtask'
+            console.log('url : ' , url)
+            
+            // subTaskData is an array, so for each and every subTask, we will have to send individual requests 
+            console.log('subTask Data length : ' , subTaskData.length)
+
+            for(let i=0;i<subTaskData.length;i++){
+                console.log('posting the subTask : ' , subTaskData[i])
+                subTaskData[i]['task'] = response1?.data.id 
+                response2 = await axios.post(url , subTaskData[i])
+
+                console.log('response 2 : ' , response2.data)
+            }
+
+
+            const responseData = {
+                taskResponse : response1?.data,
+                subTaskResponse : response2?.data
+            }
+
+            return responseData
+        }
+
     }
 )
 

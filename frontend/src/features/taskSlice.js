@@ -8,6 +8,7 @@ import {decode as base64_decode, encode as base64_encode} from 'base-64';
 
 
 export let taskID = false
+export let allSubTasks = []
 
 const initialValue = {
     taskUUID : '',
@@ -37,7 +38,6 @@ const initialValue = {
 
     // list of all the tasks
     allTasks : [],
-    allSubTasks : []
 
 }
 
@@ -107,22 +107,23 @@ const taskSlice = createSlice({
             
             
             console.log('after updation')
+
+            state.taskUUID = action.payload.taskData.taskUUID
+            state.quadrant = action.payload.taskData.quadrant
+            state.type = action.payload.taskData.type
+            state.content = action.payload.taskData.content
+            state.iconPath = action.payload.taskData.icon
+            state.due = action.payload.taskData.due
+            state.reminder = action.payload.taskData.reminder
+            state.completed = action.payload.taskData.completed
+
+            state.fetchIconImage = true
+
+            // populating hte allSubTasks list
+            allSubTasks = action.payload.subTaskData
+
+            console.log('allSubTasks Data : ' , allSubTasks)
             
-           if(action.payload.taskDetails[0]!== undefined || action.payload.taskDetails[0]!=={}){
-                console.log('action.payload is not underfined or {}, setting the state')
-
-                state.taskUUID = action.payload.taskDetails[0].taskUUID
-                state.quadrant = action.payload.taskDetails[0].quadrant
-                state.type = action.payload.taskDetails[0].type
-                state.content = action.payload.taskDetails[0].content
-                state.iconPath = action.payload.taskDetails[0].icon
-                state.due = action.payload.taskDetails[0].due
-                state.reminder = action.payload.taskDetails[0].reminder
-                state.completed = action.payload.taskDetails[0].completed
-
-                state.fetchIconImage = true
-           }
-
 
             
         })
@@ -163,7 +164,7 @@ export const { setShowAllTasks ,
                 setShowTaskCreation , 
                 setShowTaskUpdation , 
                 setShowTaskTypes , 
-                setFetchIcomImage,
+                setFetchIconImage,
                 setCompleted,
                 setDue,
                 setReminder,

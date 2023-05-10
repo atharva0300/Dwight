@@ -14,6 +14,8 @@ const SignupPopup = () => {
     console.log('showDuplicated value changed ')
   } , [showDuplicatePopup])
 
+  console.log('inside signup popup')
+
 
   const dispatch = useDispatch()
 

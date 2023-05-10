@@ -80,10 +80,6 @@ const TaskCreation = ({setShowTaskCreation }) => {
         uploadData.append('reminder' , String(reminder))
         if(iconFile){
             uploadData.append('icon' , iconFile , iconFile.name ) 
-        }else if(!iconFile){
-            // creating an empty blob and appending into the formData
-            let blob = new Blob([] , {type : 'file/image'})
-            uploadData.append('icon' , blob , blob.name)
         }
         uploadData.append('completed' , "No")
 

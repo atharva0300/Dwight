@@ -4,6 +4,7 @@ import { useSelector ,  useDispatch } from 'react-redux'
 
 import { useNavigate } from 'react-router'
 import { setSigned } from '../features/userSlice'
+import { setShowErrorDiv, setShowSigninPopup } from '../features/signinSlice'
 
 const UserSettings = () => {
     const showUserSettings = useSelector((state) => state.user.showUserSettings)
@@ -16,6 +17,7 @@ const UserSettings = () => {
 
     const handleSignout = () => {
       dispatch(setSigned(false))
+      dispatch(setShowSigninPopup(false))
       navigate("/signin")
     
     }

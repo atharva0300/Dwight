@@ -7,7 +7,7 @@ import { setShowSigninPopup } from '../../features/signinSlice'
 
 const SigninPopup = () => {
 
-  let showSigninPopup = useSelector((state) => state.signed.showSigninPopup)
+  let showSigninPopup = useSelector((state) => state.signin.showSigninPopup)
 
   const dispatch = useDispatch()
 

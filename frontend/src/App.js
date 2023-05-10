@@ -10,6 +10,7 @@ import WhiteBoard from './pages/WhiteBoard';
 
 
 
+
 function App() {
 
   const router = createBrowserRouter(
@@ -36,7 +37,7 @@ const Root = () => {
   const navigate = useNavigate()
 
   const signed = useSelector((state) => state.user.signed)
-
+  console.log('signed in app.js : ' , signed)
 
   useEffect(() => {
     if(signed===false){
@@ -46,7 +47,7 @@ const Root = () => {
       navigate("/try")
     }
   
-  }, [signed])
+  }, [signed , navigate])
 
 
   console.log('inside root')

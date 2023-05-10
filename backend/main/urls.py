@@ -11,5 +11,6 @@ urlpatterns = [
     # path('deletetask' , views.DeleteTask.as_view())
     path('updatetask' , views.UpdateTask.as_view()),
     path('iconImage' , views.IconImage.as_view() ),
-    path('subtask' , views.SubTaskView.as_view())
+    path('subtask' , views.SubTaskView.as_view()),
+    path('updatesubtask' , views.UpdateSubTask.as_view() )
 ]

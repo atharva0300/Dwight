@@ -69,7 +69,7 @@ const TaskList = () => {
     }
 
 
-    const deleteTaskHandler = async (taskUUID) => {
+    const deleteTaskHandler = (taskUUID) => {
       // deleting the task
       
       // 1. obtain the task ID 
@@ -77,14 +77,15 @@ const TaskList = () => {
 
 
       // 2. fetch the delete method to delete the task in the backend 
-      let response = await dispatch(deleteTask({'taskUUID' : taskUUID}))
+      let response = dispatch(deleteTask({'taskUUID' : taskUUID}))
       console.log('response : ' , response)
 
       // 3. re-fetch all the tasks
       let item = {
-        quadrant : quadrant
+        quadrant : quadrant,
+        userID : userID
       }
-      response = await dispatch(getAllTasks(item))
+      response = dispatch(getAllTasks(item))
       console.log('response after rerendering the updated list : ' , response)
       // comment : might have to put this in the callback
 

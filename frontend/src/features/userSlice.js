@@ -5,6 +5,8 @@ import { registerUser , loginUser } from "./thunks/RegisterThunk";
 
 // importing reducers
 import { UserReducer } from "./reducers/UserReducer";
+import { setShowTaskTypes } from "./taskSlice";
+
 
 const initialValue = {
     username : "",
@@ -31,9 +33,15 @@ export const userSlice = createSlice({
         })
         .addCase(registerUser.fulfilled , (state , action) => {
             state.message = action.payload.message
+            console.log('state.message : ' , state.message)
+
         })
         .addCase(registerUser.rejected , (state , action) => {
             state.status = 'failed'
+            console.log('user login failed')
+            state.signed = false
+            state.message = action.payload.message
+            console.log('message : ' , state.message)
         })
         .addCase(loginUser.pending , (state , action) => {
             state.status = 'loading'
@@ -48,7 +56,9 @@ export const userSlice = createSlice({
             console.log('userID in the loginUser : ' , userID)
 
             state.signed = true
-            return true;
+            console.log('signed : ' , state.signed)
+
+
         })
     }
 })
