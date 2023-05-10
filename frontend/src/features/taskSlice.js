@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask , getIconImage , getAttachments, getSubTasks, postSubTasks} from "./thunks/TaskThunk";
+import {addTask , getAllTasks , deleteTask , getSingleTask, updateTask , getIconImage , getAttachments} from "./thunks/TaskThunk";
 
 import { TaskReducer } from "./reducers/TaskReducer";
 
 // importing buffer libraries 
 import {decode as base64_decode, encode as base64_encode} from 'base-64';
 
+
+export let taskID = false
 
 const initialValue = {
     taskUUID : '',
@@ -18,6 +20,7 @@ const initialValue = {
     reminder : '',
     due : '',
     completed : '',
+    taskID : false,
 
     showTaskCreation : false,
     showTaskUpdation : false,
@@ -55,6 +58,10 @@ const taskSlice = createSlice({
 
             // setting the fetchSubTasks to true 
             state.fetchSubTasks = true
+
+            // obtaining the task id
+            taskID = action.payload.taskID
+            console.log('received taskID : ' , taskID )
             
         })
         .addCase(addTask.rejected , (state , action) => {
@@ -138,24 +145,6 @@ const taskSlice = createSlice({
             let imageDecoded = base64_decode(action.payload.iconObj)
             console.log('imageDecoded : ' , imageDecoded)
 
-        })
-
-        .addCase(getSubTasks.rejected , (state , action) => {
-            console.log('getSubTasks rejected')
-        })
-
-        .addCase(getSubTasks.fulfilled , (state , action) => {
-            console.log('getSUbTasks fulfilled')
-            console.log('action.payload : ' , action.payload)
-        })
-
-        .addCase(postSubTasks.rejected , (state ,action) =>{
-            console.log('postSubTask rejected')
-        })
-
-        .addCase(postSubTasks.fulfilled , (state , action) => {
-            console.log('postSubTask fulfilled')
-            console.log('action.payload : ' , action.payload)
         })
         
     }

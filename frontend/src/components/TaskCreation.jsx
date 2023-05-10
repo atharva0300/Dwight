@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useReducer, useState } fro
 
 // importing actions 
 import { useDispatch, useSelector } from 'react-redux'
-import { setDue, setReminder, setShowTaskCreation, setShowTaskTypes, setShowTaskUpdation } from '../features/taskSlice'
+import { setDue, setFetchSubTasks, setReminder, setShowTaskCreation, setShowTaskTypes, setShowTaskUpdation } from '../features/taskSlice'
 
 // importing task thunk
 import { addTask } from '../features/thunks/TaskThunk'
@@ -21,8 +21,10 @@ import minus from '../assets/minus.png'
 // importing buffer libraries 
 import {decode as base64_decode, encode as base64_encode} from 'base-64';
 import SubTasks from './SubTasks'
+import { postSubTasks } from '../features/thunks/SubTaskThunk'
 
-
+// importing taskID 
+import { taskID } from '../features/taskSlice'
 
 const TaskCreation = ({setShowTaskCreation }) => {
     let [targetContent , setTargetContent ] = useState()
@@ -32,6 +34,7 @@ const TaskCreation = ({setShowTaskCreation }) => {
     
     let [attachFile , setAttachFile] = useState()
     let [iconFile , setIconFile] = useState()
+    let [allSubTasks , setAllSubTasks] = useState([])
 
     // useSelector hooks 
     let type = useSelector((state) => state.tasks.type)
@@ -46,12 +49,11 @@ const TaskCreation = ({setShowTaskCreation }) => {
 
     const dispatch = useDispatch()
 
+    dispatch(setFetchSubTasks(false))
+
 
     const handleTaskSubmit = () => {
 
-        
-        // creating a uuid
-        const unique_uuid = uuid()
 
         console.log('target content in the task : ' , targetContent)
 
@@ -65,22 +67,40 @@ const TaskCreation = ({setShowTaskCreation }) => {
         const encodedImage = base64_encode(iconFile)
         console.log('encodedImage : ' , encodedImage)
 
+        // creating a uuid 
+        const taskUUID = uuid()
+
 
         uploadData.append('user', userID)
         uploadData.append('quadrant' , quadrant)
         uploadData.append('type' , type)
         uploadData.append('content' , targetContent)
-        uploadData.append('taskUUID' , unique_uuid)
-        uploadData.append('due' , due)
-        uploadData.append('reminder' , reminder)
-        uploadData.append('icon' , iconFile , iconFile.name ) 
+        uploadData.append('taskUUID' , taskUUID )
+        uploadData.append('due' , String(due))
+        uploadData.append('reminder' , String(reminder))
+        if(iconFile){
+            uploadData.append('icon' , iconFile , iconFile.name ) 
+        }else if(!iconFile){
+            // creating an empty blob and appending into the formData
+            let blob = new Blob([] , {type : 'file/image'})
+            uploadData.append('icon' , blob , blob.name)
+        }
         uploadData.append('completed' , "No")
 
-        console.log('formData : ' , uploadData)
+        let uploadData2 = new FormData()
+
+        uploadData2.append('allSubTasks' , allSubTasks)
+
+        console.log('uploadData : ' , uploadData)
+        console.log('uploadData 2 : ' , uploadData2)
 
         // sending the post request 
         // invoking the addTask thunk
-        dispatch(addTask(uploadData))
+        const item = {
+            uploadData : uploadData,
+            allSubTasks : allSubTasks
+        }
+        dispatch(addTask(item))
 
         
         if (taskCreationSuccess==='1'){
@@ -96,10 +116,6 @@ const TaskCreation = ({setShowTaskCreation }) => {
 
         // create a new image in the reactjs application 
 
-        // if the type is Todo List, then post the subTask details as well
-
-
-        
     }
 
     
@@ -160,7 +176,7 @@ const TaskCreation = ({setShowTaskCreation }) => {
             <input type ="file" onChange={AttachmentChangeHandler}/>
         </div>
 
-        <SubTasks />
+        <SubTasks allSubTasks={allSubTasks} setAllSubTasks={setAllSubTasks} />
 
 
 

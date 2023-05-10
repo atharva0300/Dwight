@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SubTaskReducer } from "./reducers/SubTaskReducer";
 import { getSubTasks, postSubTasks } from "./thunks/SubTaskThunk";
 
+// importing taskID 
+import { taskID } from "./taskSlice";
+
 const initialValue = {
     allSubTasks: [],
     id : 0,
@@ -18,6 +21,7 @@ const subtaskSlice = createSlice({
 
         .addCase(postSubTasks.fulfilled , (state , action) => {
             console.log('posts subTask fulfilled')
+            taskID = false
             
         })
 
@@ -38,6 +42,7 @@ export default subtaskSlice.reducer
 // exporting actions 
 export const {
         setSubTaskCreation ,
-        setSubTaskDeletion
+        setSubTaskDeletion,
+        setSubTaskContent
 
     } = subtaskSlice.actions

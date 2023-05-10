@@ -14,6 +14,9 @@ import { deleteTask, getAllTasks, getIconImage, getSingleTask } from '../feature
 import {setShowAllTasks, setShowTaskUpdation, setTaskListisEmpty, setUpdateTask} from '../features/taskSlice'
 import { deleteNote } from '../features/noteSlice'
 
+// importing userID 
+import { userID } from '../features/userSlice'
+
 
 const TaskList = () => {
 
@@ -48,7 +51,11 @@ const TaskList = () => {
       // 5. navigate to the taskDetail view page 
 
       console.log('uuid : ' , taskUUID)
-      dispatch( getSingleTask({'taskUUID' : taskUUID}))
+      const item = {
+        'taskUUID' : taskUUID,
+        'userID' : userID
+      }
+      dispatch( getSingleTask(item))
 
 
       // calling the iconImage thunk 

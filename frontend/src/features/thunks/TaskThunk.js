@@ -12,36 +12,36 @@ const BASE_URL = 'http://127.0.0.1:8000/'
 
 // task thunk
 export const addTask = createAsyncThunk(
-    'taskSlice/addTask' , async (taskData) => {
+    'taskSlice/addTask' , async (item) => {
+        let uploadData = item['uploadData']
+        let allSubTasks = item['allSubTasks']
 
-        console.log('taskData : ' , taskData)
-        const url = BASE_URL + 'tasklist'
-        const response = axios.post(url , taskData)
+        console.log('uploadData : ' , uploadData)
+        console.log('allSubTasks : ' , allSubTasks)
+        let url = BASE_URL + 'tasklist'
+        const response1 = await axios.post(url , uploadData)
+        console.log('response1 : ' , response1)
 
-        /*
-        axios({
-            method: 'post',
-            url: url,
-            data: taskData,
-            headers: { 'Content-Type': 'multipart/form-data' },
-        }).then((response) => {
-            console.log(response)
-            return response?.data   
-        })
-        
-        .catch((err) => console.log(err));
-        
-        */
-        /*
-        const response = await (url , {
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json',
-                'Authorization' : 'Bearer' + String(authTokens.access)
-            },
-            body : taskData
-        } )
-        */
+        if(response1.data.taskID){
+            const taskID = response1.data.taskID
+            console.log('inside the 2nd post call')
+            url = BASE_URL + 'subtask'
+            for(let i=0;i<allSubTasks.length;i++){
+                console.log('posting subtask : ' , i)
+
+
+                let item = allSubTasks[i]
+
+                // adding the taskID in the item
+                item['task'] = taskID
+                console.log('subTask : i ' , item )
+
+                // posting
+                const response2 = await axios.post(url , item)
+
+                console.log('resonse 2 : ' , response2)
+            }
+        }
     }
 )
 
@@ -50,7 +50,8 @@ export const getAllTasks = createAsyncThunk(
 
         console.log('taskData : ' , item)
         let quadrant = item['quadrant']
-        const url = BASE_URL + `tasklist?quadrant=${quadrant}`
+        let userID = item['userID']
+        const url = BASE_URL + `tasklist?quadrant=${quadrant}&user=${userID}`
         console.log('url : ' , url)
         const response = await axios.get(url )
         console.log(response.data)
@@ -74,7 +75,8 @@ export const getSingleTask = createAsyncThunk(
     'taskSlice/getSingleTask' , async (item) => {
         console.log('inside getSingleTask thunk')
         let taskUUID = item['taskUUID']
-        const url = BASE_URL + `updatetask?taskUUID=${taskUUID}`
+        let userID = item['userID']
+        const url = BASE_URL + `updatetask?taskUUID=${taskUUID}&user=${userID}`
         console.log('url : ' , url)
         const response =  await axios.get(url)
         console.log(response.data)

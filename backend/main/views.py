@@ -34,11 +34,15 @@ import base64
 import json
 from io import BytesIO
 
+# importing query dict 
+from django.http import QueryDict
+
 
 # importing our models 
 from .models import Profile , Task, SubTask
 
 from uuid import uuid4
+import uuid
 
 
 # creating a signin api 
@@ -159,15 +163,23 @@ class TaskList(generics.ListCreateAPIView) :
         task_serializer = TaskSerializer(data=request.data)
         if task_serializer.is_valid():
             task_serializer.save()
-            return Response(task_serializer.data, status=status.HTTP_201_CREATED)
+            
+            # obtain the task ID of the task which is saved 
+            task = Task.objects.get(taskUUID = request.data['taskUUID'])
+            print('obtaining hte task : ' , task)
+            print('task id : ' , task.id )
+            item = {
+                "taskID" : task.id
+            }
+            return Response(item , status=status.HTTP_201_CREATED)
         else:
             print('error', task_serializer.errors)
             return Response(task_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    def get_quadrant_tasks(self, quadrant) : 
+    def get_quadrant_tasks(self, quadrant , user ) : 
         try:
-            taskList = Task.objects.filter(quadrant = quadrant) 
+            taskList = Task.objects.filter(quadrant = quadrant , user = user) 
             # NOTE : filter() will return a queryset whereas get() will return a model object
             return taskList
         except User.DoesNotExist:
@@ -184,10 +196,11 @@ class TaskList(generics.ListCreateAPIView) :
         dictItem = dict(item)
         print('dict item : ' , dictItem)
         quadrant = dictItem['quadrant'][0]
+        user = dictItem['user'][0]
         print('quadrant : ' , quadrant)
 
         # getting all the tasks with the quadrant value 
-        taskList = self.get_quadrant_tasks(quadrant)
+        taskList = self.get_quadrant_tasks(quadrant , user)
         print('taskList : ' , taskList)
 
         serializer = TaskSerializer(taskList , many= True)
@@ -232,7 +245,7 @@ class UpdateTask(APIView) :
         dictItem = dict(item)
         print(dictItem)
 
-        task = Task.objects.filter(taskUUID = request.GET['taskUUID'])
+        task = Task.objects.filter(taskUUID = request.GET['taskUUID'] , user = request.GET['user'])
         # serialize the task 
         serializer = TaskSerializer(task , many = True)
         print('serializer.data : ' , serializer.data)
@@ -300,17 +313,22 @@ class SubTaskView(APIView) :
 
     def post(self , request , format = None ) : 
         print('inside subTaskView POST')
-        taskUUID = request.POST.get('taskUUID')
-        subTaskContent = request.POST.get('subTaskContent')
+        item = request.data
+        subTaskContent = item['subTaskContent']
+        taskID = item['task']
         print('subTaskContent : ' , subTaskContent)
-        print('taskUUID : ' , taskUUID)
+        print('taskID : ' , taskID)
+        print('request.data : ' , request.data)
         
+
         subtask_serializer = SubTaskSerializer(data = request.data)
-        if(subtask_serializer.is_valid()) : 
+        
+        if subtask_serializer.is_valid() : 
             subtask_serializer.save()
             return Response({"message" : "subTask Created" } , status = status.HTTP_201_CREATED)
         
         else : 
+            print('serializer errors : ' , subtask_serializer.errors)
             return Response({"message" : "subTask Creation Failed"} , status=status.HTTP_400_BAD_REQUEST)
 
         

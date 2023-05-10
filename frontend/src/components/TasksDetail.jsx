@@ -36,6 +36,8 @@ import { setShowDisplayCard } from '../features/matrixSlice';
 import TaskCreation from './TaskCreation';
 import TaskUpdation from './TaskUpdation';
 
+// importing userID 
+import { userID } from '../features/userSlice';
 
 
 let renderOnce = true;
@@ -105,7 +107,10 @@ const TasksDetail = () => {
         dispatch(setShowAllTasks(true))
         
         // mentioning which quadrant's data do we want
-        let item = {'quadrant' : quadrant}
+        let item = {
+            'quadrant' : quadrant,
+            'userID' : userID
+        }
 
         let response = await dispatch(getAllTasks(item))
         console.log('response : ' , response)
