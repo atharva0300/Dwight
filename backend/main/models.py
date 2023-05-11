@@ -24,7 +24,7 @@ class Task(models.Model) :
     quadrant = models.TextField(max_length=20)
     type = models.TextField(max_length=20)
     content = models.TextField(max_length=100000)
-    icon = models.ImageField(upload_to='backend/icons' , blank = True , default = 'backend/icons/default/task.png')   # add upload to photo
+    icon = models.ImageField(upload_to='backend/default' , blank = True , default = 'backend/icons/default/task.png')   # add upload to photo
     due = models.CharField(max_length=100)  # temporarily set to CharField ( will have to use datetime later )
     reminder = models.CharField(max_length=100) # temporaily set to CharField ( will have to use datetime later )
     completed = models.CharField(max_length = 5)

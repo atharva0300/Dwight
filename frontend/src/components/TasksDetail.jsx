@@ -38,6 +38,7 @@ import TaskUpdation from './TaskUpdation';
 
 // importing userID 
 import { userID } from '../features/userSlice';
+import BottomBar from './BottomBar';
 
 
 let renderOnce = true;
@@ -227,6 +228,7 @@ const TasksDetail = () => {
         }
         </motion.div>
         }   
+
     </div>
   )
 }

@@ -13,18 +13,18 @@ After you’ve drawn your Eisenhower Matrix, you will have four empty boxes, two
 **3. Third Quadrant (lower left): not important, but urgent**<br/>
 **4. Fourth Quadrant (lower right): neither important nor urgent**<br/>
 
-## Installation Guide 
+## Installation Guide ( Ubuntu 20.04 )
 1. First download the code using the .zip download or if you have git installed then : 
     - Check if you have git installed
-        ```
-        $ git --version
-        ```
+    ```
+    $ git --version
+    ```
 
-        if the output gives a version, then proceed with the next step of cloning the github repo
-        ```
-        $ git clone https://github.com/atharva0300/Dwight
-        $ cd Dwight
-        ```
+    If the output gives a version, then proceed with the next step of cloning the github repo
+    ```
+    $ git clone https://github.com/atharva0300/Dwight
+    $ cd Dwight
+    ```
 2. Setup the virtual environment
     - To create a virtual environment, run the following 
     ```
@@ -44,22 +44,27 @@ After you’ve drawn your Eisenhower Matrix, you will have four empty boxes, two
 
     ```
 
-5. Initialize your databases, make migrations and start the Django server 
+5. Initialize your databases, make migrations and start the Django server ( while in the root directory )
     ```
-    $ cd backend 
     $ python manage.py makemigrations
     $ python maange.py migrate
+    
+    NOTE : The manage.py file is inside the root directory of the project and not in the backend/ directory. So change the directory location before you run the server, else you may get the error - 'manage.py file not found' 
+    ```
+
+    - Collecting static files 
+    ```
+    # python manage.py collectstatic
     ```
 
     - After the migrations have been successfully made, run the server 
     ```
-    $ cd ..
-    $ python manage.py 
+    $ python manage.py runserver 8000
 
     # NOTE : The manage.py file is inside the root directory of the project and not in the backend/ directory. So change the directory location before you run the server, else you may get the error - 'manage.py file not found' 
     ```
 
-6. Installing the dependencies of the frontend
+6. Installing the dependencies of the frontend ( starting from the root directory )
     ```
     $ cd frontend
     $ npm install 
@@ -188,6 +193,12 @@ Django is a Python framework that follows models-templates-view architecture. He
 
 6. Django Rest Framework ( DRF )
 
+## ER Diagram 
+<img src = "./images/ER.png"  alt = "ER diagram" />
+
+## Frontend Structure
+<img src = "./images/Flowchart.png" alt = "Flowchart" />
+
 
 ## Video Demonstration of the Application
 [screen-recorder-fri-apr-28-2023-00-46-43.webm](https://user-images.githubusercontent.com/76089814/234968688-ac010206-1d66-4236-9041-404d345f80e7.webm)
@@ -200,7 +211,7 @@ Django is a Python framework that follows models-templates-view architecture. He
 - [ ] 2. Use firebase authentication
 - [X] 3. bug: Update the user in the top right bar
 - [X] 4. User should be able to signout by himself
-- [ ] 5. Creating a project, maintaining a record of all the projects with its content
+- [X] 5. Creating a project, maintaining a record of all the projects with its content
 - [ ] 6. Feature to add images into the notes
 - [ ] 7. bug: Sign in/Sign up button when clicked, styling gets glitched
 - [ ] 8. Saving the versions of the project when the save button is clicked and moving back to previous verisons of the project
